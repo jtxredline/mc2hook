@@ -37,6 +37,7 @@ public:
     float FlatDist(const Vector3& vec) const;
     float Dot(const Vector3& vec) const;
     void Cross(const Vector3& vec); // Calculate the cross product of this vector and another vector.
+    static Vector3 Cross(const Vector3& v1, const Vector3& v2);
     void Lerp(float t, const Vector3& vec1, const Vector3& vec2);
     void Negate();
     void Negate(const Vector3& vec);
