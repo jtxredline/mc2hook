@@ -1,6 +1,7 @@
 #include "vector3.h"
 #include <print>
 #include <age/core/output.h>
+#include <age/vector/matrix34.h>
 
 Vector3::Vector3() {}
 Vector3::Vector3(float x, float y, float z) : X(x), Y(y), Z(z) {}
@@ -13,6 +14,7 @@ const Vector3 Vector3::ZAXIS = Vector3(0.0f, 0.0f, 1.0f);
 float Vector3::InvMag(void) const {
     return 1.0f / this->Mag();
 }
+
 float Vector3::Mag(void) const {
     return sqrtf(this->Mag2());
 }
@@ -175,12 +177,35 @@ Vector3 Vector3::Multiply(const Vector3& vec) const {
 
 void Vector3::Print() const
 {
-    Printf("%f,%f,%f", this->X, this->Y, this->Z);
+    Printf("%f,%f,%f\r", this->X, this->Y, this->Z);
 }
 
 void Vector3::Print(const char* caption)
 {
     Printf("%s: %f,%f,%f", caption, this->X, this->Y, this->Z);
+}
+
+void Vector3::Dot(const Matrix34& mtx)
+{
+    //this->X = mtx.m00 * this->X + mtx.m10 * this->Y + mtx.m20 * this->Z + mtx.m30;
+    //this->Y = mtx.m01 * this->X  + mtx.m11 * this->Y + mtx.m21 * this->Z + mtx.m31;
+    //this->Z = mtx.m02 * this->X + mtx.m12 * this->Y + mtx.m22 * this->Z + mtx.m32;
+
+    float x, y;
+    x = mtx.m20 * this->Z + mtx.m10 * this->Y + mtx.m00 * this->X + mtx.m30;
+    y = mtx.m21 * this->Z + mtx.m01 * this->X + mtx.m11 * this->Y + mtx.m31;
+    this->Z = mtx.m22 * this->Z + mtx.m02 * this->X + mtx.m12 * this->Y + mtx.m32;
+    this->X = x;
+    this->Y = y;
+}
+
+void Vector3::Cross(const Vector3& vec)
+{
+    float newX = this->Y * vec.Z - this->Z * vec.Y;
+    float newY = this->Z * vec.X - this->X * vec.Z;
+    this->Z = this->X * vec.Y - this->Y * vec.X;
+    this->X = newX;
+    this->Y = newY;
 }
 
 void Vector3::operator+=(const Vector3& vec) {

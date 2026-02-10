@@ -23,7 +23,7 @@
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{0fc19ac9-3216-485f-927d-9419a236c493}</ProjectGuid>
     <RootNamespace>mc2hook</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -113,6 +113,7 @@
       <EnableUAC>false</EnableUAC>
       <AdditionalDependencies>dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/pdbaltpath:%_PDB% %(AdditionalOptions)</AdditionalOptions>
+      <OutputFile>D:\MC\MC2\Midnight Club 2 Test2\dinput8.dll</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -150,20 +151,33 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="age\camera\playercamera.h" />
     <ClInclude Include="age\core\file.h" />
     <ClInclude Include="age\core\output.h" />
+    <ClInclude Include="age\core\stream.h" />
     <ClInclude Include="age\data\args.h" />
     <ClInclude Include="age\data\asset.h" />
     <ClInclude Include="age\data\parse.h" />
     <ClInclude Include="age\data\refcount.h" />
     <ClInclude Include="age\data\stack.h" />
     <ClInclude Include="age\data\timemgr.h" />
+    <ClInclude Include="age\gfx\font.h" />
+    <ClInclude Include="age\gfx\pipeline.h" />
     <ClInclude Include="age\gfx\rstate.h" />
+    <ClInclude Include="age\gfx\viewport.h" />
     <ClInclude Include="age\input\input.h" />
     <ClInclude Include="age\input\keyboard.h" />
     <ClInclude Include="age\input\mouse.h" />
+    <ClInclude Include="age\managers\netmanager.h" />
+    <ClInclude Include="age\math\math.h" />
     <ClInclude Include="age\memory\age_alloc_baseclass.h" />
     <ClInclude Include="age\memory\memory.h" />
+    <ClInclude Include="age\model\getpivot.h" />
+    <ClInclude Include="age\physics\phcollider.h" />
+    <ClInclude Include="age\physics\phinst.h" />
+    <ClInclude Include="age\physics\phinertia.h" />
+    <ClInclude Include="age\physics\ph_some_inst_parent.h" />
+    <ClInclude Include="age\physics\simulator.h" />
     <ClInclude Include="age\string\string.h" />
     <ClInclude Include="age\string\unicode.h" />
     <ClInclude Include="age\text\fonttexture.h" />
@@ -181,28 +195,53 @@
     <ClInclude Include="age\vector\vector2.h" />
     <ClInclude Include="age\vector\vector3.h" />
     <ClInclude Include="age\vector\vector4.h" />
+    <ClInclude Include="age\vehicle\aero.h" />
+    <ClInclude Include="age\vehicle\automgr.h" />
+    <ClInclude Include="age\vehicle\car.h" />
+    <ClInclude Include="age\vehicle\carsim.h" />
+    <ClInclude Include="age\vehicle\carSSTurbo.h" />
+    <ClInclude Include="age\vehicle\drivetrain.h" />
+    <ClInclude Include="age\vehicle\nitro.h" />
+    <ClInclude Include="age\vehicle\transmission.h" />
+    <ClInclude Include="age\vehicle\wheel.h" />
     <ClInclude Include="age\zipfile\zipfile.h" />
     <ClInclude Include="dllmain.h" />
     <ClInclude Include="framework\hook.h" />
     <ClInclude Include="framework\HookConfig.h" />
     <ClInclude Include="framework\hook_framework.h" />
     <ClInclude Include="framework\hook_output.h" />
+    <ClInclude Include="handlers\BurnoutHandler.h" />
+    <ClInclude Include="handlers\CPUPlayerVehiclesHandler.h" />
+    <ClInclude Include="handlers\DeadZoneHandler.h" />
+    <ClInclude Include="handlers\GravityHandler.h" />
+    <ClInclude Include="handlers\REHandler.h" />
+    <ClInclude Include="handlers\TwoWheelHandler.h" />
+    <ClInclude Include="handlers\AddressPrinterHandler.h" />
     <ClInclude Include="handlers\BorderlessHandler.h" />
     <ClInclude Include="handlers\CarShadowHandler.h" />
     <ClInclude Include="handlers\ChatHandler.h" />
+    <ClInclude Include="handlers\CityModelLimitHandler.h" />
+    <ClInclude Include="handlers\ControllerScrollingFixHandler.h" />
     <ClInclude Include="handlers\CustomExceptionHandler.h" />
     <ClInclude Include="handlers\CustomVehicleHandler.h" />
     <ClInclude Include="handlers\FontCrashFixHandler.h" />
+    <ClInclude Include="handlers\FreeCamHandler.h" />
     <ClInclude Include="handlers\handlers.h" />
     <ClInclude Include="handlers\HybridFileMethodsHandler.h" />
     <ClInclude Include="handlers\InputHandler.h" />
+    <ClInclude Include="handlers\LevelExtentsHandler.h" />
+    <ClInclude Include="handlers\MaxVelocityHandler.h" />
+    <ClInclude Include="handlers\FPSCounterHandler.h" />
+    <ClInclude Include="handlers\OnlineBangersHandler.h" />
     <ClInclude Include="handlers\PathHandler.h" />
     <ClInclude Include="handlers\PrinterHandler.h" />
+    <ClInclude Include="handlers\RDTSCFixHandler.h" />
     <ClInclude Include="handlers\ReflectionFidelityHandler.h" />
     <ClInclude Include="handlers\RemoveForcedArgsHandler.h" />
     <ClInclude Include="handlers\StateResearchHook.h" />
     <ClInclude Include="handlers\SteeringSmootherHandler.h" />
     <ClInclude Include="handlers\TestPanelHandler.h" />
+    <ClInclude Include="handlers\TimeWarpHandler.h" />
     <ClInclude Include="handlers\vehTransmisisonHandler.h" />
     <ClInclude Include="handlers\zipEnumHandler.h" />
     <ClInclude Include="handlers\zipIintHandler.h" />
@@ -221,41 +260,74 @@
     <ClInclude Include="thirdparty\inicpp.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="age\camera\playercamera.cpp" />
     <ClCompile Include="age\core\output.cpp" />
+    <ClCompile Include="age\core\stream.cpp" />
     <ClCompile Include="age\data\asset.cpp" />
     <ClCompile Include="age\data\stack.cpp" />
     <ClCompile Include="age\data\timemgr.cpp" />
+    <ClCompile Include="age\gfx\font.cpp" />
+    <ClCompile Include="age\gfx\pipeline.cpp" />
     <ClCompile Include="age\gfx\rstate.cpp" />
+    <ClCompile Include="age\gfx\viewport.cpp" />
     <ClCompile Include="age\input\input.cpp" />
     <ClCompile Include="age\input\keyboard.cpp" />
     <ClCompile Include="age\input\mouse.cpp" />
+    <ClCompile Include="age\managers\netmanager.cpp" />
+    <ClCompile Include="age\math\math.cpp" />
     <ClCompile Include="age\memory\age_alloc_baseclass.cpp" />
     <ClCompile Include="age\memory\allocator.cpp" />
+    <ClCompile Include="age\model\getpivot.cpp" />
+    <ClCompile Include="age\physics\phinertia.cpp" />
+    <ClCompile Include="age\physics\simulator.cpp" />
     <ClCompile Include="age\vector\matrix34.cpp" />
     <ClCompile Include="age\vector\matrix44.cpp" />
     <ClCompile Include="age\vector\vector.h" />
     <ClCompile Include="age\vector\vector3.cpp" />
     <ClCompile Include="age\vector\vector4.cpp" />
+    <ClCompile Include="age\vehicle\automgr.cpp" />
+    <ClCompile Include="age\vehicle\carsim.cpp" />
+    <ClCompile Include="age\vehicle\drivetrain.cpp" />
+    <ClCompile Include="age\vehicle\engine.cpp" />
+    <ClCompile Include="age\vehicle\engine.h" />
+    <ClCompile Include="age\vehicle\transmission.cpp" />
+    <ClCompile Include="age\vehicle\wheel.cpp" />
     <ClCompile Include="age\zipfile\zipfile.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="framework\hook.cpp" />
     <ClCompile Include="framework\HookConfig.cpp" />
     <ClCompile Include="framework\hook_output.cpp" />
+    <ClCompile Include="handlers\BurnoutHandler.cpp" />
+    <ClCompile Include="handlers\CPUPlayerVehiclesHandler.cpp" />
+    <ClCompile Include="handlers\DeadZoneHandler.cpp" />
+    <ClCompile Include="handlers\GravityHandler.cpp" />
+    <ClCompile Include="handlers\REHandler.cpp" />
+    <ClCompile Include="handlers\TwoWheelHandler.cpp" />
+    <ClCompile Include="handlers\AddressPrinterHandler.cpp" />
     <ClCompile Include="handlers\BorderlessHandler.cpp" />
     <ClCompile Include="handlers\CarShadowHandler.cpp" />
     <ClCompile Include="handlers\ChatHandler.cpp" />
+    <ClCompile Include="handlers\CityModelLimitHandler.cpp" />
+    <ClCompile Include="handlers\ControllerScrollingFixHandler.cpp" />
     <ClCompile Include="handlers\CustomExceptionHandler.cpp" />
     <ClCompile Include="handlers\CustomVehicleHandler.cpp" />
     <ClCompile Include="handlers\FontCrashFixHandler.cpp" />
+    <ClCompile Include="handlers\FreeCamHandler.cpp" />
     <ClCompile Include="handlers\HybridFileMethodsHandler.cpp" />
     <ClCompile Include="handlers\InputHandler.cpp" />
+    <ClCompile Include="handlers\LevelExtentsHandler.cpp" />
+    <ClCompile Include="handlers\MaxVelocityHandler.cpp" />
+    <ClCompile Include="handlers\FPSCounterHandler.cpp" />
+    <ClCompile Include="handlers\OnlineBangersHandler.cpp" />
     <ClCompile Include="handlers\PathHandler.cpp" />
     <ClCompile Include="handlers\PrinterHandler.cpp" />
+    <ClCompile Include="handlers\RDTSCFixHandler.cpp" />
     <ClCompile Include="handlers\ReflectionFidelityHandler.cpp" />
     <ClCompile Include="handlers\RemoveForcedArgsHandler.cpp" />
     <ClCompile Include="handlers\StateResearchHook.cpp" />
     <ClCompile Include="handlers\SteeringSmootherHandler.cpp" />
     <ClCompile Include="handlers\TestPanelHandler.cpp" />
+    <ClCompile Include="handlers\TimeWarpHandler.cpp" />
     <ClCompile Include="handlers\vehTransmisisonHandler.cpp" />
     <ClCompile Include="handlers\zipEnumHandler.cpp" />
     <ClCompile Include="handlers\zipInitHandler.cpp" />

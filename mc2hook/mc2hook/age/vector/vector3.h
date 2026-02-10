@@ -1,5 +1,8 @@
 #pragma once
 
+// Forward declarations
+class Matrix34;
+
 struct Vector3
 {
 public:
@@ -33,6 +36,7 @@ public:
     float Dist(const Vector3& vec) const;
     float FlatDist(const Vector3& vec) const;
     float Dot(const Vector3& vec) const;
+    void Cross(const Vector3& vec); // Calculate the cross product of this vector and another vector.
     void Lerp(float t, const Vector3& vec1, const Vector3& vec2);
     void Negate();
     void Negate(const Vector3& vec);
@@ -43,6 +47,9 @@ public:
     Vector3 Multiply(const Vector3& vec) const;
     void Print() const;
     void Print(const char* caption);
+
+    void Dot(const Matrix34& mtx);
+
     void operator+=(const Vector3& vec);
     void operator-=(const Vector3& vec);
     void operator+=(Vector3& vec);

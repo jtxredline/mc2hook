@@ -17,6 +17,11 @@ private:
 public:
     static void SetCamera(Matrix44 const& mtx);
     static void SetCamera(Matrix34 const& mtx);
+    static void SetWorld(Matrix44 const& mtx);
+    static void SetWorld(Matrix34 const& mtx);
+    //static void SetColor(Vector4 const& color);
+    //static void Convert(Matrix44 const& dest, Matrix34 const& src);
+
 public:
     static Matrix44 GetCameraMatrix();
     static void SetCull(gfxCullMode mode);

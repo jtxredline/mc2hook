@@ -213,10 +213,127 @@
     <ClInclude Include="age\gfx\rstate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="handlers\OnlineBangersHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="handlers\FreeCamHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="handlers\MaxVelocityHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="age\vehicle\transmission.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="handlers\AddressPrinterHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="handlers\ControllerScrollingFixHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="age\ui\flowctrl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="handlers\ReflectionFidelityHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="handlers\RDTSCFixHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="handlers\CityModelLimitHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="handlers\LevelExtentsHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="age\gfx\viewport.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="handlers\CarShadowHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="age\gfx\font.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="handlers\FPSCounterHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="age\gfx\pipeline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="handlers\TimeWarpHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="handlers\TwoWheelHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="handlers\DeadZoneHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="handlers\BurnoutHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="age\model\getpivot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="age\core\stream.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="handlers\GravityHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="age\camera\playercamera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="age\vehicle\carsim.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="age\math\math.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="age\physics\phcollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="age\physics\phinst.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="age\physics\phinertia.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="age\vehicle\aero.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="age\vehicle\wheel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="age\vehicle\nitro.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="age\vehicle\carSSTurbo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="handlers\CPUPlayerVehiclesHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="handlers\REHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="age\vehicle\drivetrain.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="age\physics\ph_some_inst_parent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="age\physics\simulator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="age\vehicle\automgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="age\vehicle\car.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="age\managers\netmanager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -338,7 +455,109 @@
     <ClCompile Include="age\gfx\rstate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="handlers\OnlineBangersHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="handlers\FreeCamHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="handlers\MaxVelocityHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="age\vehicle\transmission.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="handlers\AddressPrinterHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="handlers\ControllerScrollingFixHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="handlers\ReflectionFidelityHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="handlers\RDTSCFixHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="handlers\CityModelLimitHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="handlers\LevelExtentsHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="age\gfx\viewport.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="handlers\CarShadowHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="age\gfx\font.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="handlers\FPSCounterHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="age\gfx\pipeline.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="handlers\TimeWarpHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="handlers\TwoWheelHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="handlers\DeadZoneHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="handlers\BurnoutHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="age\model\getpivot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="age\core\stream.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="handlers\GravityHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="age\camera\playercamera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="age\math\math.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="age\vehicle\carsim.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="handlers\CPUPlayerVehiclesHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="handlers\REHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="age\vehicle\engine.h">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="age\vehicle\engine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="age\vehicle\drivetrain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="age\vehicle\wheel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="age\physics\phinertia.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="age\physics\simulator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="age\vehicle\automgr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="age\managers\netmanager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

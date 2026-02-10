@@ -1,0 +1,107 @@
+#include <mc2hook\mc2hook.h>
+#include <age/data/timemgr.h>
+#include "transmission.h"
+
+#include <age/core/output.h> //
+#include <age/input/keyboard.h> //
+#include <dinput.h> //
+
+void vehTransmission::Update()
+{
+    //hook::Thunk<0x567E00>::Call<void>(this); // Call original
+
+    if (m_IsAutomatic == 1)
+    {
+        int gear = m_CurrentGear;
+
+        if (gear > 1 && m_GearChangeTimer > m_GearChangeTime && m_GearChangeFlag == 0)
+        {
+            bool anyWheelSlipping = false;
+            bool anyWheelOnGround = false;
+
+            for (int i = 0; i < m_Drivetrain->m_NumWheels; i++)
+            {
+                vehWheel* wheel = &m_Drivetrain->m_WheelBL[i];
+                if (wheel->m_SlidingStrength < 0.9f)
+                    anyWheelSlipping = true;
+                if (wheel->m_OnGround)
+                    anyWheelOnGround = true;
+            }
+
+            // Upshift
+            if (gear < m_AutoNumGears - 1 && m_Engine->m_CurrentRPM > m_UpshiftRPMs[gear] && anyWheelOnGround && anyWheelSlipping && !m_Clutch)
+            {
+                SetCurrentGear(gear + 1);
+                m_GearChangeTimer += datTimeManager::GetSeconds();
+                return;
+            }
+
+            int remainingDownshifts = m_MaxDownshifts;
+            if (m_CurrentGear > 2)
+            {
+                do
+                {
+                    if (remainingDownshifts-- <= 0)
+                        break;
+
+                    float rpmLimit = (m_Engine->m_ThrottleValue == 0.0f) ? m_MinDownshiftRPMs[m_CurrentGear] : m_MaxDownshiftRPMs[m_CurrentGear];
+
+                    if (m_Engine->m_CurrentRPM >= rpmLimit)
+                        break;
+                    if (!anyWheelOnGround)
+                        break;
+
+                    SetCurrentGear(m_CurrentGear - 1);
+                } while (m_CurrentGear > 2);
+            }
+        }
+    }
+
+    m_GearChangeTimer += datTimeManager::GetSeconds();
+
+    // Debug flag
+    if (ioKeyboard::GetKeyDown(DIK_LALT)) m_CallOriginal = !m_CallOriginal;
+}
+
+void vehTransmission::SetGearChangeFlag(int flag)
+{    
+    m_GearChangeFlag = flag;
+
+    if (flag != 0)
+        m_GearChangeTimer = 0.0f;
+}
+
+void vehTransmission::SetCurrentGear(int g)
+{
+    int prevGear = m_CurrentGear;
+
+    if (g == prevGear || (m_IsAutomatic == 1 && g >= m_AutoNumGears))
+        return;
+
+    if (g > 2)
+    {
+        m_GearChangeTimer = 0.0f;
+
+        if (g > prevGear)
+        {
+            SetGearChangeFlag(1); // Upshift
+            m_CurrentGear = g;
+            return;
+        }
+
+        if (g < prevGear)
+        {
+            SetGearChangeFlag(-1); // Downshift
+        }
+    }
+
+    m_CurrentGear = g;
+}
+
+float vehTransmission::GetRatio() const
+{   
+    if (m_IsAutomatic) // Automatic
+        return m_AutoRatios[m_CurrentGear];
+    else               // Manual
+        return m_ManualGearRatios[m_CurrentGear];
+}
