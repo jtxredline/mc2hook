@@ -1,15 +1,14 @@
 ﻿#include "KinematicSteeringHandler.h"
 #include <age/data/timemgr.h>
-#include <age/vector/vector3.h>
-#include <age/vector/matrix34.h>
-#include <cmath>
-#include <age/vehicle/automgr.h>
-#include <age/vehicle/carsim.h>
+#include <age/managers/netmanager.h>
 #include <age/physics/phcollider.h>
 #include <age/physics/phinertia.h>
-#include <age/managers/netmanager.h>
-#include <age/input/keyboard.h>
-#include <dinput.h>
+#include <age/vector/matrix34.h>
+#include <age/vector/vector3.h>
+#include <age/vehicle/automgr.h>
+#include <age/vehicle/carsim.h>
+#include <age/vehicle/input.h>
+#include <cmath>
 
 float KinematicSteeringHandler::sm_SteeringRate = 0.0f;
 float KinematicSteeringHandler::sm_SteeringLock = 0.0f;
@@ -82,15 +81,17 @@ void KinematicSteeringHandler::Update() {
 
     float lastRequestedSteering = *getPtr<float>(this, 0x1C);
     float deltaTime = datTimeManager::GetSeconds();
-    vehCarSim* vehicle = *getPtr<vehCarSim*>(this, 0x2C);
-    if (!vehicle || !vehicle->collider || !vehicle->collider->ics) return;
+    //vehCarSim* vehicle = *getPtr<vehCarSim*>(this, 0x2C); What it was before
+    vehCarSim* vehicle = static_cast<vehInput*>(this)->m_VehCarSim;
 
-    phInertialCS* ics = vehicle->collider->ics;
-    Vector3 worldVel = ics->world_velocity;
-    Matrix34 worldTrans = ics->world_transform;
-    Vector3 angVel = ics->angular_velocity;
+    if (!vehicle || !vehicle->m_Collider || !vehicle->m_Collider->m_ICS) return;
 
-    float frontAxleX = ((Vector3*)((char*)vehicle->wheels[0] + 0x114))->X;
+    phInertialCS* m_ICS = vehicle->m_Collider->m_ICS;
+    Vector3 worldVel = m_ICS->m_WorldVelocity;
+    Matrix34 worldTrans = m_ICS->m_WorldTransform;
+    Vector3 angVel = m_ICS->m_AngularVelocity;
+
+    float frontAxleX = vehicle->m_Wheels[0]->m_LocalOffset.X;
     Vector3 axleVel = ComputeAxleVelocity(worldVel, angVel, worldTrans, frontAxleX);
 
     float lateralVel = axleVel.Dot(worldTrans.GetRow(0));
@@ -108,11 +109,10 @@ void KinematicSteeringHandler::Update() {
     float fpsCorrectionPower = deltaTime * 144.0f;
     float normalizedDampening = powf(speedFactor, fpsCorrectionPower);
 
-    // Apply the logic: (Current + Input) * Dampening
     sm_SteerValue = ClampSteering((sm_SteerValue + driverDelta - correctionDelta) * normalizedDampening);
 
     *getPtr<float>(this, 0x1C) = sm_SteerValue;
-    vehicle->steer = sm_SteerValue;
+    vehicle->m_Steer = sm_SteerValue;
 }
 
 void KinematicSteeringHandler::Install() {

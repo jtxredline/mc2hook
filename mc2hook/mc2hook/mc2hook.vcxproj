@@ -201,6 +201,7 @@
     <ClInclude Include="age\vehicle\carsim.h" />
     <ClInclude Include="age\vehicle\carSSTurbo.h" />
     <ClInclude Include="age\vehicle\drivetrain.h" />
+    <ClInclude Include="age\vehicle\input.h" />
     <ClInclude Include="age\vehicle\nitro.h" />
     <ClInclude Include="age\vehicle\transmission.h" />
     <ClInclude Include="age\vehicle\wheel.h" />
@@ -214,6 +215,7 @@
     <ClInclude Include="handlers\CPUPlayerVehiclesHandler.h" />
     <ClInclude Include="handlers\DeadZoneHandler.h" />
     <ClInclude Include="handlers\GravityHandler.h" />
+    <ClInclude Include="handlers\KinematicSteeringHandler.h" />
     <ClInclude Include="handlers\REHandler.h" />
     <ClInclude Include="handlers\TwoWheelHandler.h" />
     <ClInclude Include="handlers\AddressPrinterHandler.h" />
@@ -290,6 +292,7 @@
     <ClCompile Include="age\vehicle\drivetrain.cpp" />
     <ClCompile Include="age\vehicle\engine.cpp" />
     <ClCompile Include="age\vehicle\engine.h" />
+    <ClCompile Include="age\vehicle\input.cpp" />
     <ClCompile Include="age\vehicle\transmission.cpp" />
     <ClCompile Include="age\vehicle\wheel.cpp" />
     <ClCompile Include="age\zipfile\zipfile.cpp" />
@@ -301,6 +304,7 @@
     <ClCompile Include="handlers\CPUPlayerVehiclesHandler.cpp" />
     <ClCompile Include="handlers\DeadZoneHandler.cpp" />
     <ClCompile Include="handlers\GravityHandler.cpp" />
+    <ClCompile Include="handlers\KinematicSteeringHandler.cpp" />
     <ClCompile Include="handlers\REHandler.cpp" />
     <ClCompile Include="handlers\TwoWheelHandler.cpp" />
     <ClCompile Include="handlers\AddressPrinterHandler.cpp" />

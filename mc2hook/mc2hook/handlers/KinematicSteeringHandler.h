@@ -1,8 +1,6 @@
 ﻿#pragma once
 #include <mc2hook\mc2hook.h>
 
-class Vector3;
-class Matrix34;
 
 class KinematicSteeringHandler {
 public:
