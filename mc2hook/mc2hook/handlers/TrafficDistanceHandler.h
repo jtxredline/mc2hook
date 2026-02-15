@@ -6,9 +6,6 @@ public:
     static void Install();
 
 private:
-    static void LoadConfig();
-    static void PatchDistances();
+    static float sm_TrafficDistanceMultiplier;
 
-    static float sm_SpawnDistanceMultiplier;
-    static float sm_CullDistanceMultiplier;
 };
