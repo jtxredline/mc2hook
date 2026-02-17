@@ -19,4 +19,5 @@ public:
     static float GetElapsedTime();
     static float GetPrevElapsedTime();
     static float GetUnwarpedSeconds();
+    void Update();
 };

@@ -10,3 +10,23 @@ static char* StringDuplicate(const char* str)
     memcpy(dup, str, size);
     return dup;
 }
+
+static char* StringToLower(const char* devName)
+{
+    static char buffer[256];
+
+    int i = 0;
+    while (devName[i] != '\0' && i < 255)
+    {
+        char c = devName[i];
+
+        // ASCII uppercase -> lowercase
+        if (c >= 'A' && c <= 'Z')
+            c = c + ('a' - 'A');  // +32
+
+        buffer[i++] = c;
+    }
+
+    buffer[i] = '\0';
+    return buffer;
+}

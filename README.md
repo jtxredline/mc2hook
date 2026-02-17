@@ -1,5 +1,5 @@
 # mc2hook
-A hook for Midnight Club 2 that allows for custom vehicles, multi-dat loading, and more
+A hook for Midnight Club 2 that allows for custom vehicles, multi-dat loading, Discord rich presence, and more
 
 ## Building
 Using a recent version of the Visual Studio IDE (including Visual Studio 2022 14.39)

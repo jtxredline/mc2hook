@@ -1,4 +1,6 @@
 #include "timemgr.h"
+#include <mc2hook\mc2hook.h>
+#include <discord-rpc/discord_rpc.h>
 
 declfield(datTimeManager::Seconds)(0x6797CC);
 declfield(datTimeManager::InvSeconds)(0x6797D4);
@@ -41,4 +43,11 @@ float datTimeManager::GetFPS()
 float datTimeManager::GetUnwarpedSeconds()
 {
     return datTimeManager::UnwarpedSeconds.get();
+}
+
+void datTimeManager::Update()
+{
+    hook::Thunk<0x613FC0>::Call<void>(this); // Call original
+
+    Discord_RunCallbacks();
 }

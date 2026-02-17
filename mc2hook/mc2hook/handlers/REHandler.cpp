@@ -3,6 +3,8 @@
 #include <age/vehicle/transmission.h>
 #include <age/vehicle/engine.h>
 #include <age/vehicle/wheel.h>
+#include <age/state/gamestate.h>
+#include <age/data/timemgr.h>
 
 void REHandler::Install()
 {
@@ -38,5 +40,23 @@ void REHandler::Install()
         &vehWheel::ComputeFriction, {
             cb::call(0x56DF6B),
             cb::call(0x56DFE2),
+        });
+
+    // mcGameState
+    InstallCallback("mcGameState EnterState", "mcGameState::EnterState()",
+        &mcGameState::EnterState, {
+            cb::call(0x404BAE),
+        });
+
+    InstallVTableHook("mcGameState EnterState", &mcGameState::EnterState, { 0x62D978 });
+
+    // datTimeManager
+    InstallCallback("datTimeManager", "datTimeManager::Update()",
+        &datTimeManager::Update, {
+            cb::call(0x401CE1),
+            cb::call(0x402321),
+            cb::call(0x402395),
+            cb::call(0x4023F1),
+            cb::call(0x42059D),
         });
 }

@@ -57,4 +57,11 @@ namespace math
         if (value < 0.0f) return -1.0f;
         return 0.0f;
     }
+
+    int RandomInt(int min, int max)
+    {
+        static unsigned int seed = 0x12345678;
+        seed = seed * 1103515245 + 12345;
+        return min + (seed % (max - min + 1));
+    }
 }
