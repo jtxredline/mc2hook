@@ -340,6 +340,80 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="age\vehicle\input.h">
+    <ClInclude Include="handlers\TrafficDistanceHandler.h">
+    <ClInclude Include="age\state\gamestate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="discord-rpc\gamesdk\achievement_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="discord-rpc\gamesdk\activity_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="discord-rpc\gamesdk\application_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="discord-rpc\gamesdk\core.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="discord-rpc\gamesdk\discord.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="discord-rpc\gamesdk\event.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="discord-rpc\gamesdk\ffi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="discord-rpc\gamesdk\image_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="discord-rpc\gamesdk\lobby_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="discord-rpc\gamesdk\network_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="discord-rpc\gamesdk\overlay_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="discord-rpc\gamesdk\relationship_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="discord-rpc\gamesdk\storage_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="discord-rpc\gamesdk\store_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="discord-rpc\gamesdk\types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="discord-rpc\gamesdk\user_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="discord-rpc\gamesdk\voice_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="discord-rpc\discord_rpc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="age\types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="age\mcraceconfig\raceconfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="age\globals.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="age\mcfe\hub.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="age\mclobby\lobbyderived.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -572,5 +646,73 @@
     <ClCompile Include="age\vehicle\input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="handlers\TrafficDistanceHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="discord-rpc\gamesdk\achievement_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="discord-rpc\gamesdk\activity_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="discord-rpc\gamesdk\application_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="discord-rpc\gamesdk\core.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="discord-rpc\gamesdk\image_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="discord-rpc\gamesdk\lobby_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="discord-rpc\gamesdk\network_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="discord-rpc\gamesdk\overlay_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="discord-rpc\gamesdk\relationship_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="discord-rpc\gamesdk\storage_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="discord-rpc\gamesdk\store_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="discord-rpc\gamesdk\types.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="discord-rpc\gamesdk\user_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="discord-rpc\gamesdk\voice_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="discord-rpc\discord_rpc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="age\mcraceconfig\raceconfig.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="age\state\gamestate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="age\mcfe\hub.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="age\mclobby\lobbyderived.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="discord-rpc\lib\discord_game_sdk.dll.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="mc2hook.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

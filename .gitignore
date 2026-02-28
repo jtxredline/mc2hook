@@ -975,7 +975,9 @@ _deps
 *.lai
 *.la
 *.a
-*.lib
+
+## Include lib files
+#!*.lib
 
 # Executables
 *.exe

@@ -165,11 +165,15 @@
     <ClInclude Include="age\gfx\pipeline.h" />
     <ClInclude Include="age\gfx\rstate.h" />
     <ClInclude Include="age\gfx\viewport.h" />
+    <ClInclude Include="age\globals.h" />
     <ClInclude Include="age\input\input.h" />
     <ClInclude Include="age\input\keyboard.h" />
     <ClInclude Include="age\input\mouse.h" />
+    <ClInclude Include="age\mcfe\hub.h" />
     <ClInclude Include="age\managers\netmanager.h" />
     <ClInclude Include="age\math\math.h" />
+    <ClInclude Include="age\mclobby\lobbyderived.h" />
+    <ClInclude Include="age\mcraceconfig\raceconfig.h" />
     <ClInclude Include="age\memory\age_alloc_baseclass.h" />
     <ClInclude Include="age\memory\memory.h" />
     <ClInclude Include="age\model\getpivot.h" />
@@ -178,6 +182,7 @@
     <ClInclude Include="age\physics\phinertia.h" />
     <ClInclude Include="age\physics\ph_some_inst_parent.h" />
     <ClInclude Include="age\physics\simulator.h" />
+    <ClInclude Include="age\state\gamestate.h" />
     <ClInclude Include="age\string\string.h" />
     <ClInclude Include="age\string\unicode.h" />
     <ClInclude Include="age\text\fonttexture.h" />
@@ -186,6 +191,7 @@
     <ClInclude Include="age\text\stringtable.h" />
     <ClInclude Include="age\text\hashtable.h" />
     <ClInclude Include="age\memory\allocator.h" />
+    <ClInclude Include="age\types.h" />
     <ClInclude Include="age\ui\flowctrl.h" />
     <ClInclude Include="age\ui\group.h" />
     <ClInclude Include="age\ui\visual.h" />
@@ -206,6 +212,24 @@
     <ClInclude Include="age\vehicle\transmission.h" />
     <ClInclude Include="age\vehicle\wheel.h" />
     <ClInclude Include="age\zipfile\zipfile.h" />
+    <ClInclude Include="discord-rpc\discord_rpc.h" />
+    <ClInclude Include="discord-rpc\gamesdk\achievement_manager.h" />
+    <ClInclude Include="discord-rpc\gamesdk\activity_manager.h" />
+    <ClInclude Include="discord-rpc\gamesdk\application_manager.h" />
+    <ClInclude Include="discord-rpc\gamesdk\core.h" />
+    <ClInclude Include="discord-rpc\gamesdk\discord.h" />
+    <ClInclude Include="discord-rpc\gamesdk\event.h" />
+    <ClInclude Include="discord-rpc\gamesdk\ffi.h" />
+    <ClInclude Include="discord-rpc\gamesdk\image_manager.h" />
+    <ClInclude Include="discord-rpc\gamesdk\lobby_manager.h" />
+    <ClInclude Include="discord-rpc\gamesdk\network_manager.h" />
+    <ClInclude Include="discord-rpc\gamesdk\overlay_manager.h" />
+    <ClInclude Include="discord-rpc\gamesdk\relationship_manager.h" />
+    <ClInclude Include="discord-rpc\gamesdk\storage_manager.h" />
+    <ClInclude Include="discord-rpc\gamesdk\store_manager.h" />
+    <ClInclude Include="discord-rpc\gamesdk\types.h" />
+    <ClInclude Include="discord-rpc\gamesdk\user_manager.h" />
+    <ClInclude Include="discord-rpc\gamesdk\voice_manager.h" />
     <ClInclude Include="dllmain.h" />
     <ClInclude Include="framework\hook.h" />
     <ClInclude Include="framework\HookConfig.h" />
@@ -217,6 +241,7 @@
     <ClInclude Include="handlers\GravityHandler.h" />
     <ClInclude Include="handlers\KinematicSteeringHandler.h" />
     <ClInclude Include="handlers\REHandler.h" />
+    <ClInclude Include="handlers\TrafficDistanceHandler.h" />
     <ClInclude Include="handlers\TwoWheelHandler.h" />
     <ClInclude Include="handlers\AddressPrinterHandler.h" />
     <ClInclude Include="handlers\BorderlessHandler.h" />
@@ -259,6 +284,7 @@
     <ClInclude Include="mcgame\ui\mainmenu.h" />
     <ClInclude Include="mcgame\ui\pausemenu.h" />
     <ClInclude Include="mcgame\ui\vehicle3d.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="thirdparty\inicpp.h" />
   </ItemGroup>
   <ItemGroup>
@@ -275,13 +301,17 @@
     <ClCompile Include="age\input\input.cpp" />
     <ClCompile Include="age\input\keyboard.cpp" />
     <ClCompile Include="age\input\mouse.cpp" />
+    <ClCompile Include="age\mcfe\hub.cpp" />
     <ClCompile Include="age\managers\netmanager.cpp" />
     <ClCompile Include="age\math\math.cpp" />
+    <ClCompile Include="age\mclobby\lobbyderived.cpp" />
+    <ClCompile Include="age\mcraceconfig\raceconfig.cpp" />
     <ClCompile Include="age\memory\age_alloc_baseclass.cpp" />
     <ClCompile Include="age\memory\allocator.cpp" />
     <ClCompile Include="age\model\getpivot.cpp" />
     <ClCompile Include="age\physics\phinertia.cpp" />
     <ClCompile Include="age\physics\simulator.cpp" />
+    <ClCompile Include="age\state\gamestate.cpp" />
     <ClCompile Include="age\vector\matrix34.cpp" />
     <ClCompile Include="age\vector\matrix44.cpp" />
     <ClCompile Include="age\vector\vector.h" />
@@ -296,6 +326,21 @@
     <ClCompile Include="age\vehicle\transmission.cpp" />
     <ClCompile Include="age\vehicle\wheel.cpp" />
     <ClCompile Include="age\zipfile\zipfile.cpp" />
+    <ClCompile Include="discord-rpc\discord_rpc.cpp" />
+    <ClCompile Include="discord-rpc\gamesdk\achievement_manager.cpp" />
+    <ClCompile Include="discord-rpc\gamesdk\activity_manager.cpp" />
+    <ClCompile Include="discord-rpc\gamesdk\application_manager.cpp" />
+    <ClCompile Include="discord-rpc\gamesdk\core.cpp" />
+    <ClCompile Include="discord-rpc\gamesdk\image_manager.cpp" />
+    <ClCompile Include="discord-rpc\gamesdk\lobby_manager.cpp" />
+    <ClCompile Include="discord-rpc\gamesdk\network_manager.cpp" />
+    <ClCompile Include="discord-rpc\gamesdk\overlay_manager.cpp" />
+    <ClCompile Include="discord-rpc\gamesdk\relationship_manager.cpp" />
+    <ClCompile Include="discord-rpc\gamesdk\storage_manager.cpp" />
+    <ClCompile Include="discord-rpc\gamesdk\store_manager.cpp" />
+    <ClCompile Include="discord-rpc\gamesdk\types.cpp" />
+    <ClCompile Include="discord-rpc\gamesdk\user_manager.cpp" />
+    <ClCompile Include="discord-rpc\gamesdk\voice_manager.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="framework\hook.cpp" />
     <ClCompile Include="framework\HookConfig.cpp" />
@@ -306,6 +351,7 @@
     <ClCompile Include="handlers\GravityHandler.cpp" />
     <ClCompile Include="handlers\KinematicSteeringHandler.cpp" />
     <ClCompile Include="handlers\REHandler.cpp" />
+    <ClCompile Include="handlers\TrafficDistanceHandler.cpp" />
     <ClCompile Include="handlers\TwoWheelHandler.cpp" />
     <ClCompile Include="handlers\AddressPrinterHandler.cpp" />
     <ClCompile Include="handlers\BorderlessHandler.cpp" />
@@ -338,6 +384,12 @@
     <ClCompile Include="handlers\InitHandler.cpp" />
     <ClCompile Include="mcgame\ui\asyncio.cpp" />
     <ClCompile Include="handlers\OpenSpyHandler.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="discord-rpc\lib\discord_game_sdk.dll.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="mc2hook.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

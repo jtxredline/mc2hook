@@ -1,6 +1,7 @@
 #include "InitHandler.h"
 #include <mc2hook\mc2hook.h>
 #include <handlers\handlers.h>
+#include <discord-rpc/discord_rpc.h>
 
 void InitHandler::PostEngineInitHook()
 {
@@ -27,4 +28,8 @@ void InitHandler::Install()
             cb::call(0x401384),
         }
     );
+
+    // Discord RPC init
+    bool useDiscordRPC = HookConfig::GetBool("Discord", "UseRPC", true);
+    if (useDiscordRPC) Discord_Init();
 }

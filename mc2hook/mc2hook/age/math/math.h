@@ -21,4 +21,5 @@ namespace math
 	float DistanceSq(Vector3 from, Vector3 to); // Distance/length squared.
 	float frand();
 	float Sign(float value);
+	int RandomInt(int min, int max);
 }
