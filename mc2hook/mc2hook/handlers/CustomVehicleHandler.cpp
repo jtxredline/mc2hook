@@ -8,6 +8,8 @@
 #include <mcgame/ui/mainmenu.h>
 #include <mcgame/ui/pausemenu.h>
 
+#include <discord-rpc/discord_rpc.h>
+
 //#include <string.h>
 
 // DEFINES
@@ -158,6 +160,9 @@ int CustomVehicleHandler::netmanager_GetVarHook()
     // Prevents mc2hook users from accidentally (or maliciously) crashing people with less mods / unmodded games
     int value = hook::Thunk<0x55E930>::Call<int>(this);
     Warningf("Vehicle var get in net manager: %i, clamping to %i", value, (value >= 32) ? 0 : value);
+
+    Discord_UpdateForState(RPCState::LobbyOnline); // Update RPC, going from Frontend to Online lobby
+
     return (value >= 32) ? 0 : value;
 }
 

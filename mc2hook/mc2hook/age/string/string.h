@@ -10,3 +10,31 @@ static char* StringDuplicate(const char* str)
     memcpy(dup, str, size);
     return dup;
 }
+
+static char* StringToLower(const char* devName)
+{
+    static char buffer[256];
+
+    int i = 0;
+    while (devName[i] != '\0' && i < 255)
+    {
+        char c = devName[i];
+
+        // ASCII uppercase -> lowercase
+        if (c >= 'A' && c <= 'Z')
+            c = c + ('a' - 'A');  // +32
+
+        buffer[i++] = c;
+    }
+
+    buffer[i] = '\0';
+    return buffer;
+}
+
+static char* NarrowCopy(char* dst, const wchar_t* src, int len) // 0x405700
+{
+    for (int i = 0; i < len; i++)
+        dst[i] = (char)src[i];
+
+    return dst;
+}
