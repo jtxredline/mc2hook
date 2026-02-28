@@ -336,6 +336,7 @@
     <ClInclude Include="age\managers\netmanager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="handlers\TrafficDistanceHandler.h">
     <ClInclude Include="age\state\gamestate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -633,6 +634,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="age\managers\netmanager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="handlers\TrafficDistanceHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="discord-rpc\gamesdk\achievement_manager.cpp">
