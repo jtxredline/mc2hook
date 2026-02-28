@@ -34,6 +34,7 @@
 #include <handlers/GravityHandler.h>
 #include <handlers/CPUPlayerVehiclesHandler.h>
 #include <handlers/REHandler.h>
+#include <handlers\KinematicSteeringHandler.h>
 #include <handlers\TrafficDistanceHandler.h>
 #include <handlers\StateResearchHook.h>
 
@@ -54,6 +55,7 @@ static void InstallHandlersPostEngineInit()
     //InstallHandler<vehTransmissionHandler>("Transmission Handler");
     InstallHandler<MaxVelocityHandler>("Max Velocity Handler");
     InstallHandler<AddressPrinterHandler>("Address Printer Handler");
+    InstallHandler<KinematicSteeringHandler>("Kinematic Steering Handler");
     InstallHandler<TrafficDistanceHandler>("Traffic Distance Handler");
 
     //InstallHandler<TwoWheelHandler>("Two Wheel Handler");

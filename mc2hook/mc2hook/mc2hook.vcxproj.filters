@@ -336,6 +336,10 @@
     <ClInclude Include="age\managers\netmanager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="handlers\KinematicSteeringHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="age\vehicle\input.h">
     <ClInclude Include="handlers\TrafficDistanceHandler.h">
     <ClInclude Include="age\state\gamestate.h">
       <Filter>Header Files</Filter>
@@ -634,6 +638,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="age\managers\netmanager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="handlers\KinematicSteeringHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="age\vehicle\input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="handlers\TrafficDistanceHandler.cpp">
