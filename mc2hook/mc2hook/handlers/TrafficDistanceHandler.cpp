@@ -4,7 +4,6 @@ static constexpr float DEFAULT_SPAWN_BASE = 200.0f;
 static constexpr float DEFAULT_CULL_DISTANCE = 25.0f;
 float TrafficDistanceHandler::sm_TrafficDistanceMultiplier = 0.0f;
 
-
 void TrafficDistanceHandler::Install() {
     sm_TrafficDistanceMultiplier = HookConfig::GetFloat("Traffic", "TrafficDistanceMultiplier", 1.0f);
 

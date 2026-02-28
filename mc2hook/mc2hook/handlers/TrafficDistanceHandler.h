@@ -7,5 +7,4 @@ public:
 
 private:
     static float sm_TrafficDistanceMultiplier;
-
 };
