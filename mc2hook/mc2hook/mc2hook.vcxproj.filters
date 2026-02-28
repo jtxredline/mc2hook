@@ -402,6 +402,12 @@
     <ClInclude Include="age\globals.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="age\mcfe\hub.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="age\mclobby\lobbyderived.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -675,6 +681,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="age\state\gamestate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="age\mcfe\hub.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="age\mclobby\lobbyderived.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

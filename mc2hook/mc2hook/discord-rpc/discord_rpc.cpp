@@ -12,7 +12,7 @@
 static const int64_t DISCORD_APP_ID = 1472018278317555722;
 static discord::Core* g_core = nullptr;
 static int64_t g_startTimestamp = 0;
-static GameState g_lastState = GameState::Boot;
+static RPCState g_lastState = RPCState::Boot;
 
 static int64_t GetUnixTimestamp()
 {
@@ -42,7 +42,7 @@ static const char* raceTypeNames[] =
     "Racing:",
     "Racing:",
     "CTF:",
-    "Detonator:",
+    "Detonate:",
     "Lose The Cops:",
     "Destroy:"
 };
@@ -132,7 +132,6 @@ static const RaceNameEntry raceNameTable[] =
 };
 
 static const int raceNameCount = sizeof(raceNameTable) / sizeof(raceNameTable[0]);
-
 const char* GetCleanRaceName(const char* devName)
 {
     if (!devName)
@@ -152,8 +151,6 @@ const char* GetCleanRaceName(const char* devName)
     // Fallback: return original name (mostly a custom race)
     return devName;
 }
-
-//
 
 void Discord_Init()
 {
@@ -195,7 +192,7 @@ void Discord_RunCallbacks()
         g_core->RunCallbacks();
 }
 
-void Discord_UpdateForState(GameState state)
+void Discord_UpdateForState(RPCState state)
 {
     if (!g_core)
         return;
@@ -219,19 +216,20 @@ void Discord_UpdateForState(GameState state)
     activity.GetAssets().SetLargeImage("mc2_logo");
     activity.GetAssets().SetLargeText("Midnight Club 2");
 
+    char detailsText[256];
+    char stateText[256];
+
     switch (state)
     {
-    case GameState::MainMenu:
+    case RPCState::Frontend:
         activity.SetDetails("In main menu");
         break;
 
-    case GameState::Loading:
+    case RPCState::Loading:
         activity.SetDetails("Loading...");
         break;
 
-    case GameState::Race:
-    {
-        char detailsText[256];
+    case RPCState::Race: {
         raceType = raceTypeNames[mcRaceConfig::g_CurrentRaceType];
         vehicle = g_VehicleNames[mcRaceConfig::g_CurrentCar];
         city = g_CityNames[mcRaceConfig::g_CurrentCity];
@@ -264,10 +262,12 @@ void Discord_UpdateForState(GameState state)
         // Network state
         if (mcNetManager::IsNetworkMode == true)
         {
-            char stateText[256];
             int numSlots = mcRaceConfig::g_NumPlayerSlots;
             int numPlayers = vehAutoMgr::Instance->m_NumSims;
-            sprintf_s(stateText, "Multiplayer %d of %d", numPlayers, numSlots);
+
+            if (mcNetManager::Instance->m_IsHostOnline == true) sprintf_s(stateText, "Online %d of %d", numPlayers, numSlots);
+            if (mcNetManager::Instance->m_IsHostOnline == false) sprintf_s(stateText, "LAN %d of %d", numPlayers, numSlots);
+            
             activity.SetState(stateText);
         }
 
@@ -305,13 +305,42 @@ void Discord_UpdateForState(GameState state)
     }
     break;
     
-    case GameState::RaceEditor:
+    case RPCState::RaceEditor: {
         activity.SetDetails("In race editor");
         activity.SetState(g_CityNames[mcRaceConfig::g_CurrentCity]);
         activity.GetAssets().SetLargeImage("raceeditor");
         activity.GetAssets().SetLargeText("Midnight Club 2");
         activity.GetAssets().SetSmallImage("mc2_logo");
-        break;
+    }
+    break;
+
+    case RPCState::LobbyOnline: {
+        activity.SetDetails("In lobby");
+        activity.SetState("Online");
+    }
+    break;
+
+
+    case RPCState::LobbyLAN: {
+        activity.SetDetails("In lobby");
+        activity.SetState("LAN");
+    }
+    break;
+
+    case RPCState::Host:
+    {
+        strcpy(detailsText, "In a host");
+
+        int numSlots = mcNetManager::Instance->m_NumPlayerSlots;
+        int numPlayers = mcNetManager::Instance->GetPlayerCount();
+
+        if (mcNetManager::Instance->m_IsHostOnline == true) sprintf_s(stateText, "Online %d of %d", numPlayers, numSlots); // Online
+        else sprintf_s(stateText, "LAN %d of %d", numPlayers, numSlots); // LAN
+
+        activity.SetDetails(detailsText);
+        activity.SetState(stateText);
+    }
+    break;
 
     default:
         activity.SetDetails("Playing");

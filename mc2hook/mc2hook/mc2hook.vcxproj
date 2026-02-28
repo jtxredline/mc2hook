@@ -169,8 +169,10 @@
     <ClInclude Include="age\input\input.h" />
     <ClInclude Include="age\input\keyboard.h" />
     <ClInclude Include="age\input\mouse.h" />
+    <ClInclude Include="age\mcfe\hub.h" />
     <ClInclude Include="age\managers\netmanager.h" />
     <ClInclude Include="age\math\math.h" />
+    <ClInclude Include="age\mclobby\lobbyderived.h" />
     <ClInclude Include="age\mcraceconfig\raceconfig.h" />
     <ClInclude Include="age\memory\age_alloc_baseclass.h" />
     <ClInclude Include="age\memory\memory.h" />
@@ -295,8 +297,10 @@
     <ClCompile Include="age\input\input.cpp" />
     <ClCompile Include="age\input\keyboard.cpp" />
     <ClCompile Include="age\input\mouse.cpp" />
+    <ClCompile Include="age\mcfe\hub.cpp" />
     <ClCompile Include="age\managers\netmanager.cpp" />
     <ClCompile Include="age\math\math.cpp" />
+    <ClCompile Include="age\mclobby\lobbyderived.cpp" />
     <ClCompile Include="age\mcraceconfig\raceconfig.cpp" />
     <ClCompile Include="age\memory\age_alloc_baseclass.cpp" />
     <ClCompile Include="age\memory\allocator.cpp" />

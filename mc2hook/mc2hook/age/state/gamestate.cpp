@@ -2,37 +2,40 @@
 #include <mc2hook\mc2hook.h>
 #include <age/core/output.h>
 #include <discord-rpc/discord_rpc.h>
+#include <age/types.h>
+
+declfield(mcGameState::Instance)(0x6C3890);
 
 void mcGameState::EnterState(int state)
 {
     switch (state)
     {
-    case 1:
+    case GameState::Boot:
         mcGameState::EnterStateBoot();
         break;
-    case 2:
+    case GameState::Game:
         mcGameState::EnterStateGame();
-        Discord_UpdateForState(GameState::Loading);
-        Discord_UpdateForState(GameState::Race);
+        Discord_UpdateForState(RPCState::Loading); // RPC refresh workaround
+        Discord_UpdateForState(RPCState::Race);
         break;
-    case 3:
+    case GameState::Replay:
         mcGameState::EnterStateReplay();
         break;
-    case 4:
+    case GameState::Movie:
         mcGameState::EnterStateMovie();
         break;
-    case 5:
+    case GameState::Frontend:
         mcGameState::EnterStateFrontend();
-        Discord_UpdateForState(GameState::MainMenu);
+        Discord_UpdateForState(RPCState::Frontend);
         break;
-    case 6:
+    case GameState::RaceEditor:
         mcGameState::EnterStateRaceEditor();
-        Discord_UpdateForState(GameState::RaceEditor);
+        Discord_UpdateForState(RPCState::RaceEditor);
         break;
-    case 7:
+    case GameState::CarViewer:
         mcGameState::EnterStateCarViewer();
         break;
-    case 8:
+    case GameState::Quit:
         hook::Thunk<0x402AC0>::Call<int>(this);
         break;
     default:

@@ -51,6 +51,18 @@ enum RACE_TYPE {
 	destroy                  = 13
 };
 
+enum GameState {
+	Invalid,
+	Boot,
+	Game,
+	Replay,
+	Movie,
+	Frontend,
+	RaceEditor,
+	CarViewer,
+	Quit,
+};
+
 enum CITY {
 	losangeles  = 0,
 	paris       = 1,

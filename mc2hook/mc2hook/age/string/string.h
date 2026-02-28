@@ -30,3 +30,11 @@ static char* StringToLower(const char* devName)
     buffer[i] = '\0';
     return buffer;
 }
+
+static char* NarrowCopy(char* dst, const wchar_t* src, int len) // 0x405700
+{
+    for (int i = 0; i < len; i++)
+        dst[i] = (char)src[i];
+
+    return dst;
+}

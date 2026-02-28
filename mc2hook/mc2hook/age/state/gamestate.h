@@ -34,6 +34,9 @@ public:
     char field_5E;
 
 public:
+    static hook::Type<mcGameState*> Instance;
+
+public:
     void EnterState(int state);
     void EnterStateBoot();
     void EnterStateMovie();
