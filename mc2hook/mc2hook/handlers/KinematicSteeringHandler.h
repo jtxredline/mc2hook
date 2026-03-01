@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include <mc2hook\mc2hook.h>
-
+#include <age/vector/vector3.h>
 
 class KinematicSteeringHandler {
 public:

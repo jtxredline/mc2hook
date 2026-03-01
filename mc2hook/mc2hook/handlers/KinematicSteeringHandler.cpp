@@ -5,10 +5,8 @@
 #include <age/physics/phinertia.h>
 #include <age/vector/matrix34.h>
 #include <age/vector/vector3.h>
-#include <age/vehicle/automgr.h>
 #include <age/vehicle/carsim.h>
-#include <age/vehicle/input.h>
-#include <cmath>
+#include <age/vehicle/vehinput.h>
 
 float KinematicSteeringHandler::sm_SteeringRate = 0.0f;
 float KinematicSteeringHandler::sm_SteeringLock = 0.0f;
@@ -81,8 +79,8 @@ void KinematicSteeringHandler::Update() {
 
     float lastRequestedSteering = *getPtr<float>(this, 0x1C);
     float deltaTime = datTimeManager::GetSeconds();
-    //vehCarSim* vehicle = *getPtr<vehCarSim*>(this, 0x2C); What it was before
-    vehCarSim* vehicle = static_cast<vehInput*>(this)->m_VehCarSim;
+    vehCarSim* vehicle = *getPtr<vehCarSim*>(this, 0x2C);
+    //vehCarSim* vehicle = static_cast<vehInput*>(this)->m_VehCarSim;
 
     if (!vehicle || !vehicle->m_Collider || !vehicle->m_Collider->m_ICS) return;
 

@@ -1,6 +1,4 @@
-#include "input.h"
-#include <age/vehicle/carsim.h>
-#include <age/vehicle/transmission.h>
+#include "vehinput.h"
 
 // The actual implementation is in the original game at 0x46B330
 // This is just a placeholder if needed for documentation

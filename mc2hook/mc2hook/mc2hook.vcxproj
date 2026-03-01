@@ -207,7 +207,7 @@
     <ClInclude Include="age\vehicle\carsim.h" />
     <ClInclude Include="age\vehicle\carSSTurbo.h" />
     <ClInclude Include="age\vehicle\drivetrain.h" />
-    <ClInclude Include="age\vehicle\input.h" />
+    <ClInclude Include="age\vehicle\vehinput.h" />
     <ClInclude Include="age\vehicle\nitro.h" />
     <ClInclude Include="age\vehicle\transmission.h" />
     <ClInclude Include="age\vehicle\wheel.h" />
@@ -322,7 +322,7 @@
     <ClCompile Include="age\vehicle\drivetrain.cpp" />
     <ClCompile Include="age\vehicle\engine.cpp" />
     <ClCompile Include="age\vehicle\engine.h" />
-    <ClCompile Include="age\vehicle\input.cpp" />
+    <ClCompile Include="age\vehicle\vehinput.cpp" />
     <ClCompile Include="age\vehicle\transmission.cpp" />
     <ClCompile Include="age\vehicle\wheel.cpp" />
     <ClCompile Include="age\zipfile\zipfile.cpp" />
