@@ -2,7 +2,7 @@
 
 void OpenSpyHandler::Install()
 {
-    bool enableOpenSpy = HookConfig::GetBool("Experimental", "EnableOpenSpy", true);
+    bool enableOpenSpy = HookConfig::GetBool("Network", "EnableOpenSpy", true);
     if (enableOpenSpy)
     {
         // replace 'gamespy.com' portion of the following URLs with 'openspy.net'
