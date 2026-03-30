@@ -22,4 +22,5 @@ namespace math
 	float frand();
 	float Sign(float value);
 	int RandomInt(int min, int max);
+	float Clamp(float value, float min, float max);
 }

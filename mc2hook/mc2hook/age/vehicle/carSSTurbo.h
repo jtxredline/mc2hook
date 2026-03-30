@@ -42,4 +42,8 @@ public:
 	int dword_90;
 	int dword_94;
 	int dword_98;
+
+public:
+	void sub_4D4270();
+	bool sub_4D4230();
 };

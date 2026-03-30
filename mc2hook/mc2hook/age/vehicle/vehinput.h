@@ -1,21 +1,29 @@
 #pragma once
-#include <age/vehicle/carsim.h>
+#include <age/input/input.h>
 
+class vehEntity;
 class vehCarSim;
+class vehModel;
+class vehAudio;
+class vehDamage;
+class ioDeviceWrapper;
 
 class vehInput {
 public:
     void* m_Vtable;
     int dword_04;
     int dword_08;
-    int dword_0c;                      // Contains network player ID at offset 0x0E (short)
-    float m_GasBrake;                  // Gas/brake combined axis (-1 to 1)
-    int dword_14;                      // Brake value
-    int dword_18;                      // Handbrake (lerped value)
-    float m_LastRequestedSteer;        // Steering input from player (-1 to 1)
-    int dword_20;                      // Camera controls (likely float for up/down)
-    int dword_24;                      // Camera controls (likely float for left/right)
-    int m_CurrentGear;                 // Bitfield containing:
+
+    uint16_t m_Flags;
+    uint16_t m_PlayerID;
+
+    float m_GasBrake;
+    float m_Brake;
+    float m_Handbrake;
+    float m_Steer;
+    float m_SteerRate;                 // ?
+    float m_2WheelSteer;
+    int m_CurrentGearFlags;            // Bitfield containing:
                                        //   Bits 0-15: Current gear number
                                        //   Bit 16 (0x10000): Camera mode flag
                                        //   Bit 17 (0x20000): Headlights on
@@ -28,7 +36,7 @@ public:
                                        //   Bit 24 (0x1000000): Upshift request
                                        //   Bit 25 (0x2000000): Downshift request
                                        //   Bit 31 (0x80000000): Counter-steer detect
-    vehCarSim* m_VehCarSim;            // Pointer to the vehicle car simulation
+    vehCarSim* m_CarSim;               // Pointer to the vehicle car simulation
     int dword_30;
     int dword_34;
     int dword_38;
@@ -37,25 +45,48 @@ public:
     int dword_44;                      // Some gear-related value
     int dword_48;
     int dword_4c;
-    int dword_50;                      // Pointer to another structure (vehicle instance?)
-    int dword_54;                      // Input flags/state
-    int m_SteerCopy;                   // Copy of steering value for change detection (likely float)
+    vehEntity* m_Entity;
+    int m_Drivable;                 // int8_t?
+    //char pad_55[3];                    //
+    float m_InAirSteer;
     int dword_5c;
     int dword_60;
     int dword_64;
     int dword_68;
     float m_AnalogSteerSpeed;          // Analog steering smoothing speed (keyboard)
-    int dword_70;                      // Steer lerp speed (likely float for high speed)
-    int dword_74;                      // Steer lerp speed (likely float for low speed)
+    float dword_70;                    // Steer lerp speed (likely float for high speed)
+    float dword_74;                    // Steer lerp speed (likely float for low speed)
     int dword_78;
     int dword_7c;
-    int dword_80;                      // Input device/controller pointer
-    int dword_84;
-    int dword_88;
-    int dword_8c;
+    ioDeviceWrapper* m_Device;         // Input device/controller pointer
+    uint8_t net_84[4];
+    uint8_t net_88[4];
+    uint8_t net_8C[4];
 
 public:
-    // Virtual function at vtable offset 0
-    virtual void Update();              // The main update function (0x46B330)
-    
+    void Update();
+    void UpdateFFB();
+    void SomeAssignInputs();
+    void UpdateNetworkInput();
+    void ApplyReplayFrame();
+    float sub_46AA90(float speed);
+    void sub_46A760(int a2, int a3);
+    void sub_46A7A0(float steer, float* gasbrake, float* brake, int* drivable);
+    void SomethingReplay();
+
+    static float PackSignedFloat(float value, int8_t* out)
+    {
+        int8_t packed = (int8_t)(value * 127.0f);
+        *out = packed;
+
+        return packed / 127.0f;
+    }
+
+    static float PackUnsignedFloat(float value, uint8_t* out)
+    {
+        uint8_t packed = (uint8_t)(value * 255.0f);
+        *out = packed;
+
+        return packed / 255.0f;
+    }
 };

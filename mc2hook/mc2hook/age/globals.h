@@ -70,3 +70,18 @@ static const char* g_VehicleNames[] =
     "Paris Cop",
     "Tokyo Cop"
 };
+
+static const char* g_TODList[TOD_COUNT] =
+{
+    "dawn",
+    "midnight",
+    "dusk"
+};
+
+static const char* g_WeatherList[WEATHER_COUNT] =
+{
+    "clear",
+    "cloudy",
+    "rainy",
+    "none"
+};

@@ -8,6 +8,8 @@
 #include <age/input/mouse.h>
 #include <age/data/timemgr.h>
 #include <dinput.h>
+
+#include <age/gfx/rstate.h> //
 //#include <age/camera/playercamera.h>
 
 // TODO:
@@ -29,6 +31,10 @@ static bool overrideCameraMtx = false;
 static bool freecamToggle = false;
 Matrix34 customCameraMtx34 = Matrix34::I;
 Matrix34 customSkyboxCameraMtx34 = Matrix34::I;
+Matrix34 audioMtx = Matrix34::I;
+
+static bool mirrorMode = false;
+static float mirrorFactor = 1.0f;
 
 Vector3 dir;
 Vector3 e;
@@ -53,8 +59,8 @@ int activateFreecam, freecamLeft, freecamRight, freecamForward, freecamBackward,
 freecamUp, freecamDown, freecamIncreaseFOV, freecamDecreaseFOV, activateReplayCam;
 
 void FreeCamHandler::SetCameraHook(Matrix34& const origMtx)
-{   
-    if (ioKeyboard::GetKeyDown(activateFreecam) && !freecamToggle)//(GetAsyncKeyState(0xA2) & 1) // Activates free cam on LCTRL, https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
+{           
+    if (ioKeyboard::GetKeyDown(activateFreecam) && !freecamToggle)
     {
         freecamToggle = true;
         Printf("Free camera ON\n");
@@ -80,13 +86,21 @@ void FreeCamHandler::SetCameraHook(Matrix34& const origMtx)
             customCameraMtx34.SetRow(1, Vector3(m44b.X, m44b.Y, m44b.Z));
             customCameraMtx34.SetRow(2, Vector3(m44c.X, m44c.Y, m44c.Z));
             customCameraMtx34.SetRow(3, Vector3(m44d.X, m44d.Y, m44d.Z));
+
+            // Mirror mode adjustments
+            if (mirrorMode == true)
+            {
+                customCameraMtx34.m00 *= -1.0f;
+                customCameraMtx34.m01 *= -1.0f;
+                customCameraMtx34.m02 *= -1.0f;
+            }
         }
     }
 
     if (ioKeyboard::GetKeyUp(activateFreecam) && freecamToggle) freecamToggle = false;
 
     // Mouse delta values used for camera rotation
-    int DX = ioMouse::GetXDelta();
+    int DX = ioMouse::GetXDelta() * mirrorFactor;
     int DY = ioMouse::GetYDelta();
     int DZ = ioMouse::GetScrollDelta();
 
@@ -123,7 +137,7 @@ void FreeCamHandler::SetCameraHook(Matrix34& const origMtx)
     if (ioKeyboard::GetKey(freecamLeft))
     {
         dir = customCameraMtx34.GetRow(0);
-        e = dir * datTimeManager::GetSeconds() * translateXZSpeed * translateMultiplier;
+        e = dir * datTimeManager::GetSeconds() * translateXZSpeed * translateMultiplier * mirrorFactor;
 
         customCameraMtx34.m30 -= e.X;
         customCameraMtx34.m31 -= e.Y;
@@ -141,7 +155,7 @@ void FreeCamHandler::SetCameraHook(Matrix34& const origMtx)
     if (ioKeyboard::GetKey(freecamRight))
     {
         dir = customCameraMtx34.GetRow(0);
-        e = dir * datTimeManager::GetSeconds() * translateXZSpeed * translateMultiplier;
+        e = dir * datTimeManager::GetSeconds() * translateXZSpeed * translateMultiplier * mirrorFactor;
 
         customCameraMtx34.m30 += e.X;
         customCameraMtx34.m31 += e.Y;
@@ -157,14 +171,14 @@ void FreeCamHandler::SetCameraHook(Matrix34& const origMtx)
     {
         customCameraMtx34.m31 += datTimeManager::GetSeconds() * translateYSpeed * translateMultiplier;
     }
-
-    if (overrideCameraMtx) gfxState::SetCamera(customCameraMtx34);
-    else gfxState::SetCamera(origMtx); // Call original
+    
+    if (overrideCameraMtx) gfxState::SetCamera34(customCameraMtx34);
+    else gfxState::SetCamera34(origMtx); // Call original
 }
 void FreeCamHandler::SetCameraOtherHook(Matrix34& const origMtx) // Only set the matrix, no other calculations
 {
-    if (overrideCameraMtx) gfxState::SetCamera(customCameraMtx34);
-    else gfxState::SetCamera(origMtx); // Call original
+    if (overrideCameraMtx) gfxState::SetCamera34(customCameraMtx34);
+    else gfxState::SetCamera34(origMtx); // Call original
 }
 void FreeCamHandler::SetWorldHook(Matrix34& const origMtx)
 {
@@ -172,20 +186,23 @@ void FreeCamHandler::SetWorldHook(Matrix34& const origMtx)
     {
         customSkyboxCameraMtx34 = origMtx;
         customSkyboxCameraMtx34.SetRow(3, customCameraMtx34.GetRow(3));
-        gfxState::SetWorld(customSkyboxCameraMtx34); // Call using custom matrix
+        gfxState::SetWorld34(customSkyboxCameraMtx34); // Call using custom matrix
     }
-    else gfxState::SetWorld(origMtx); // Call original
+    else gfxState::SetWorld34(origMtx); // Call original
 }
 void FreeCamHandler::AddFrameCameraHook(Matrix34& const a2, bool& const a3)
 {
-    if (overrideCameraMtx)
+    if (overrideCameraMtx) audioMtx = customCameraMtx34;
+    else audioMtx = a2;
+
+    if (mirrorMode)
     {
-        hook::Thunk<0x5D6050>::Call<void>(this, &customCameraMtx34, false); // Call using custom camera matrix
+        audioMtx.m00 *= -1.0f;
+        audioMtx.m01 *= -1.0f;
+        audioMtx.m02 *= -1.0f;
     }
-    else
-    {
-        hook::Thunk<0x5D6050>::Call<void>(this, &a2, &a3); // Call original
-    }    
+
+    hook::Thunk<0x5D6050>::Call<void>(this, &audioMtx, false); // Call using custom audio matrix
 }
 void FreeCamHandler::sub_518FA0_Hook(Vector3& const a2, void* a3, void* a4)
 {
@@ -260,13 +277,14 @@ float FreeCamHandler::GetFOVLerpRate(float a, float b, float t) // Regular lerp 
 }
 
 void FreeCamHandler::Install()
-{
+{    
     bool enableFreecam = HookConfig::GetBool("Freecam", "EnableFreecam", true);
 
     if (enableFreecam)
     {
+        // https://community.bistudio.com/wiki/DIK_KeyCodes
         // Read key mappings from .ini file
-        activateFreecam = HookConfig::GetInt("Input Setup", "ActivateFreecam", DIK_LCONTROL);
+        activateFreecam = HookConfig::GetInt("Input Setup", "ActivateFreecam", DIK_F4);
         freecamLeft = HookConfig::GetInt("Input Setup", "FreecamLeft", DIK_J);
         freecamRight = HookConfig::GetInt("Input Setup", "FreecamRight", DIK_L);
         freecamForward = HookConfig::GetInt("Input Setup", "FreecamForward", DIK_I);
@@ -276,6 +294,10 @@ void FreeCamHandler::Install()
         freecamIncreaseFOV = HookConfig::GetInt("Input Setup", "FreecamIncreaseFOV", DIK_P);
         freecamDecreaseFOV = HookConfig::GetInt("Input Setup", "FreecamDecreaseFOV", DIK_SEMICOLON);
         activateReplayCam = HookConfig::GetInt("Input Setup", "ActivateReplayCam", DIK_F3);
+
+        // Mirror mode check
+        mirrorMode = HookConfig::GetBool("Graphics", "MirrorMode", false);
+        if (mirrorMode) mirrorFactor = -1.0f;
 
         // Read camera clip values
         cameraNearClip = HookConfig::GetFloat("Graphics", "CameraNearClip", 0.25f);

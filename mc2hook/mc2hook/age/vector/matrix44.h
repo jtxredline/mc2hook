@@ -40,10 +40,10 @@ public:
     Vector4 GetRow(int row) const;
     void SetColumn(int column, const Vector4& value);
     void SetRow(int row, const Vector4& value);
-
+    void Set(const Matrix44& a1);
+    void FastInverse(const Matrix44& m);
     void Transform3x3(const Vector3& vector, Vector3& out) const;
     Vector3 Transform3x3(const Vector3& vector) const;
     void FromMatrix34(Matrix34 const& m34);
     Matrix34 ToMatrix34();
-    //inline Matrix34& Matrix44::Convert(Matrix34& dest, const Matrix44& m44);
 };

@@ -4,6 +4,13 @@
 
 class vehEngine;
 
+enum TransmissionMode
+{
+    Manual = 0,
+    Auto = 1,
+    NumModes = 2
+};
+
 class vehTransmission {
 public:
     void* m_Vtable;
@@ -11,7 +18,7 @@ public:
     vehDrivetrain* m_Drivetrain;
     int m_GearChangeFlag;
     float m_GearChangeTimer;
-    int m_IsAutomatic;
+    int m_Mode;
     int m_CurrentGear;
     float m_ManualGearRatios[8];
     int m_ManualNumGears;
@@ -36,7 +43,9 @@ public:
 public:
     void Update();
     void SetGearChangeFlag(int flag);
-    void SetCurrentGear(int g);
+    int SetCurrentGear(int g);
     float GetRatio() const;
+    void Upshift();
+    void Downshift();
 };
 //ASSERT_SIZEOF(vehTransmission, 0xEC);

@@ -2,7 +2,6 @@
 #include <age/data/timemgr.h>
 #include "transmission.h"
 
-#include <age/core/output.h> //
 #include <age/input/keyboard.h> //
 #include <dinput.h> //
 
@@ -10,7 +9,7 @@ void vehTransmission::Update()
 {
     //hook::Thunk<0x567E00>::Call<void>(this); // Call original
 
-    if (m_IsAutomatic == 1)
+    if (m_Mode == TransmissionMode::Auto)
     {
         int gear = m_CurrentGear;
 
@@ -71,37 +70,78 @@ void vehTransmission::SetGearChangeFlag(int flag)
         m_GearChangeTimer = 0.0f;
 }
 
-void vehTransmission::SetCurrentGear(int g)
+int vehTransmission::SetCurrentGear(int g)
 {
     int prevGear = m_CurrentGear;
-
-    if (g == prevGear || (m_IsAutomatic == 1 && g >= m_AutoNumGears))
-        return;
-
-    if (g > 2)
+    if (g != prevGear && (m_Mode != TransmissionMode::Auto || g < m_AutoNumGears))
     {
-        m_GearChangeTimer = 0.0f;
-
-        if (g > prevGear)
+        if (g > 2)
         {
-            SetGearChangeFlag(1); // Upshift
-            m_CurrentGear = g;
-            return;
+            m_GearChangeTimer = 0.0;
+            if (g > prevGear)
+            {
+                SetGearChangeFlag(1);
+                m_CurrentGear = g;
+                return g;
+            }
+            if (g < prevGear)
+                SetGearChangeFlag(-1);
         }
-
-        if (g < prevGear)
-        {
-            SetGearChangeFlag(-1); // Downshift
-        }
+        m_CurrentGear = g;
     }
-
-    m_CurrentGear = g;
+    return m_CurrentGear;
 }
 
 float vehTransmission::GetRatio() const
 {   
-    if (m_IsAutomatic) // Automatic
+    if (m_Mode == TransmissionMode::Auto)
         return m_AutoRatios[m_CurrentGear];
-    else               // Manual
+    else
         return m_ManualGearRatios[m_CurrentGear];
+}
+
+void vehTransmission::Upshift()
+{
+    //hook::Thunk<0x567D80>::Call<void>(this); // Call original
+    
+    bool canShift;
+
+    if (m_Mode)
+    {
+        if (m_Mode != TransmissionMode::Auto)
+            return;
+        canShift = m_CurrentGear < 2;
+    }
+    else
+    {
+        canShift = m_CurrentGear < m_ManualNumGears - 1;
+    }
+    if (canShift)
+        SetCurrentGear(m_CurrentGear + 1);
+}
+
+void vehTransmission::Downshift()
+{
+    //hook::Thunk<0x567DB0>::Call<void>(this); // Call original
+
+    if (m_Mode)
+    {
+        if (m_Mode == TransmissionMode::Auto)
+        {
+            if (m_CurrentGear < 2)
+            {
+                if (m_CurrentGear >= 1)
+                    SetCurrentGear(0);
+            }
+            else
+            {
+                SetCurrentGear(1);
+            }
+        }
+    }
+    else
+    {
+        if (m_CurrentGear > 0) // > 2 // No neutral/reverse gear fix
+            SetCurrentGear(m_CurrentGear - 1);
+    }
 }

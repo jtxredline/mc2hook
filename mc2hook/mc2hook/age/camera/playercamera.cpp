@@ -49,7 +49,7 @@ void camTrackCS::UpdateSS()
     }
 
     // Rest of UpdateSS
-    float v4, fov, v8, v12;
+    float v8, v12;
     float speed;
 
     speed = m_CarSim->m_Speed;
@@ -69,8 +69,8 @@ void camTrackCS::UpdateSS()
         v12 = 0.0;
     }
 
-    v4 = math::EaseIn(v12);
-    fov = m_SSFOVMin + (m_SSFOVMax - m_SSFOVMin) * v4;
+    float v4 = math::EaseIn(v12);
+    float fov = m_SSFOVMin + (m_SSFOVMax - m_SSFOVMin) * v4;
 
     if (m_CarSim->m_SSTurbo)
         fov += m_CarSim->m_SSTurbo->dword_3c;

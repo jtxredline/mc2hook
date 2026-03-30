@@ -100,6 +100,40 @@ void Matrix44::SetRow(int row, const Vector4& value)
     }
 }
 
+void Matrix44::Set(const Matrix44& to)
+{
+    *this = to;
+}
+
+void Matrix44::FastInverse(const Matrix44& m)
+{
+    float rx = m.m30;
+    float ry = m.m31;
+    float rz = m.m32;
+
+    float r, rd;
+
+    r = m.m00; rd = r * rx;  m00 = r;
+    r = m.m01; rd += r * ry; m10 = r;
+    r = m.m02; rd += r * rz; m20 = r;
+    m30 = -rd;
+
+    r = m.m10; rd = r * rx;  m01 = r;
+    r = m.m11; rd += r * ry; m11 = r;
+    r = m.m12; rd += r * rz; m21 = r;
+    m31 = -rd;
+
+    r = m.m20; rd = r * rx;  m02 = r;
+    r = m.m21; rd += r * ry; m12 = r;
+    r = m.m22; rd += r * rz; m22 = r;
+    m32 = -rd;
+
+    m03 = 0.0f;
+    m13 = 0.0f;
+    m23 = 0.0f;
+    m33 = 1.0f;
+}
+
 void Matrix44::Transform3x3(const Vector3& vector, Vector3& out) const
 {
     out.X = this->m00 * vector.X + this->m10 * vector.Y + this->m20 * vector.Z;

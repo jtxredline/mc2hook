@@ -20,4 +20,8 @@ public:
 	float m_FlameTime;
 	float m_FlameSize;
 	int dword_40;
+
+public:
+	void sub_4D1F80();
+	bool sub_46A350();
 };

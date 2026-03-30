@@ -13,7 +13,6 @@
 #include <handlers\PathHandler.h>
 #include <handlers\zipEnumHandler.h>
 #include <handlers\TestPanelHandler.h>
-#include <handlers\vehTransmisisonHandler.h>
 #include <handlers\InputHandler.h>
 #include <handlers\BorderlessHandler.h>
 #include <handlers\ReflectionFidelityHandler.h>
@@ -36,6 +35,7 @@
 #include <handlers/REHandler.h>
 #include <handlers\KinematicSteeringHandler.h>
 #include <handlers\TrafficDistanceHandler.h>
+#include <handlers/RenderDistanceHandler.h>
 #include <handlers\StateResearchHook.h>
 
 // Installed before engine init
@@ -52,7 +52,6 @@ static void InstallHandlersPostEngineInit()
     InstallHandler<SteeringSmootherHandler>("Smooth Steering");
     InstallHandler<BurnoutHandler>("Burnout Handler");
     InstallHandler<PathHandler>("Path Handler");
-    //InstallHandler<vehTransmissionHandler>("Transmission Handler");
     InstallHandler<MaxVelocityHandler>("Max Velocity Handler");
     InstallHandler<AddressPrinterHandler>("Address Printer Handler");
     InstallHandler<KinematicSteeringHandler>("Kinematic Steering Handler");
@@ -88,6 +87,7 @@ static void InstallMainHandlers()
     InstallHandler<DeadZoneHandler>("Dead Zone Handler");
     InstallHandler<GravityHandler>("Gravity Handler");
     InstallHandler<CPUPlayerVehiclesHandler>("CPU Player Vehicles Handler");
+    InstallHandler<RenderDistanceHandler>("RenderDistance Handler");
     InstallHandler<REHandler>("RE Handler");
     
     //InstallHandler<StateResearchHook>("SRH");

@@ -1,718 +1,274 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="age\camera\playercamera.cpp" />
+    <ClCompile Include="age\core\output.cpp" />
+    <ClCompile Include="age\core\stream.cpp" />
+    <ClCompile Include="age\data\asset.cpp" />
+    <ClCompile Include="age\data\stack.cpp" />
+    <ClCompile Include="age\data\timemgr.cpp" />
+    <ClCompile Include="age\gfx\font.cpp" />
+    <ClCompile Include="age\gfx\pipeline.cpp" />
+    <ClCompile Include="age\gfx\rstate.cpp" />
+    <ClCompile Include="age\gfx\viewport.cpp" />
+    <ClCompile Include="age\input\input.cpp" />
+    <ClCompile Include="age\input\keyboard.cpp" />
+    <ClCompile Include="age\input\mouse.cpp" />
+    <ClCompile Include="age\mcfe\hub.cpp" />
+    <ClCompile Include="age\managers\netmanager.cpp" />
+    <ClCompile Include="age\math\math.cpp" />
+    <ClCompile Include="age\mclobby\lobbyderived.cpp" />
+    <ClCompile Include="age\mcraceconfig\raceconfig.cpp" />
+    <ClCompile Include="age\memory\age_alloc_baseclass.cpp" />
+    <ClCompile Include="age\memory\allocator.cpp" />
+    <ClCompile Include="age\model\getpivot.cpp" />
+    <ClCompile Include="age\physics\phinertia.cpp" />
+    <ClCompile Include="age\physics\simulator.cpp" />
+    <ClCompile Include="age\state\gamestate.cpp" />
+    <ClCompile Include="age\vector\matrix34.cpp" />
+    <ClCompile Include="age\vector\matrix44.cpp" />
+    <ClCompile Include="age\vector\vector.h" />
+    <ClCompile Include="age\vector\vector3.cpp" />
+    <ClCompile Include="age\vector\vector4.cpp" />
+    <ClCompile Include="age\vehicle\automgr.cpp" />
+    <ClCompile Include="age\vehicle\carsim.cpp" />
+    <ClCompile Include="age\vehicle\drivetrain.cpp" />
+    <ClCompile Include="age\vehicle\engine.cpp" />
+    <ClCompile Include="age\vehicle\engine.h" />
+    <ClCompile Include="age\vehicle\vehinput.cpp" />
+    <ClCompile Include="age\vehicle\transmission.cpp" />
+    <ClCompile Include="age\vehicle\wheel.cpp" />
+    <ClCompile Include="age\zipfile\zipfile.cpp" />
+    <ClCompile Include="discord-rpc\discord_rpc.cpp" />
+    <ClCompile Include="discord-rpc\gamesdk\achievement_manager.cpp" />
+    <ClCompile Include="discord-rpc\gamesdk\activity_manager.cpp" />
+    <ClCompile Include="discord-rpc\gamesdk\application_manager.cpp" />
+    <ClCompile Include="discord-rpc\gamesdk\core.cpp" />
+    <ClCompile Include="discord-rpc\gamesdk\image_manager.cpp" />
+    <ClCompile Include="discord-rpc\gamesdk\lobby_manager.cpp" />
+    <ClCompile Include="discord-rpc\gamesdk\network_manager.cpp" />
+    <ClCompile Include="discord-rpc\gamesdk\overlay_manager.cpp" />
+    <ClCompile Include="discord-rpc\gamesdk\relationship_manager.cpp" />
+    <ClCompile Include="discord-rpc\gamesdk\storage_manager.cpp" />
+    <ClCompile Include="discord-rpc\gamesdk\store_manager.cpp" />
+    <ClCompile Include="discord-rpc\gamesdk\types.cpp" />
+    <ClCompile Include="discord-rpc\gamesdk\user_manager.cpp" />
+    <ClCompile Include="discord-rpc\gamesdk\voice_manager.cpp" />
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="framework\hook.cpp" />
+    <ClCompile Include="framework\HookConfig.cpp" />
+    <ClCompile Include="framework\hook_output.cpp" />
+    <ClCompile Include="handlers\BurnoutHandler.cpp" />
+    <ClCompile Include="handlers\CPUPlayerVehiclesHandler.cpp" />
+    <ClCompile Include="handlers\DeadZoneHandler.cpp" />
+    <ClCompile Include="handlers\GravityHandler.cpp" />
+    <ClCompile Include="handlers\KinematicSteeringHandler.cpp" />
+    <ClCompile Include="handlers\REHandler.cpp" />
+    <ClCompile Include="handlers\TrafficDistanceHandler.cpp" />
+    <ClCompile Include="handlers\TwoWheelHandler.cpp" />
+    <ClCompile Include="handlers\AddressPrinterHandler.cpp" />
+    <ClCompile Include="handlers\BorderlessHandler.cpp" />
+    <ClCompile Include="handlers\CarShadowHandler.cpp" />
+    <ClCompile Include="handlers\ChatHandler.cpp" />
+    <ClCompile Include="handlers\CityModelLimitHandler.cpp" />
+    <ClCompile Include="handlers\ControllerScrollingFixHandler.cpp" />
+    <ClCompile Include="handlers\CustomExceptionHandler.cpp" />
+    <ClCompile Include="handlers\CustomVehicleHandler.cpp" />
+    <ClCompile Include="handlers\FontCrashFixHandler.cpp" />
+    <ClCompile Include="handlers\FreeCamHandler.cpp" />
+    <ClCompile Include="handlers\HybridFileMethodsHandler.cpp" />
+    <ClCompile Include="handlers\InputHandler.cpp" />
+    <ClCompile Include="handlers\LevelExtentsHandler.cpp" />
+    <ClCompile Include="handlers\MaxVelocityHandler.cpp" />
+    <ClCompile Include="handlers\FPSCounterHandler.cpp" />
+    <ClCompile Include="handlers\OnlineBangersHandler.cpp" />
+    <ClCompile Include="handlers\PathHandler.cpp" />
+    <ClCompile Include="handlers\PrinterHandler.cpp" />
+    <ClCompile Include="handlers\RDTSCFixHandler.cpp" />
+    <ClCompile Include="handlers\ReflectionFidelityHandler.cpp" />
+    <ClCompile Include="handlers\RemoveForcedArgsHandler.cpp" />
+    <ClCompile Include="handlers\StateResearchHook.cpp" />
+    <ClCompile Include="handlers\SteeringSmootherHandler.cpp" />
+    <ClCompile Include="handlers\TestPanelHandler.cpp" />
+    <ClCompile Include="handlers\TimeWarpHandler.cpp" />
+    <ClCompile Include="handlers\zipEnumHandler.cpp" />
+    <ClCompile Include="handlers\zipInitHandler.cpp" />
+    <ClCompile Include="handlers\InitHandler.cpp" />
+    <ClCompile Include="mcgame\ui\asyncio.cpp" />
+    <ClCompile Include="handlers\OpenSpyHandler.cpp" />
+    <ClCompile Include="age\mcdata\mcdata.cpp" />
+    <ClCompile Include="age\mcconfig\mcconfig.cpp" />
+    <ClCompile Include="age\vehicle\carmodel.cpp" />
+    <ClCompile Include="age\state\racestate.cpp" />
+    <ClCompile Include="age\vehicle\caraudio.cpp" />
+    <ClCompile Include="age\vehicle\carSSTurbo.cpp" />
+    <ClCompile Include="age\vehicle\nitro.cpp" />
+    <ClCompile Include="age\vehicle\damage.cpp" />
+    <ClCompile Include="age\data\replay.cpp" />
+    <ClCompile Include="age\data\memstream.cpp" />
+    <ClCompile Include="age\input\joystick.cpp" />
+    <ClCompile Include="age\input\device.cpp" />
+    <ClCompile Include="age\managers\mcaudiomgr.cpp" />
+    <ClCompile Include="handlers\RenderDistanceHandler.cpp" />
+    <ClCompile Include="age\data\token.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="dllmain.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="framework\hook.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="framework\hook_framework.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="framework\HookConfig.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="framework\hook_output.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="mc2hook\mc2hook_defs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="mc2hook\mc2hook_util.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="mc2hook\mc2hook.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="thirdparty\inicpp.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\zipfile\zipfile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\zipIintHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\data\args.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\data\asset.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\handlers.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\CustomVehicleHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\data\stack.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\core\output.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\CustomExceptionHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\PrinterHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\FontCrashFixHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\memory\allocator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\text\stringtable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\text\hashtable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\text\stringdata.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\string\string.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\string\unicode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\RemoveForcedArgsHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\memory\memory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\memory\age_alloc_baseclass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\SteeringSmootherHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\data\timemgr.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\PathHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\zipEnumHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\ui\widget.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\data\refcount.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\ui\visual.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="mcgame\ui\asyncio.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="mcgame\ui\carstats.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\input\keyboard.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\TestPanelHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\InputHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\text\language.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\text\fonttexture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\InitHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\OpenSpyHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="mcgame\ui\vehicle3d.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="mcgame\ui\iconbase.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\data\parse.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\vector\vector3.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\vector\vector2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\vector\vector4.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="mcgame\ui\mainmenu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\ui\group.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="mcgame\ui\group.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="mcgame\ui\pausemenu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\vehTransmisisonHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\input\input.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\BorderlessHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\ChatHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\StateResearchHook.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\core\file.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\HybridFileMethodsHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\vector\matrix34.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\vector\matrix44.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\input\mouse.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\gfx\rstate.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\OnlineBangersHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\FreeCamHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\MaxVelocityHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\vehicle\transmission.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\AddressPrinterHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\ControllerScrollingFixHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\ui\flowctrl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\ReflectionFidelityHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\RDTSCFixHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\CityModelLimitHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\LevelExtentsHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\gfx\viewport.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\CarShadowHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\gfx\font.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\FPSCounterHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\gfx\pipeline.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\TimeWarpHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\TwoWheelHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\DeadZoneHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\BurnoutHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\model\getpivot.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\core\stream.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\GravityHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\camera\playercamera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\vehicle\carsim.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\math\math.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\physics\phcollider.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\physics\phinst.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\physics\phinertia.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\vehicle\aero.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\vehicle\wheel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\vehicle\nitro.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\vehicle\carSSTurbo.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\CPUPlayerVehiclesHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\REHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\vehicle\drivetrain.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\physics\ph_some_inst_parent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\physics\simulator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\vehicle\automgr.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\vehicle\car.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\managers\netmanager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="handlers\KinematicSteeringHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\vehicle\input.h">
-    <ClInclude Include="handlers\TrafficDistanceHandler.h">
-    <ClInclude Include="age\state\gamestate.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="discord-rpc\gamesdk\achievement_manager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="discord-rpc\gamesdk\activity_manager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="discord-rpc\gamesdk\application_manager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="discord-rpc\gamesdk\core.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="discord-rpc\gamesdk\discord.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="discord-rpc\gamesdk\event.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="discord-rpc\gamesdk\ffi.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="discord-rpc\gamesdk\image_manager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="discord-rpc\gamesdk\lobby_manager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="discord-rpc\gamesdk\network_manager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="discord-rpc\gamesdk\overlay_manager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="discord-rpc\gamesdk\relationship_manager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="discord-rpc\gamesdk\storage_manager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="discord-rpc\gamesdk\store_manager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="discord-rpc\gamesdk\types.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="discord-rpc\gamesdk\user_manager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="discord-rpc\gamesdk\voice_manager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="discord-rpc\discord_rpc.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\types.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\mcraceconfig\raceconfig.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\globals.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\mcfe\hub.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="age\mclobby\lobbyderived.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="dllmain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="framework\HookConfig.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="framework\hook_output.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="framework\hook.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\zipfile\zipfile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\zipInitHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\data\asset.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\CustomVehicleHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\data\stack.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\core\output.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\CustomExceptionHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\PrinterHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\FontCrashFixHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\RemoveForcedArgsHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\memory\allocator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\memory\age_alloc_baseclass.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\SteeringSmootherHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\data\timemgr.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\PathHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\zipEnumHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="mcgame\ui\asyncio.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\input\keyboard.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\TestPanelHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\InputHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\InitHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\OpenSpyHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\vector\vector.h">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\vehTransmisisonHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\input\input.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\BorderlessHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\ChatHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\StateResearchHook.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\HybridFileMethodsHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\vector\vector3.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\vector\matrix44.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\vector\matrix34.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\vector\vector4.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\input\mouse.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\gfx\rstate.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\OnlineBangersHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\FreeCamHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\MaxVelocityHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\vehicle\transmission.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\AddressPrinterHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\ControllerScrollingFixHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\ReflectionFidelityHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\RDTSCFixHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\CityModelLimitHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\LevelExtentsHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\gfx\viewport.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\CarShadowHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\gfx\font.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\FPSCounterHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\gfx\pipeline.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\TimeWarpHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\TwoWheelHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\DeadZoneHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\BurnoutHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\model\getpivot.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\core\stream.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\GravityHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\camera\playercamera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\math\math.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\vehicle\carsim.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\CPUPlayerVehiclesHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\REHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\vehicle\engine.h">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\vehicle\engine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\vehicle\drivetrain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\vehicle\wheel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\physics\phinertia.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\physics\simulator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\vehicle\automgr.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\managers\netmanager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\KinematicSteeringHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\vehicle\input.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="handlers\TrafficDistanceHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="discord-rpc\gamesdk\achievement_manager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="discord-rpc\gamesdk\activity_manager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="discord-rpc\gamesdk\application_manager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="discord-rpc\gamesdk\core.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="discord-rpc\gamesdk\image_manager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="discord-rpc\gamesdk\lobby_manager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="discord-rpc\gamesdk\network_manager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="discord-rpc\gamesdk\overlay_manager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="discord-rpc\gamesdk\relationship_manager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="discord-rpc\gamesdk\storage_manager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="discord-rpc\gamesdk\store_manager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="discord-rpc\gamesdk\types.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="discord-rpc\gamesdk\user_manager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="discord-rpc\gamesdk\voice_manager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="discord-rpc\discord_rpc.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\mcraceconfig\raceconfig.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\state\gamestate.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\mcfe\hub.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="age\mclobby\lobbyderived.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <ClInclude Include="age\camera\playercamera.h" />
+    <ClInclude Include="age\core\file.h" />
+    <ClInclude Include="age\core\output.h" />
+    <ClInclude Include="age\core\stream.h" />
+    <ClInclude Include="age\data\args.h" />
+    <ClInclude Include="age\data\asset.h" />
+    <ClInclude Include="age\data\parse.h" />
+    <ClInclude Include="age\data\refcount.h" />
+    <ClInclude Include="age\data\stack.h" />
+    <ClInclude Include="age\data\timemgr.h" />
+    <ClInclude Include="age\gfx\font.h" />
+    <ClInclude Include="age\gfx\pipeline.h" />
+    <ClInclude Include="age\gfx\rstate.h" />
+    <ClInclude Include="age\gfx\viewport.h" />
+    <ClInclude Include="age\globals.h" />
+    <ClInclude Include="age\input\input.h" />
+    <ClInclude Include="age\input\keyboard.h" />
+    <ClInclude Include="age\input\mouse.h" />
+    <ClInclude Include="age\mcfe\hub.h" />
+    <ClInclude Include="age\managers\netmanager.h" />
+    <ClInclude Include="age\math\math.h" />
+    <ClInclude Include="age\mclobby\lobbyderived.h" />
+    <ClInclude Include="age\mcraceconfig\raceconfig.h" />
+    <ClInclude Include="age\memory\age_alloc_baseclass.h" />
+    <ClInclude Include="age\memory\memory.h" />
+    <ClInclude Include="age\model\getpivot.h" />
+    <ClInclude Include="age\physics\phcollider.h" />
+    <ClInclude Include="age\physics\phinst.h" />
+    <ClInclude Include="age\physics\phinertia.h" />
+    <ClInclude Include="age\physics\ph_some_inst_parent.h" />
+    <ClInclude Include="age\physics\simulator.h" />
+    <ClInclude Include="age\state\gamestate.h" />
+    <ClInclude Include="age\string\string.h" />
+    <ClInclude Include="age\string\unicode.h" />
+    <ClInclude Include="age\text\fonttexture.h" />
+    <ClInclude Include="age\text\language.h" />
+    <ClInclude Include="age\text\stringdata.h" />
+    <ClInclude Include="age\text\stringtable.h" />
+    <ClInclude Include="age\text\hashtable.h" />
+    <ClInclude Include="age\memory\allocator.h" />
+    <ClInclude Include="age\types.h" />
+    <ClInclude Include="age\ui\flowctrl.h" />
+    <ClInclude Include="age\ui\group.h" />
+    <ClInclude Include="age\ui\visual.h" />
+    <ClInclude Include="age\ui\widget.h" />
+    <ClInclude Include="age\vector\matrix34.h" />
+    <ClInclude Include="age\vector\matrix44.h" />
+    <ClInclude Include="age\vector\vector2.h" />
+    <ClInclude Include="age\vector\vector3.h" />
+    <ClInclude Include="age\vector\vector4.h" />
+    <ClInclude Include="age\vehicle\aero.h" />
+    <ClInclude Include="age\vehicle\automgr.h" />
+    <ClInclude Include="age\vehicle\car.h" />
+    <ClInclude Include="age\vehicle\carsim.h" />
+    <ClInclude Include="age\vehicle\carSSTurbo.h" />
+    <ClInclude Include="age\vehicle\drivetrain.h" />
+    <ClInclude Include="age\vehicle\vehinput.h" />
+    <ClInclude Include="age\vehicle\nitro.h" />
+    <ClInclude Include="age\vehicle\transmission.h" />
+    <ClInclude Include="age\vehicle\wheel.h" />
+    <ClInclude Include="age\zipfile\zipfile.h" />
+    <ClInclude Include="discord-rpc\discord_rpc.h" />
+    <ClInclude Include="discord-rpc\gamesdk\achievement_manager.h" />
+    <ClInclude Include="discord-rpc\gamesdk\activity_manager.h" />
+    <ClInclude Include="discord-rpc\gamesdk\application_manager.h" />
+    <ClInclude Include="discord-rpc\gamesdk\core.h" />
+    <ClInclude Include="discord-rpc\gamesdk\discord.h" />
+    <ClInclude Include="discord-rpc\gamesdk\event.h" />
+    <ClInclude Include="discord-rpc\gamesdk\ffi.h" />
+    <ClInclude Include="discord-rpc\gamesdk\image_manager.h" />
+    <ClInclude Include="discord-rpc\gamesdk\lobby_manager.h" />
+    <ClInclude Include="discord-rpc\gamesdk\network_manager.h" />
+    <ClInclude Include="discord-rpc\gamesdk\overlay_manager.h" />
+    <ClInclude Include="discord-rpc\gamesdk\relationship_manager.h" />
+    <ClInclude Include="discord-rpc\gamesdk\storage_manager.h" />
+    <ClInclude Include="discord-rpc\gamesdk\store_manager.h" />
+    <ClInclude Include="discord-rpc\gamesdk\types.h" />
+    <ClInclude Include="discord-rpc\gamesdk\user_manager.h" />
+    <ClInclude Include="discord-rpc\gamesdk\voice_manager.h" />
+    <ClInclude Include="dllmain.h" />
+    <ClInclude Include="framework\hook.h" />
+    <ClInclude Include="framework\HookConfig.h" />
+    <ClInclude Include="framework\hook_framework.h" />
+    <ClInclude Include="framework\hook_output.h" />
+    <ClInclude Include="handlers\BurnoutHandler.h" />
+    <ClInclude Include="handlers\CPUPlayerVehiclesHandler.h" />
+    <ClInclude Include="handlers\DeadZoneHandler.h" />
+    <ClInclude Include="handlers\GravityHandler.h" />
+    <ClInclude Include="handlers\KinematicSteeringHandler.h" />
+    <ClInclude Include="handlers\REHandler.h" />
+    <ClInclude Include="handlers\TrafficDistanceHandler.h" />
+    <ClInclude Include="handlers\TwoWheelHandler.h" />
+    <ClInclude Include="handlers\AddressPrinterHandler.h" />
+    <ClInclude Include="handlers\BorderlessHandler.h" />
+    <ClInclude Include="handlers\CarShadowHandler.h" />
+    <ClInclude Include="handlers\ChatHandler.h" />
+    <ClInclude Include="handlers\CityModelLimitHandler.h" />
+    <ClInclude Include="handlers\ControllerScrollingFixHandler.h" />
+    <ClInclude Include="handlers\CustomExceptionHandler.h" />
+    <ClInclude Include="handlers\CustomVehicleHandler.h" />
+    <ClInclude Include="handlers\FontCrashFixHandler.h" />
+    <ClInclude Include="handlers\FreeCamHandler.h" />
+    <ClInclude Include="handlers\handlers.h" />
+    <ClInclude Include="handlers\HybridFileMethodsHandler.h" />
+    <ClInclude Include="handlers\InputHandler.h" />
+    <ClInclude Include="handlers\LevelExtentsHandler.h" />
+    <ClInclude Include="handlers\MaxVelocityHandler.h" />
+    <ClInclude Include="handlers\FPSCounterHandler.h" />
+    <ClInclude Include="handlers\OnlineBangersHandler.h" />
+    <ClInclude Include="handlers\PathHandler.h" />
+    <ClInclude Include="handlers\PrinterHandler.h" />
+    <ClInclude Include="handlers\RDTSCFixHandler.h" />
+    <ClInclude Include="handlers\ReflectionFidelityHandler.h" />
+    <ClInclude Include="handlers\RemoveForcedArgsHandler.h" />
+    <ClInclude Include="handlers\StateResearchHook.h" />
+    <ClInclude Include="handlers\SteeringSmootherHandler.h" />
+    <ClInclude Include="handlers\TestPanelHandler.h" />
+    <ClInclude Include="handlers\TimeWarpHandler.h" />
+    <ClInclude Include="handlers\zipEnumHandler.h" />
+    <ClInclude Include="handlers\zipIintHandler.h" />
+    <ClInclude Include="handlers\InitHandler.h" />
+    <ClInclude Include="mc2hook\mc2hook.h" />
+    <ClInclude Include="mc2hook\mc2hook_defs.h" />
+    <ClInclude Include="mc2hook\mc2hook_util.h" />
+    <ClInclude Include="mcgame\ui\asyncio.h" />
+    <ClInclude Include="mcgame\ui\carstats.h" />
+    <ClInclude Include="handlers\OpenSpyHandler.h" />
+    <ClInclude Include="mcgame\ui\group.h" />
+    <ClInclude Include="mcgame\ui\iconbase.h" />
+    <ClInclude Include="mcgame\ui\mainmenu.h" />
+    <ClInclude Include="mcgame\ui\pausemenu.h" />
+    <ClInclude Include="mcgame\ui\vehicle3d.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="thirdparty\inicpp.h" />
+    <ClInclude Include="age\mcdata\mcdata.h" />
+    <ClInclude Include="age\mcconfig\mcconfig.h" />
+    <ClInclude Include="age\vehicle\entity.h" />
+    <ClInclude Include="age\vehicle\carmodel.h" />
+    <ClInclude Include="age\state\racestate.h" />
+    <ClInclude Include="age\vehicle\caraudio.h" />
+    <ClInclude Include="age\vehicle\damage.h" />
+    <ClInclude Include="age\data\replay.h" />
+    <ClInclude Include="age\data\memstream.h" />
+    <ClInclude Include="age\input\joystick.h" />
+    <ClInclude Include="age\input\device.h" />
+    <ClInclude Include="age\managers\mcaudiomgr.h" />
+    <ClInclude Include="handlers\RenderDistanceHandler.h" />
+    <ClInclude Include="age\data\token.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="discord-rpc\lib\discord_game_sdk.dll.lib" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="mc2hook.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
+    <ResourceCompile Include="mc2hook.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="mc2hook.ini" />
   </ItemGroup>
 </Project>

@@ -13,9 +13,9 @@
 // vehCarSim: 0x56A3E0, 0x644A74 Maybe
 // vehDamage: 0x4CFAF0, 0x6446D4
 // vehDrivetrain: 0x573CB0, 0x56C696 (cb)
-// vehEngine: 0x56FBD0, 650F9C
+// vehEngine: 0x56FBD0, 0x650F9C
 // vehFluid:
-// vehGyro:
+// vehGyro: 0x4DC190, 0x64556C
 // vehNitro:
 // vehStuck:
 // vehSuspension:
@@ -33,12 +33,12 @@
 // vehManager: 0x4CEA70, 0x644690
 
 void AddressPrinterHandler::PrintAddress() {
-    hook::Thunk<0x57B660>::Call<void>(this);
+    hook::Thunk<0x4D1710>::Call<void>(this);
 
     if (ioKeyboard::GetKeyDown(DIK_LALT))
     {
         void* pt = getPtr<void*>(this, 0x0);
-        Printf("camTrackCS: %p\n", pt);
+        Printf("mcCar: %p\n", pt);
     }
 }
 
@@ -47,7 +47,7 @@ void AddressPrinterHandler::Install()
     bool printAddress = HookConfig::GetBool("Debug", "PrintAddress", false);
     if (printAddress)
     {
-        //InstallVTableHook("Print Address", &PrintAddress, { 0x651A8C });
+        InstallVTableHook("Print Address", &PrintAddress, { 0x644980 });
 
         //InstallCallback("Address Printer", "Address Printer", &PrintAddress, { cb::call(0x4CEA74) });
     }

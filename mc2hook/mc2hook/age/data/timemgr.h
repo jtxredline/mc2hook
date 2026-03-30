@@ -3,7 +3,7 @@
 
 class datTimeManager
 {
-private:
+public:
     static hook::Type<float> Seconds;
     static hook::Type<float> ActualSeconds;
     static hook::Type<float> FPS;

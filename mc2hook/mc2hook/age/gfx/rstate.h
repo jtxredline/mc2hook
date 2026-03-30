@@ -2,6 +2,7 @@
 #include <mc2hook\mc2hook.h>
 #include <age/vector/matrix44.h>
 #include <age/vector/matrix34.h>
+#include <d3d9.h>
 
 enum class gfxCullMode
 {
@@ -12,18 +13,24 @@ enum class gfxCullMode
 
 class gfxState
 {
-private:
-    static hook::TypeProxy<Matrix44> sm_Camera;
+public:
+    static hook::Type<Matrix44> sm_Camera; // TypeProxy?
+    static hook::Type<Matrix44> sm_View;
+    static hook::Type<int> sm_Cull; // gfxCullMode
+    static hook::Type<int> s_LastCull; // gfxCullMode
+    static hook::Type<bool> s_CullInitialized;
+public:
+    static hook::Type<IDirect3DDevice9*> lpD3DDevice;
 public:
     static void SetCamera(Matrix44 const& mtx);
-    static void SetCamera(Matrix34 const& mtx);
+    static void SetCamera34(Matrix34 const& mtx);
     static void SetWorld(Matrix44 const& mtx);
-    static void SetWorld(Matrix34 const& mtx);
-    //static void SetColor(Vector4 const& color);
-    //static void Convert(Matrix44 const& dest, Matrix34 const& src);
+    static void SetWorld34(Matrix34 const& mtx);
+    //static void SetLighting(uint8_t const& val);
+    static void SetFogStart(float val);
+    static void SetFogEnd(float val);
 
-public:
     static Matrix44 GetCameraMatrix();
-    static void SetCull(gfxCullMode mode);
-    static void SetZWriteEnable(bool enable);
+    
+    static void SetCull(int mode);
 };

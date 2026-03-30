@@ -78,3 +78,18 @@ enum CITY {
 	arena3      = 11,
 	nocity      = 12
 };
+
+enum TOD {
+	dawn = 0,
+	midnight = 1,
+	dusk = 2,
+	TOD_COUNT
+};
+
+enum WEATHER {
+	clear = 0,
+	cloudy = 1,
+	rainy = 2,
+	none = 3,
+	WEATHER_COUNT
+};

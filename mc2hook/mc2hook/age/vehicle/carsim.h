@@ -124,4 +124,5 @@ public:
 
 public:
 	int OnGround(); // Number of wheels on ground
+	void SetDrivable(int a2);
 };
