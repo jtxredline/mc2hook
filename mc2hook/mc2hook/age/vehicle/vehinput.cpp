@@ -432,8 +432,11 @@ void vehInput::UpdateNetworkInput()
     //else if (m_CurrentGearFlags & 0x2000000) m_CarSim->m_Transmission->Downshift();
 
     // Fix for double shift and no neutral/reverse in manual in MP
-    int16_t gear = (int16_t)(m_CurrentGearFlags & 0xFFFF);
-    m_CarSim->m_Transmission->SetCurrentGear(gear);
+    if (m_CarSim->m_Transmission->m_Mode != TransmissionMode::Auto)
+    {
+        int16_t gear = (int16_t)(m_CurrentGearFlags & 0xFFFF);
+        m_CarSim->m_Transmission->SetCurrentGear(gear);
+    }
     
     // Headlights
     m_Entity->m_Model->sub_4C4BC0((m_CurrentGearFlags & 0x20000) != 0);
