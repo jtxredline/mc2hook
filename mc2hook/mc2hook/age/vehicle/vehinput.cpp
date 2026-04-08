@@ -236,6 +236,8 @@ LABEL_61:
     if (mcGameState::Instance->m_IsPausedLocally || m_Device->GetInput(0x17) == 0.0f) flags &= ~(0x40u << 16);
     else flags |= (0x40u << 16);
 
+    // Map toggle
+    //
     //if (!mcGameState::Instance->m_IsPausedLocally
     //    && m_Device->sub_467E90(0x13)//ioDevice_467E90(&this->device->unk0, 0x13)
     //    && mcRaceState::Instance->m_CurrentState < 6)
@@ -246,6 +248,36 @@ LABEL_61:
     //    else
     //        (*(void(__thiscall**)(_BYTE*, int))(*(_DWORD*)v35 + 0x34))(v35, 1);
     //}
+
+    if (!mcGameState::Instance->m_IsPausedLocally
+        && m_Device->sub_467E90(0x13)
+        && mcRaceState::Instance->m_CurrentState < 6)
+    {
+        int playerId = m_PlayerID;//SHIWORD(this->player_id_flags);
+
+        void* playerMgr = hook::StaticThunk<0x4690F0>::Call<void*>(playerId); // GetPlayerManager_4690F0(playerId);
+        if (playerMgr)
+        {
+            void* ptr50 = *(void**)((char*)playerMgr + 0x50);
+            if (ptr50)
+            {
+                uint8_t* mapCtrl = *(uint8_t**)((char*)ptr50 + 0x14);
+                if (mapCtrl)
+                {
+                    // Offset 0x28 = "is map open"
+                    bool isOpen = mapCtrl[0x28] != 0;
+
+                    // Virtual function at vtable + 0x34
+                    void* vtable = *(void**)mapCtrl;
+                    using Fn = void(__thiscall*)(void*, int);
+                    Fn toggle = *(Fn*)((char*)vtable + 0x34);
+
+                    toggle(mapCtrl, isOpen ? 0 : 1);
+                }
+            }
+        }
+    }
+    // Map toggle end
 
     //
     if (!mcGameState::Instance->m_IsPausedLocally && m_Device->sub_467E90(0x14))

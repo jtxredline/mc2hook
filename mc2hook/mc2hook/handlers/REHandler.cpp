@@ -13,6 +13,8 @@
 #include <age/mcdata/mcdata.h>
 #include <age/mcconfig/mcconfig.h>
 #include <age/input/input.h>
+#include <age/vehicle/gyro.h>
+#include <age/hud/hudMap.h>
 
 void REHandler::Install()
 {
@@ -117,7 +119,7 @@ void REHandler::Install()
                 //cb::call(0x45DC55),
                 //cb::call(0x45FA57),
                 //cb::call(0x49242A),
-                //cb::call(0x493245),
+                cb::call(0x493245),   // Powerup icon related
                 //cb::call(0x4944E3),
                 //cb::call(0x4A522E),
                 //cb::call(0x4A5254),
@@ -135,7 +137,7 @@ void REHandler::Install()
                 //cb::call(0x4E2EA8),
                 //cb::call(0x4E2EB2),
                 //cb::call(0x4E2F33),
-                cb::call(0x4E2F3D), // Skybox / car taillight related
+                cb::call(0x4E2F3D),   // Skybox / car taillight related
                 //cb::call(0x4E2F52),
                 //cb::call(0x4E2F75),
                 //cb::call(0x4E2F97),
@@ -178,9 +180,9 @@ void REHandler::Install()
                 //cb::call(0x51EEC1),
                 //cb::call(0x52262A),
                 //cb::call(0x52283C),
-                cb::call(0x525F26), // World building normals
-                cb::call(0x526025), // Some prop normals // Should be 1
-                cb::call(0x526CF8), // World road normals
+                cb::call(0x525F26),   // World building normals
+                cb::call(0x526025),   // Some prop normals // Should be 1
+                cb::call(0x526CF8),   // World road normals
                 //cb::call(0x526DF5),
                 //cb::call(0x527F74),
                 //cb::call(0x5280B4),
@@ -212,12 +214,12 @@ void REHandler::Install()
                 //cb::call(0x4A582D),
                 //cb::call(0x4A5967),
                 //cb::call(0x4A6034),
-                cb::call(0x4A6238), // Map related
+                //cb::call(0x4A6238), // Map related
                 //cb::call(0x4A712A),
                 cb::call(0x4A8603), // Minimap CPs related
                 cb::call(0x4A8C3C), // Battle mode minimap CPs related
                 cb::call(0x4A8ED8), // Opponent arrows on minimap (online) related
-                cb::call(0x4A903E), // Map arrow related, makes it disappear, it is broken anyway
+                //cb::call(0x4A903E), // Map arrow related, makes it disappear, it is broken anyway
                 cb::call(0x4A90E9), // Opponent arrows on minimap related
                 //cb::call(0x4A999C),
                 //cb::call(0x4A9E12),
@@ -249,6 +251,15 @@ void REHandler::Install()
             cb::call(0x5EEA44),
         });
 
+    // hudMap
+    //InstallCallback("hudMap::sub_4A93C0()", "hudMap::sub_4A93C0()",
+    //    &hudMap::sub_4A93C0, {
+    //        cb::call(0x4A990B),
+    //        cb::call(0x4A9D8F),
+    //    });
+
+    //InstallVTableHook("hudMap::sub_4A93C0()", &hudMap::sub_4A93C0, { 0x642C38 });
+
     // vehInput
     InstallVTableHook("vehInput::Update()", &vehInput::Update, { 0x63D0C4 });
     InstallVTableHook("vehInput::ApplyReplayFrame()", &vehInput::ApplyReplayFrame, { 0x63D0D4 });
@@ -259,5 +270,8 @@ void REHandler::Install()
 
     // mcConfig
     InstallCallback("mcConfig::LookupTOD()", "mcConfig::LookupTOD()", &mcConfig::LookupTOD, { cb::jmp(0x53D0A0) });
-    InstallCallback("mcConfig::LookupWeather()", "mcConfig::LookupWeather()", &mcConfig::LookupWeather, { cb::jmp(0x53D050) });    
+    InstallCallback("mcConfig::LookupWeather()", "mcConfig::LookupWeather()", &mcConfig::LookupWeather, { cb::jmp(0x53D050) });
+
+    // vehGyro
+    //InstallVTableHook("vehGyro::Update()", &vehGyro::Update, { 0x64556C });
 };
