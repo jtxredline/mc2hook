@@ -11,6 +11,10 @@ public:
     static hook::Type<float> ElapsedTime;
     static hook::Type<float> PrevElapsedTime;
     static hook::Type<float> UnwarpedSeconds;
+
+    //static float m_PhysicsBaselineFPS = HookConfig::GetFloat("Physics", "PhysicsFixesBaselineFPS", 60.0f);
+    //physicsFixesBaselineFPS = HookConfig::GetFloat("Physics", "PhysicsFixesBaselineFPS", 60.0f);
+
 public:
     static float GetSeconds();
     static float GetActualSeconds();
@@ -19,5 +23,9 @@ public:
     static float GetElapsedTime();
     static float GetPrevElapsedTime();
     static float GetUnwarpedSeconds();
+
+    static float GetPhysicsFPSMultiplier();
+    // TODO: Test getting ini value once
+
     void Update();
 };

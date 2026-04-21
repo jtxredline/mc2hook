@@ -63,6 +63,21 @@ enum GameState {
 	Quit,
 };
 
+enum RaceState {
+	// 0
+	Default = 1,
+	BeforeCountdown = 2,
+	Countdown = 3,
+	Racing = 4,
+	// 5
+	AllFinished = 6,
+	ShowSplashScreen = 7,
+	ShowAbilitySplashScreen = 8,
+	SaveToMemCard = 9,
+	Results = 10,
+	RaceOver = 11,
+};
+
 enum CITY {
 	losangeles  = 0,
 	paris       = 1,

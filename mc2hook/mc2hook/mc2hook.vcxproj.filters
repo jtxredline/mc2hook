@@ -111,6 +111,12 @@
     <ClCompile Include="age\managers\mcaudiomgr.cpp" />
     <ClCompile Include="handlers\RenderDistanceHandler.cpp" />
     <ClCompile Include="age\data\token.cpp" />
+    <ClCompile Include="age\vehicle\gyro.cpp" />
+    <ClCompile Include="age\hud\hudMap.cpp" />
+    <ClCompile Include="age\physics\phcollider.cpp" />
+    <ClCompile Include="age\physics\archetype.cpp" />
+    <ClCompile Include="age\managers\layermgr.cpp" />
+    <ClCompile Include="age\vehicle\gyrotemp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="age\camera\playercamera.h" />
@@ -261,6 +267,10 @@
     <ClInclude Include="age\managers\mcaudiomgr.h" />
     <ClInclude Include="handlers\RenderDistanceHandler.h" />
     <ClInclude Include="age\data\token.h" />
+    <ClInclude Include="age\vehicle\gyro.h" />
+    <ClInclude Include="age\hud\hudMap.h" />
+    <ClInclude Include="age\physics\archetype.h" />
+    <ClInclude Include="age\managers\layermgr.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="discord-rpc\lib\discord_game_sdk.dll.lib" />

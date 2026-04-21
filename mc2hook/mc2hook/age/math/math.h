@@ -23,4 +23,5 @@ namespace math
 	float Sign(float value);
 	int RandomInt(int min, int max);
 	float Clamp(float value, float min, float max);
+	float EaseOutSine(float t);
 }

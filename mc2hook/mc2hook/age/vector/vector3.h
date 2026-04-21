@@ -24,6 +24,7 @@ public:
     void Add(const Vector3& vec);
     void AddScaled(const Vector3& vec, float scale);
     void Subtract(const Vector3& vec);
+    void Subtract(const Vector3& a, const Vector3& b);
     void SubtractScaled(const Vector3& vec, float scale);
     void Scale(float scale);
     void InvScale(float scale);
@@ -36,12 +37,14 @@ public:
     float Dist(const Vector3& vec) const;
     float FlatDist(const Vector3& vec) const;
     float Dot(const Vector3& vec) const;
+    void Dot(const Matrix34& mtx);
     void Cross(const Vector3& vec); // Calculate the cross product of this vector and another vector.
     static Vector3 Cross(const Vector3& v1, const Vector3& v2);
     void Lerp(float t, const Vector3& vec1, const Vector3& vec2);
     void Negate();
     void Negate(const Vector3& vec);
     void Normalize();
+    void Normalize(const Vector3& v);
     void Min(const Vector3& vec1, const Vector3& vec2);
     void Max(const Vector3& vec1, const Vector3& vec2);
     bool IsEqual(const Vector3& vec) const;
@@ -49,7 +52,7 @@ public:
     void Print() const;
     void Print(const char* caption);
 
-    void Dot(const Matrix34& mtx);
+    void Midpoint(const Vector3& a, const Vector3& b);
 
     void operator+=(const Vector3& vec);
     void operator-=(const Vector3& vec);

@@ -19,3 +19,8 @@ void vehCarSim::SetDrivable(int a2)
 {
     hook::Thunk<0x4D2A50>::Call<void>(this, a2); // Call original
 }
+
+void vehCarSim::SetCenterOfMass(const Vector3& cg)
+{
+    this->m_CenterOfMass = cg;
+}

@@ -1,6 +1,7 @@
 ﻿#include <mc2hook\mc2hook.h>
 #include <age/data/timemgr.h>
 #include <age/math/math.h>
+#include <age/vehicle/carsim.h>
 #include "wheel.h"
 
 #include <age/core/output.h> //

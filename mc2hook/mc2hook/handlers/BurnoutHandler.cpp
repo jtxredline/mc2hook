@@ -26,7 +26,7 @@ void BurnoutHandler::vehCarSimUpdate()
         vehCarSimValuesCached = true;
     }
 
-    burnoutIncreaseSpeed = burnoutIncreaseSpeedCached * datTimeManager::GetSeconds() * physicsFixesBaselineFPS;
+    burnoutIncreaseSpeed = burnoutIncreaseSpeedCached * datTimeManager::GetSeconds() * physicsFixesBaselineFPS; // Make this a member, part of datTimeManager
     burnoutDecreaseSpeed = burnoutDecreaseSpeedCached * datTimeManager::GetSeconds() * physicsFixesBaselineFPS;
     burnoutDamageAmount = burnoutDamageAmountCached * datTimeManager::GetSeconds() * physicsFixesBaselineFPS;
 

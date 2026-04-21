@@ -8,7 +8,17 @@
 #include <age/vehicle/carSSTurbo.h>
 
 class vehTransmission;
-class vehWheel;
+class vehEngine;
+class vehDrivetrain;
+class phCollider;
+
+struct vehWheels
+{
+	vehWheel m_Wheel_FL;
+	vehWheel m_Wheel_RL;
+	vehWheel m_Wheel_FR;
+	vehWheel m_Wheel_RR;
+};
 
 class vehCarSim {
 public:
@@ -17,12 +27,12 @@ public:
 	int dword_08;
 	vehAero* m_Aero;
 	void* m_Fluid;
-	void* m_Engine;
+	vehEngine* m_Engine;
 	vehTransmission* m_Transmission;
 	int m_NumWheels;
-	vehWheel* m_WheelFront;
+	vehWheels* m_WheelsStruct; //vehWheel* m_WheelFront; // void*
 	int m_NumDrivetrains;
-	void* m_Drivetrain;
+	vehDrivetrain* m_Drivetrain;
 	int m_NumAxles;
 	void* m_Axle;
 	int m_NumSuspensions;
@@ -61,7 +71,11 @@ public:
 	float m_AirGravity;
 	int m_DrivetrainType;
 	int dword_e8;
-	vehWheel* m_Wheels[4];	
+	vehWheel* m_Wheels[4];
+	//vehWheel* m_WheelFL;
+	//vehWheel* m_WheelRL;
+	//vehWheel* m_WheelFR;
+	//vehWheel* m_WheelRR;
 	int dword_fc;
 	int dword_100;
 	int dword_104;
@@ -125,4 +139,6 @@ public:
 public:
 	int OnGround(); // Number of wheels on ground
 	void SetDrivable(int a2);
+	void SetCenterOfMass(const Vector3& cg); // Set the simulation center of mass offset from instance origin
 };
+

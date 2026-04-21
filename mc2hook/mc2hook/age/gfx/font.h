@@ -4,5 +4,5 @@
 class gfxFont
 {
 public:
-    static void DrawFont(int x, int y, const char* string, void* a4);
+    static void DrawFont(int x, int y, const char* string, int a4);
 };

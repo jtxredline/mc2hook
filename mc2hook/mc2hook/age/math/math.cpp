@@ -71,4 +71,10 @@ namespace math
         if (value > max) return max;
         return value;
     }
+
+    float EaseOutSine(float t)
+    {
+        t = Clamp(t, 0.0f, 1.0f);
+        return (sinf(t * (math::PI * 0.5f)));
+    }
 }

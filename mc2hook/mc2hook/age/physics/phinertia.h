@@ -69,4 +69,9 @@ public:
 public:
 	void ApplyContactForce(Vector3* someForce,Vector3* somePos, Matrix34* a4, Vector3* a5);
 	void AddForce(const Vector3& f); // Vector3* a3);
+	void AccumulateForce(const Vector3& force);
+	void ComputeForce(float impulseScale, Vector3& out) const;
+	void ApplyForwardTorque(float amount);
+	void ApplyUpTorque(float amount);
+	void ApplyLateralTorque(float amount);
 };

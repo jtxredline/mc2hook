@@ -14,10 +14,22 @@
 #include <age/mcconfig/mcconfig.h>
 #include <age/input/input.h>
 #include <age/vehicle/gyro.h>
-#include <age/hud/hudMap.h>
+#include <age/hud/hudMap.h> //
+#include <age/managers/layermgr.h>
+#include <age/input/joystick.h>
+#include <age/gfx/pipeline.h>
 
 void REHandler::Install()
 {
+    // gfxPipeline
+    InstallCallback("gfxPipeline::gfxWindowCreate()", "gfxPipeline::gfxWindowCreate()", &gfxPipeline::gfxWindowCreate, { cb::call(0x5F1338) });
+
+    InstallCallback("gfxPipeline::InputWindowProc()", "gfxPipeline::InputWindowProc()",
+        &gfxPipeline::InputWindowProc, {
+            cb::jmp(0x5ED4E9),
+            cb::jmp(0x5ED517),
+            cb::jmp(0x5ED544) });
+    
     // camTrackCS
     InstallCallback("RE Handler (1)", "camTrackCS::UpdateSS()",
         &camTrackCS::UpdateSS, {
@@ -214,7 +226,7 @@ void REHandler::Install()
                 //cb::call(0x4A582D),
                 //cb::call(0x4A5967),
                 //cb::call(0x4A6034),
-                //cb::call(0x4A6238), // Map related
+                cb::call(0x4A6238), // Map related
                 //cb::call(0x4A712A),
                 cb::call(0x4A8603), // Minimap CPs related
                 cb::call(0x4A8C3C), // Battle mode minimap CPs related
@@ -264,6 +276,14 @@ void REHandler::Install()
     InstallVTableHook("vehInput::Update()", &vehInput::Update, { 0x63D0C4 });
     InstallVTableHook("vehInput::ApplyReplayFrame()", &vehInput::ApplyReplayFrame, { 0x63D0D4 });
     
+    // ioJoystick
+    InstallCallback("ioJoystick::BeginAll()", "ioJoystick::BeginAll()", &ioJoystick::BeginAll, { cb::call(0x60481A) });
+    InstallCallback("ioJoystick::Poll()", "ioJoystick::Poll()", &ioJoystick::Poll, {cb::call(0x605084)});
+    //InstallCallback("ioJoystick::Update()", "ioJoystick::Update()", &ioJoystick::Update, { cb::call(0x6050B4) });
+    InstallCallback("ioJoystick::UpdateAll()", "ioJoystick::UpdateAll()", &ioJoystick::UpdateAll, { cb::call(0x60488C) });
+    //InstallCallback("ioJoystick::End()", "ioJoystick::End()", &ioJoystick::End, { cb::call(0x6050F3) });
+    InstallCallback("ioJoystick::EndAll()", "ioJoystick::EndAll()", &ioJoystick::EndAll, { cb::call(0x60483E) });
+
     // mcData
     InstallCallback("mcData::SetTOD()", "mcData::SetTOD()", &mcData::SetTOD, { cb::jmp(0x53A960) });
     InstallCallback("mcData::SetWeather()", "mcData::SetWeather()", &mcData::SetWeather, { cb::jmp(0x53AA00) });
@@ -273,5 +293,34 @@ void REHandler::Install()
     InstallCallback("mcConfig::LookupWeather()", "mcConfig::LookupWeather()", &mcConfig::LookupWeather, { cb::jmp(0x53D050) });
 
     // vehGyro
-    //InstallVTableHook("vehGyro::Update()", &vehGyro::Update, { 0x64556C });
+    InstallVTableHook("vehGyro::Update()", &vehGyro::Update, { 0x64556C });
+    //InstallCallback("vehGyro::ApplyScaledTorqueAndForce()", "vehGyro::ApplyScaledTorqueAndForce()", &vehGyro::ApplyScaledTorqueAndForce, { cb::call (0x4DCB48) });
+
+    // mcLayerMgr
+    InstallCallback("mcLayerMgr::BeginLoadLayer()", "mcLayerMgr::BeginLoadLayer()",
+        &mcLayerMgr::BeginLoadLayer, {
+        //cb::call(0x402A69),
+        //cb::call(0x402C1C),
+        //cb::call(0x402C5E),
+        //cb::call(0x402C96),
+        //cb::call(0x402CB8),
+        //cb::call(0x402CF0),
+        cb::call(0x4038B8), // Begin loading movie
+        //cb::call(0x403962),
+        //cb::call(0x403984),
+        //cb::call(0x403A6C),
+        //cb::call(0x403AB6),
+        //cb::call(0x403B0E),
+        //cb::call(0x403B5E),
+        //cb::call(0x40420C),
+        //cb::call(0x40424F),
+        //cb::call(0x404292),
+        //cb::call(0x4042D5),
+        //cb::call(0x404318),
+    });
+
+    InstallCallback("mcLayerMgr::AfterLoadLayer()", "mcLayerMgr::AfterLoadLayer()",
+        &mcLayerMgr::AfterLoadLayer, {
+            cb::call(0x4038D1), // After loading movie
+        });
 };

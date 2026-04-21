@@ -169,11 +169,13 @@
     <ClInclude Include="age\gfx\rstate.h" />
     <ClInclude Include="age\gfx\viewport.h" />
     <ClInclude Include="age\globals.h" />
+    <ClInclude Include="age\hud\hudMap.h" />
     <ClInclude Include="age\input\device.h" />
     <ClInclude Include="age\input\input.h" />
     <ClInclude Include="age\input\joystick.h" />
     <ClInclude Include="age\input\keyboard.h" />
     <ClInclude Include="age\input\mouse.h" />
+    <ClInclude Include="age\managers\layermgr.h" />
     <ClInclude Include="age\managers\mcaudiomgr.h" />
     <ClInclude Include="age\mcconfig\mcconfig.h" />
     <ClInclude Include="age\mcdata\mcdata.h" />
@@ -185,6 +187,7 @@
     <ClInclude Include="age\memory\age_alloc_baseclass.h" />
     <ClInclude Include="age\memory\memory.h" />
     <ClInclude Include="age\model\getpivot.h" />
+    <ClInclude Include="age\physics\archetype.h" />
     <ClInclude Include="age\physics\phcollider.h" />
     <ClInclude Include="age\physics\phinst.h" />
     <ClInclude Include="age\physics\phinertia.h" />
@@ -220,6 +223,7 @@
     <ClInclude Include="age\vehicle\drivetrain.h" />
     <ClInclude Include="age\vehicle\entity.h" />
     <ClInclude Include="age\vehicle\carmodel.h" />
+    <ClInclude Include="age\vehicle\gyro.h" />
     <ClInclude Include="age\vehicle\vehinput.h" />
     <ClInclude Include="age\vehicle\nitro.h" />
     <ClInclude Include="age\vehicle\transmission.h" />
@@ -314,11 +318,13 @@
     <ClCompile Include="age\gfx\pipeline.cpp" />
     <ClCompile Include="age\gfx\rstate.cpp" />
     <ClCompile Include="age\gfx\viewport.cpp" />
+    <ClCompile Include="age\hud\hudMap.cpp" />
     <ClCompile Include="age\input\device.cpp" />
     <ClCompile Include="age\input\input.cpp" />
     <ClCompile Include="age\input\joystick.cpp" />
     <ClCompile Include="age\input\keyboard.cpp" />
     <ClCompile Include="age\input\mouse.cpp" />
+    <ClCompile Include="age\managers\layermgr.cpp" />
     <ClCompile Include="age\managers\mcaudiomgr.cpp" />
     <ClCompile Include="age\mcconfig\mcconfig.cpp" />
     <ClCompile Include="age\mcdata\mcdata.cpp" />
@@ -330,6 +336,8 @@
     <ClCompile Include="age\memory\age_alloc_baseclass.cpp" />
     <ClCompile Include="age\memory\allocator.cpp" />
     <ClCompile Include="age\model\getpivot.cpp" />
+    <ClCompile Include="age\physics\archetype.cpp" />
+    <ClCompile Include="age\physics\phcollider.cpp" />
     <ClCompile Include="age\physics\phinertia.cpp" />
     <ClCompile Include="age\physics\simulator.cpp" />
     <ClCompile Include="age\state\gamestate.cpp" />
@@ -348,6 +356,8 @@
     <ClCompile Include="age\vehicle\engine.cpp" />
     <ClCompile Include="age\vehicle\engine.h" />
     <ClCompile Include="age\vehicle\carmodel.cpp" />
+    <ClCompile Include="age\vehicle\gyro.cpp" />
+    <ClCompile Include="age\vehicle\gyrotemp.cpp" />
     <ClCompile Include="age\vehicle\nitro.cpp" />
     <ClCompile Include="age\vehicle\vehinput.cpp" />
     <ClCompile Include="age\vehicle\transmission.cpp" />

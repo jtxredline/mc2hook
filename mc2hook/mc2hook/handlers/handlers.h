@@ -41,6 +41,7 @@
 // Installed before engine init
 static void InstallHandlersPreEngineInit()
 {
+    InstallHandler<REHandler>("RE Handler"); //
     InstallHandler<InputHandler>("Input Handler");
     InstallHandler<BorderlessHandler>("Borderless Handler");
 }
@@ -88,7 +89,7 @@ static void InstallMainHandlers()
     InstallHandler<GravityHandler>("Gravity Handler");
     InstallHandler<CPUPlayerVehiclesHandler>("CPU Player Vehicles Handler");
     InstallHandler<RenderDistanceHandler>("RenderDistance Handler");
-    InstallHandler<REHandler>("RE Handler");
+    //InstallHandler<REHandler>("RE Handler");
     
     //InstallHandler<StateResearchHook>("SRH");
 }

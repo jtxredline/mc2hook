@@ -26,4 +26,7 @@ public:
 	int dword_70;
 	int dword_74;
 	int dword_78;
+
+public:
+	void ApplyLeanImpulse(float impulse);
 };

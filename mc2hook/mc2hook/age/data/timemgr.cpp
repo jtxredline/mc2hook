@@ -1,5 +1,4 @@
 #include "timemgr.h"
-#include <mc2hook\mc2hook.h>
 #include <discord-rpc/discord_rpc.h>
 
 declfield(datTimeManager::Seconds)(0x6797CC);

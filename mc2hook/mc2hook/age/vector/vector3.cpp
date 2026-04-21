@@ -46,6 +46,11 @@ void Vector3::Subtract(const Vector3& vec) {
     this->Y -= vec.Y;
     this->Z -= vec.Z;
 }
+void Vector3::Subtract(const Vector3& a, const Vector3& b) {
+    this->X = a.X - b.X;
+    this->Y = a.Y - b.Y;
+    this->Z = a.Z - b.Z;
+}
 void Vector3::SubtractScaled(const Vector3& vec, float scale) {
     this->X -= (vec.X * scale);
     this->Y -= (vec.Y * scale);
@@ -124,6 +129,20 @@ float Vector3::Dot(const Vector3& vec) const {
     return vec.Z * this->Z + vec.Y * this->Y + vec.X * this->X;
 }
 
+void Vector3::Dot(const Matrix34& mtx)
+{
+    //this->X = mtx.m00 * this->X + mtx.m10 * this->Y + mtx.m20 * this->Z + mtx.m30;
+    //this->Y = mtx.m01 * this->X  + mtx.m11 * this->Y + mtx.m21 * this->Z + mtx.m31;
+    //this->Z = mtx.m02 * this->X + mtx.m12 * this->Y + mtx.m22 * this->Z + mtx.m32;
+
+    float x, y;
+    x = mtx.m20 * this->Z + mtx.m10 * this->Y + mtx.m00 * this->X + mtx.m30;
+    y = mtx.m21 * this->Z + mtx.m01 * this->X + mtx.m11 * this->Y + mtx.m31;
+    this->Z = mtx.m22 * this->Z + mtx.m02 * this->X + mtx.m12 * this->Y + mtx.m32;
+    this->X = x;
+    this->Y = y;
+}
+
 void Vector3::Lerp(float t, const Vector3& vec1, const Vector3& vec2) {
     this->X = (vec2.X - vec1.X) * t + vec1.X;
     this->Y = (vec2.Y - vec1.Y) * t + vec1.Y;
@@ -151,6 +170,16 @@ void Vector3::Normalize()
     this->X *= mul;
     this->Y *= mul;
     this->Z *= mul;
+}
+
+void Vector3::Normalize(const Vector3& v)
+{
+    float len = v.Mag2();
+    float mul = (len != 0.0f) ? 1.0f / sqrtf(len) : 0.0f;
+
+    this->X = v.X * mul;
+    this->Y = v.Y * mul;
+    this->Z = v.Z * mul;
 }
 
 void Vector3::Min(const Vector3& vec1, const Vector3& vec2)
@@ -183,20 +212,6 @@ void Vector3::Print() const
 void Vector3::Print(const char* caption)
 {
     Printf("%s: %f,%f,%f", caption, this->X, this->Y, this->Z);
-}
-
-void Vector3::Dot(const Matrix34& mtx)
-{
-    //this->X = mtx.m00 * this->X + mtx.m10 * this->Y + mtx.m20 * this->Z + mtx.m30;
-    //this->Y = mtx.m01 * this->X  + mtx.m11 * this->Y + mtx.m21 * this->Z + mtx.m31;
-    //this->Z = mtx.m02 * this->X + mtx.m12 * this->Y + mtx.m22 * this->Z + mtx.m32;
-
-    float x, y;
-    x = mtx.m20 * this->Z + mtx.m10 * this->Y + mtx.m00 * this->X + mtx.m30;
-    y = mtx.m21 * this->Z + mtx.m01 * this->X + mtx.m11 * this->Y + mtx.m31;
-    this->Z = mtx.m22 * this->Z + mtx.m02 * this->X + mtx.m12 * this->Y + mtx.m32;
-    this->X = x;
-    this->Y = y;
 }
 
 void Vector3::Cross(const Vector3& vec)
@@ -248,4 +263,11 @@ Vector3 Vector3::operator/(float value) const {
 }
 Vector3 Vector3::operator*(float value) const {
     return Vector3(this->X * value, this->Y * value, this->Z * value);
+}
+
+void Vector3::Midpoint(const Vector3& a, const Vector3& b)
+{
+    this->X = (a.X + b.X) * 0.5f;
+    this->Y = (a.Y + b.Y) * 0.5f;
+    this->Z = (a.Z + b.Z) * 0.5f;
 }

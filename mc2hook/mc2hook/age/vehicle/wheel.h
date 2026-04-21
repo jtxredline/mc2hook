@@ -1,6 +1,5 @@
 #pragma once
 #include <mc2hook\mc2hook.h>
-#include <age/vehicle/carsim.h>
 #include <age/vector/matrix34.h>
 #include <age/physics/phinertia.h>
 
