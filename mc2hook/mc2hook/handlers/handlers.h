@@ -27,7 +27,6 @@
 #include <handlers/CarShadowHandler.h>
 #include <handlers\FPSCounterHandler.h>
 #include <handlers/TimeWarpHandler.h>
-#include <handlers/TwoWheelHandler.h>
 #include <handlers/DeadZoneHandler.h>
 #include <handlers/BurnoutHandler.h>
 #include <handlers/GravityHandler.h>
@@ -41,7 +40,7 @@
 // Installed before engine init
 static void InstallHandlersPreEngineInit()
 {
-    InstallHandler<REHandler>("RE Handler"); //
+    InstallHandler<REHandler>("RE Handler");
     InstallHandler<InputHandler>("Input Handler");
     InstallHandler<BorderlessHandler>("Borderless Handler");
 }
@@ -58,7 +57,6 @@ static void InstallHandlersPostEngineInit()
     InstallHandler<KinematicSteeringHandler>("Kinematic Steering Handler");
     InstallHandler<TrafficDistanceHandler>("Traffic Distance Handler");
 
-    //InstallHandler<TwoWheelHandler>("Two Wheel Handler");
     //InstallHandler<TestPanelHandler>("Panel Handler (Keyboard input test really)");
     //InstallHandler<OnlineBangersHandler>("Online Bangers Handler");
     //InstallHandler<VelocityPrinterHandler>("Velocity Printer Handler");

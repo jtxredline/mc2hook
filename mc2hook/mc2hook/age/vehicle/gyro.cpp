@@ -6,53 +6,10 @@
 #include <age/vehicle/vehinput.h>
 #include <age/physics/archetype.h>
 
-#include <age/core/output.h> //
-
 declfield(vehGyro::dword_6957C0)(0x6957C0);
 
-// WIP
 void vehGyro::Update()
 {
-    __int16 leanTimer;
-    __int16 tempLean;
-    __int16 currentLean;
-    double wheelZDiff;
-    long double targetLean;
-    long double clampedLean;
-    bool rearWheelOnGround;
-    float contactM01;
-    float contactM02;
-    float contactM21;
-    float gasBrakeInput;
-    double wheelieGravityRef;
-    long double wheelieAngleCorrection;
-    long double wheelieBaseTorque;
-    long double finalWheelieTorque;
-    int spinAssistFlag;
-    long double spinTorque;
-    double finalTurnTorque;
-    double directionSign;
-    long double lowSpeedFactor;
-    double airControlThreshold;
-    float rollLimitNeg;
-    float currentRollAngle;
-    float negLeanUpB;
-    float negLeanUpC;
-    float negLeanUpD;
-    float wheelHeightDelta;
-    float minLeanClamp;
-    float wheelieDot;
-    float reverseSpinScale;
-    float lowSpeedTurnScale;
-    float lowSpeedAbs;
-    Vector3 torqueVec;
-    Vector3 forceOffset;
-    Vector3 comPoint;
-    float driftScale;
-    float burnoutScale;
-    Vector3 axis;
-    Vector3 applyOffset;
-
     // Wheel ptrs
     vehWheel* wheel_FL = m_CarSim->m_Wheels[0];
     vehWheel* wheel_RL = m_CarSim->m_Wheels[1];
@@ -71,65 +28,66 @@ void vehGyro::Update()
     float speed = m_CarSim->m_Speed;
     float steer = m_Input->m_Steer;
     float burnout = m_CarSim->m_BurnoutValue;
-
-    float onGroundFactorFinal = brake;
+    float gasBrake = m_Input->m_GasBrake;
 
     phCollider* collider = m_CarSim->m_Collider;
     phInertialCS* ics = collider->m_ICS;
     Vector3 worldPos = ics->m_WorldTransform.GetRow(3);
 
-    const float wheelsOnGround = (float)m_CarSim->OnGround();
-    const float invWheelCount = 1.0f / (float)m_CarSim->m_NumWheels;
-    const float groundRatio = wheelsOnGround * invWheelCount;
+    // Ground contact ratio (0.0f = all wheels airborne, 1.0f = all on ground)
+    float wheelsOnGround = (float)m_CarSim->OnGround();
+    float invWheelCount = 1.0f / (float)m_CarSim->m_NumWheels;
+    float groundRatio = wheelsOnGround * invWheelCount;
 
-    // Compute forward velocity
-    const Matrix34& mat = collider->m_SomeInstParent->m_SomeInstParentTransform;
-    const Vector3& vel = collider->m_ICS->m_WorldVelocity;
+    // Forward speed along the vehicle's local Z axis
+    Matrix34& mat = collider->m_SomeInstParent->m_SomeInstParentTransform;
+    Vector3& vel = collider->m_ICS->m_WorldVelocity;
 
     float forwardSpeed = -(mat.m20 * vel.X + mat.m21 * vel.Y + mat.m22 * vel.Z);
-    const float absForwardSpeed = fabs(forwardSpeed);
+    float absForwardSpeed = fabs(forwardSpeed);
 
-    //Vector3 torqueVec, forceOffset, comPoint, axis, applyOffset;
-    //float driftScale = 0.0f;
-    //float burnoutScale = 0.0f;
-
-    // Drift / handbrake torque
+    // -------------------------------------------------------------------------
+    // Handbrake torque / Burnout turn
+    // -------------------------------------------------------------------------
     if ((dword_18 & 0x20000) != 0)
     {
         if (m_Drift <= 0.0f || handbrake <= 0.0f || burnout <= 0.0f)
         {
-            // Normal drift torque
             if (m_Drift > 0.0f && handbrake > 0.0f && forwardSpeed > 10.0f)
             {
-                driftScale = forwardSpeed;
+                float handbrakeTorqueScale = forwardSpeed;
                 if (forwardSpeed < 25.0f)
-                    driftScale = forwardSpeed * forwardSpeed * 0.04f;
+                    handbrakeTorqueScale = forwardSpeed * forwardSpeed * 0.04f;
 
-                driftScale *= groundRatio * steer * handbrake;
+                handbrakeTorqueScale *= groundRatio * steer * handbrake;
 
+                Vector3 handbrakeTorqueAxis;
                 // Compute axis
                 if (wheel_RR)
                 {
-                    axis.Midpoint(wheel_RL->m_ContactMatrix.GetRow(1), wheel_RR->m_ContactMatrix.GetRow(1));
-                    axis.Normalize();
+                    handbrakeTorqueAxis.Midpoint(wheel_RL->m_ContactMatrix.GetRow(1), wheel_RR->m_ContactMatrix.GetRow(1));
+                    handbrakeTorqueAxis.Normalize();
                 }
                 else
                 {
-                    axis = wheel_RL->m_ContactMatrix.GetRow(1);
+                    handbrakeTorqueAxis = wheel_RL->m_ContactMatrix.GetRow(1);
                 }
 
-                // Compute contact point
+                // Force offset origin: midpoint of rear wheel contacts
+                Vector3 handbrakeTorqueOrigin;
                 if (wheel_RR)
-                     comPoint.Midpoint(wheel_RL->m_ContactMatrix.GetRow(3), wheel_RR->m_ContactMatrix.GetRow(3));
-                else comPoint = wheel_RL->m_ContactMatrix.GetRow(3);
+                    handbrakeTorqueOrigin.Midpoint(wheel_RL->m_ContactMatrix.GetRow(3),
+                                                   wheel_RR->m_ContactMatrix.GetRow(3));
+                else
+                    handbrakeTorqueOrigin = wheel_RL->m_ContactMatrix.GetRow(3);
 
-                // Apply torque
-                float torque = -(driftScale * ics->m_AngInertia.Y * m_Drift);
-                torqueVec = axis * torque;
+                // Apply handbrake torque
+                float handbrakeTorque = -(handbrakeTorqueScale * ics->m_AngInertia.Y * m_Drift);
 
-                forceOffset = comPoint - worldPos;
+                Vector3 handbrakeTorqueVec = handbrakeTorqueAxis * handbrakeTorque;
+                Vector3 handbrakeTorqueOffset = handbrakeTorqueOrigin - worldPos;
 
-                ApplyScaledTorqueAndForce(torqueVec, forceOffset, ics->m_InvAngInertia.Y);
+                ApplyScaledTorqueAndForce(handbrakeTorqueVec, handbrakeTorqueOffset, ics->m_InvAngInertia.Y);
             }
         }
         else
@@ -137,35 +95,39 @@ void vehGyro::Update()
             // Burnout turning torque
             bool isRWD = m_CarSim->m_DrivetrainType == 1;
 
-            burnoutScale = pow(m_CarSim->m_Engine->m_CurrentRPS / m_CarSim->m_Engine->m_OptRPS, 0.5f)
+            float burnoutTurnTorqueScale =
+                pow(m_CarSim->m_Engine->m_CurrentRPS / m_CarSim->m_Engine->m_OptRPS, 0.5f)
                 * steer
                 * m_BurnoutTurn
                 * burnout;
 
+            // Pick the driven axle wheels
             vehWheel* wA = isRWD ? m_CarSim->m_Wheels[1] : m_CarSim->m_Wheels[0];
             vehWheel* wB = isRWD ? m_CarSim->m_Wheels[3] : m_CarSim->m_Wheels[2];
 
-            if (!isRWD) burnoutScale *= 2.0f;
+            // FWD gets a larger scale
+            if (!isRWD) burnoutTurnTorqueScale *= 2.0f;
 
-            comPoint.Midpoint(wA->m_ContactMatrix.GetRow(1),
-                wB->m_ContactMatrix.GetRow(1));
+            Vector3 burnoutTurnTorqueAxis;
+            burnoutTurnTorqueAxis.Midpoint(wA->m_ContactMatrix.GetRow(1),
+                                           wB->m_ContactMatrix.GetRow(1));
 
-            axis.Midpoint(wA->m_ContactMatrix.GetRow(3),
-                wB->m_ContactMatrix.GetRow(3));
+            Vector3 burnoutTurnTorqueOrigin;
+            burnoutTurnTorqueOrigin.Midpoint(wA->m_ContactMatrix.GetRow(3),
+                                             wB->m_ContactMatrix.GetRow(3));
 
-            float burnoutTorque = -(burnoutScale * ics->m_AngInertia.Y * m_Drift);
+            float burnoutTurnTorque = -(burnoutTurnTorqueScale * ics->m_AngInertia.Y * m_Drift);
+            
+            Vector3 burnoutTurnTorqueVec = burnoutTurnTorqueAxis * burnoutTurnTorque;
+            Vector3 burnoutTurnOffset = burnoutTurnTorqueOrigin - worldPos;
 
-            torqueVec = comPoint * burnoutTorque;
-
-            forceOffset = axis - worldPos;
-
-            ApplyScaledTorqueAndForce(torqueVec, forceOffset, ics->m_InvAngInertia.Y);
+            ApplyScaledTorqueAndForce(burnoutTurnTorqueVec, burnoutTurnOffset, ics->m_InvAngInertia.Y);
         }
     }
-
-    // Gravity scale / Airtime
+    // -------------------------------------------------------------------------
+    // Gravity scale / airtime
+    // -------------------------------------------------------------------------
     float gravityScale = collider->m_SomeInstParent->m_Archetype->sub_47B9D0();
-    float wheelieParam = gravityScale * -9.8f;
 
     if (wheelsOnGround == 0.0f)
     {
@@ -177,60 +139,63 @@ void vehGyro::Update()
         *(uint16_t*)&dword_4C = 30;
     }
 
-    // Drift thrust (boost / force)
+    // -------------------------------------------------------------------------
+    // Fishtail / drift force
+    // -------------------------------------------------------------------------
     if ((dword_18 & 0x20000) != 0 && m_DriftThrust > 0.0f)
     {
-        driftScale = (handbrake > 0.0f && burnout <= 0.0f) ? handbrake : 0.0f;
+        float driftForceScale = (handbrake > 0.0f && burnout <= 0.0f) ? handbrake : 0.0f;
 
-        if (driftScale <= dword_44)
+        if (driftForceScale <= dword_44)
         {
-            if (driftScale < dword_44)
-                math::Approach(dword_44, driftScale, m_DriftDecay, datTimeManager::Seconds);
+            if (driftForceScale < dword_44)
+                math::Approach(dword_44, driftForceScale, m_DriftDecay, datTimeManager::Seconds);
         }
         else
         {
-            dword_44 = driftScale;
+            dword_44 = driftForceScale;
         }
 
         if (dword_44 > 0.0f)
         {
-            Vector3 velocityDir = ics->m_WorldVelocity;
-            velocityDir.Normalize();
+            // Alignment: how much velocity is sideways relative to vehicle forward
+            Vector3 driftVelocityDir = ics->m_WorldVelocity;
+            driftVelocityDir.Normalize();
 
-            float driftThrustScale = *(float*)&m_CarSim->dword_154 * m_DriftThrust * dword_44;
-            float driftforceScale = groundRatio * driftThrustScale;
+            float driftAlignmentDot = fabs(driftVelocityDir.Dot(ics->m_WorldTransform.GetRow(0)));
+            float driftAlignmentClamped = math::Clamp(driftAlignmentDot, 0.0f, 1.0f);
 
-            float alignmentDot = fabs(velocityDir.Dot(ics->m_WorldTransform.GetRow(0)));
+            float driftForceScale =
+                -(math::EaseOutSine(driftAlignmentClamped) *
+                    groundRatio *
+                    *(float*)&m_CarSim->dword_154 *
+                    m_DriftThrust *
+                    dword_44 *
+                    m_CarSim->m_Throttle *
+                    m_CarSim->m_Drivetrain->m_WheelBL->m_SurfaceFriction);
 
-            float alignmentClamped = math::Clamp(alignmentDot, 0.0f, 1.0f);
-
-            float driftThrustForce =
-                -(math::EaseOutSine(alignmentClamped) *
-                driftforceScale *
-                m_CarSim->m_Throttle *
-                m_CarSim->m_Drivetrain->m_WheelBL->m_SurfaceFriction);
-
-            Vector3 driftForce = ics->m_WorldTransform.GetRow(2) * driftThrustForce;
+            Vector3 driftForce = ics->m_WorldTransform.GetRow(2) * driftForceScale;
 
             ics->AccumulateForce(driftForce);
         }
 
+        // Reduce driven wheel torque proportionally while drifting
         if (m_CarSim->m_NumWheels > 0)
         {
-            float scale = 1.0f - driftScale * 0.5f;
+            float driftWheelTorqueScale = 1.0f - driftForceScale * 0.5f;
             for (int i = 0; i < m_CarSim->m_NumWheels; ++i)
-                m_CarSim->m_Wheels[i]->m_WheelDriveTorque *= scale;
+                m_CarSim->m_Wheels[i]->m_WheelDriveTorque *= driftWheelTorqueScale;
         }
     }
 
-    // 2-wheel mode / Leaning
-    Matrix34 worldTransform;
-
+    // -------------------------------------------------------------------------
+    // 2-wheel lean
+    // -------------------------------------------------------------------------
     if ((m_CarSim->field_184 & 2) == 0 && (dword_18 & 0x80000) != 0 && m_CarSim->m_NumWheels == 4)
     {
-        worldTransform.Set(ics->m_WorldTransform);
-
-        if ((dword_4C & 0xFFFF) == 0 && wheelsOnGround != 0.0f && worldTransform.m11 > 0.8f)
+        Vector3 comPoint;
+        // Initiate a lean if conditions are met (upright, on ground, no burnout, above min speed)
+        if ((dword_4C & 0xFFFF) == 0 && wheelsOnGround != 0.0f && ics->m_WorldTransform.m11 > 0.8f)
         {
             if (burnout == 0.0f)
             {
@@ -245,146 +210,123 @@ void vehGyro::Update()
 
                     *(int16_t*)((char*)&dword_14 + 2) = leanDir;
 
+                    // Shift center of mass and apply impulse in lean direction
+                    comPoint = m_CarSim->m_CenterOfMass;
                     if (leanDir == -1)
                     {
-                        comPoint = m_CarSim->m_CenterOfMass;
                         comPoint.X = -(m_CarSim->m_Size.X * 0.5f * m_TwoWheelCOG);
                         m_CarSim->SetCenterOfMass(comPoint);
                         collider->ApplyLeanImpulse(m_LeanImpulseUp);
                     }
                     else if (leanDir == 1)
                     {
-                        comPoint = m_CarSim->m_CenterOfMass;
                         comPoint.X = m_CarSim->m_Size.X * 0.5f * m_TwoWheelCOG;
                         m_CarSim->SetCenterOfMass(comPoint);
                         collider->ApplyLeanImpulse(-m_LeanImpulseUp);
                     }
 
-                    m_CarSim->m_Wheels[0]->m_SteeringLimit = 0.0f;
-                    m_CarSim->m_Wheels[2]->m_SteeringLimit = 0.0f;
-                    *(uint16_t*)&dword_4C = 0x1E;
+                    // Disable front steering while on 2 wheels
+                    wheel_FL->m_SteeringLimit = 0.0f;
+                    wheel_FR->m_SteeringLimit = 0.0f;
+                    *(uint16_t*)&dword_4C = 30;
                 }
             }
         }
 
-    ////////////////////////////////////////////////////
-
     LABEL_65:
-        leanTimer = this->dword_4C;
-        if (leanTimer > 0)
-            *(uint16_t*)&this->dword_4C = (uint16_t)(leanTimer - 1);
+        uint16_t& leanTimer = *(uint16_t*)&dword_4C;
+        if (leanTimer > 0) leanTimer--;
 
-        tempLean = (int16_t)(this->dword_14 >> 16);
-        if (!tempLean)
-            goto LABEL_89;
+        int16_t currentLean = (int16_t)(dword_14 >> 16);
+        if (!currentLean) goto LABEL_89;
 
-        if ((this->m_Input->m_CurrentGearFlags & 0x10000) == 0 || tempLean == 0x63)
+        if ((m_Input->m_CurrentGearFlags & 0x10000) == 0 || currentLean == 0x63)
         {
-            if (wheelsOnGround != 0.0)
+            if (wheelsOnGround != 0.0f)
             {
-                if (tempLean == -1)
-                    collider->ApplyLeanImpulse(-m_LeanImpulseDn);
-                else
-                    collider->ApplyLeanImpulse(m_LeanImpulseDn);
+                collider->ApplyLeanImpulse(currentLean == -1 ? -m_LeanImpulseDn : m_LeanImpulseDn);
             }
-            *(int16_t*)((char*)&this->dword_14 + 2) = 0;
-            *(uint16_t*)&this->dword_4C = 0xA;
+            *(int16_t*)((char*)&dword_14 + 2) = 0;
+            leanTimer = 10;
         }
 
-        tempLean = (int16_t)(this->dword_14 >> 16);
-        if (tempLean)
+        currentLean = (int16_t)(dword_14 >> 16);
+
+        if (currentLean)
         {
-            if (m_CarSim->m_Speed < (double)this->m_LeanSpeedMin)
-                goto LABEL_82;
+            if (speed < m_LeanSpeedMin) goto LABEL_82;
 
-            if (*(uint16_t*)&this->dword_4C)
-                goto LABEL_87;
+            if (leanTimer)              goto LABEL_87;
 
-            if (collider->m_Inst->m_WorldTransform.m11 < 0.0)
+            if (collider->m_Inst->m_WorldTransform.m11 < 0.0f)
             {
             LABEL_82:
                 if (wheelsOnGround != 0.0)
                 {
-                    if (tempLean == (__int16)0xFFFF)
-                        collider->ApplyLeanImpulse(-m_LeanImpulseDn);
-                    else
-                        collider->ApplyLeanImpulse(m_LeanImpulseDn);
+                    collider->ApplyLeanImpulse(currentLean == -1 ? -m_LeanImpulseDn : m_LeanImpulseDn);
                 }
                 goto LABEL_86;
             }
 
-            if (wheelsOnGround == 0.0 && this->m_Airtime > 1.0)
+            if (wheelsOnGround == 0.0f && m_Airtime > 1.0f)
             {
             LABEL_86:
-                *(int16_t*)((char*)&this->dword_14 + 2) = 0;
-                *(uint16_t*)&this->dword_4C = 0xA;
+                *(int16_t*)((char*)&dword_14 + 2) = 0;
+                leanTimer = 0xA;
             }
         }
 
     LABEL_87:
-        if (!((int16_t)(this->dword_14 >> 16)))
+        if (!((int16_t)(dword_14 >> 16)))
         {
             comPoint = m_CarSim->m_CenterOfMass;
-            comPoint.X = 0.0;
+            comPoint.X = 0.0f;
             m_CarSim->SetCenterOfMass(comPoint);
         }
 
     LABEL_89:
-        currentLean = (int16_t)(this->dword_14 >> 16);
-        if (currentLean && this->m_Lean > 0.0)
-        {
-            wheelZDiff = wheel_RL->m_LocalOffset.Z - wheel_FL->m_LocalOffset.Z;
+        currentLean = (int16_t)(dword_14 >> 16);
 
-            forceOffset = Vector3(0.0f, 0.0f, 0.0f);
-            axis = Vector3(0.0f, 0.0f, 0.0f);
+        if (currentLean && m_Lean > 0.0f)
+        {
+            float wheelZDiff = wheel_RL->m_LocalOffset.Z - wheel_FL->m_LocalOffset.Z;
+
+            Vector3 leanTorqueAxis(0.0f, 0.0f, 0.0f);
+            Vector3 leanTorqueOrigin(0.0f, 0.0f, 0.0f);
 
             if (currentLean >= 0)
             {
-                axis.Midpoint(RRpos, FRpos);
-                forceOffset.Subtract(RRpos, FRpos);
+                leanTorqueOrigin.Midpoint(RRpos, FRpos);
+                leanTorqueAxis.Subtract(RRpos, FRpos);
             }
             else
             {
-                axis.Midpoint(RLpos, FLpos);
-                forceOffset.Subtract(RLpos, FLpos);
+                leanTorqueOrigin.Midpoint(RLpos, FLpos);
+                leanTorqueAxis.Subtract(RLpos, FLpos);
             }
 
-            wheelHeightDelta = (float)wheelZDiff;
-            forceOffset = forceOffset / wheelHeightDelta;
+            leanTorqueAxis = leanTorqueAxis / wheelZDiff;
 
-            targetLean = asin(ics->m_WorldTransform.m01) -
-                (double)(-(int16_t)(this->dword_14 >> 16)) *
-                this->m_TwoWheelLeanAngle * 1.5704999;
+            float leanTargetAngle = asin(ics->m_WorldTransform.m01) -
+                (float)(-(int16_t)(dword_14 >> 16)) *
+                m_TwoWheelLeanAngle * 1.5705f;
 
-            if (targetLean <= this->m_LeanLimit)
-            {
-                minLeanClamp = -this->m_LeanLimit;
-                if (targetLean < minLeanClamp)
-                    targetLean = minLeanClamp;
-            }
-            else
-            {
-                targetLean = this->m_LeanLimit;
-            }
 
-            clampedLean = -((targetLean * this->m_Lean
-                - -(forceOffset.Z * ics->m_AngularVelocity.Z +
-                    forceOffset.Y * ics->m_AngularVelocity.Y +
-                    forceOffset.X * ics->m_AngularVelocity.X)
-                * this->m_LeanDamp * datTimeManager::InvSeconds)
+            leanTargetAngle = math::Clamp(leanTargetAngle, -m_LeanLimit, m_LeanLimit);
+
+            float leanTorqueScale = -((leanTargetAngle * m_Lean
+                + leanTorqueAxis.Dot(ics->m_AngularVelocity)
+                * m_LeanDamp * datTimeManager::InvSeconds
+                * datTimeManager::PhysicsSecondsScale) // FPS dependency fix
                 * ics->m_AngInertia.Z);
 
-            torqueVec.X = forceOffset.X * clampedLean;
-            torqueVec.Y = forceOffset.Y * clampedLean;
-            torqueVec.Z = clampedLean * forceOffset.Z;
+            Vector3 leanTorqueVec = leanTorqueAxis * leanTorqueScale;
+            Vector3 leanTorqueOffset = leanTorqueOrigin - worldPos;
 
-            applyOffset.X = axis.X - ics->m_WorldTransform.m30;
-            applyOffset.Y = axis.Y - ics->m_WorldTransform.m31;
-            applyOffset.Z = axis.Z - ics->m_WorldTransform.m32;
+            ApplyScaledTorqueAndForce(leanTorqueVec, leanTorqueOffset, ics->m_InvAngInertia.Z);
 
-            ApplyScaledTorqueAndForce(torqueVec, applyOffset, ics->m_InvAngInertia.Z);
-
-            if (this->m_TwoWheelDrag != 0.0)
+            // Optional drag force to slow the vehicle while on 2 wheels
+            if (m_TwoWheelDrag != 0.0f)
             {
                 Vector3 velDir;
                 velDir.Normalize(ics->m_WorldVelocity);
@@ -393,246 +335,242 @@ void vehGyro::Update()
         }
     }
 
-    // Wheelie system
-    if ((this->dword_18 & 0x100000) == 0)
+    // -------------------------------------------------------------------------
+    // Wheelie
+    // -------------------------------------------------------------------------
+    if ((dword_18 & 0x100000) == 0)
         goto LABEL_118;
 
-    if (m_CarSim->m_BurnoutValue <= 0.0 || this->m_Input->m_Handbrake != 0.0)
+    if (burnout <= 0.0f || handbrake != 0.0f)
         goto LABEL_118;
 
-    rearWheelOnGround = wheel_RL->m_OnGround;
-    memset(&torqueVec, 0, sizeof(torqueVec));
-    burnoutScale = 0.0;
+    Vector3 wheelieTorqueAxis(0.0f, 0.0f, 0.0f);
+    float wheelieGroundNormalY = 0.0f;
 
-    if (!rearWheelOnGround)
+    if (!wheel_RL->m_OnGround)
     {
         if (!wheel_RR || !wheel_RR->m_OnGround)
             goto LABEL_112;
 
-        contactM01 = wheel_RR->m_ContactMatrix.m01;
-        torqueVec.X = wheel_RR->m_ContactMatrix.m00;
-        contactM02 = wheel_RR->m_ContactMatrix.m02;
-        torqueVec.Y = contactM01;
-        contactM21 = wheel_RR->m_ContactMatrix.m21;
-        goto LABEL_111;
+        wheelieTorqueAxis = wheel_RR->m_ContactMatrix.GetRow(0);
+        wheelieGroundNormalY = wheel_RR->m_ContactMatrix.m21;
+        goto LABEL_112;
     }
 
     if (!wheel_RR || !wheel_RR->m_OnGround)
     {
-        contactM01 = wheel_RL->m_ContactMatrix.m01;
-        contactM02 = wheel_RL->m_ContactMatrix.m02;
-        torqueVec.X = wheel_RL->m_ContactMatrix.m00;
-        contactM21 = wheel_RL->m_ContactMatrix.m21;
-        torqueVec.Y = contactM01;
-    LABEL_111:
-        torqueVec.Z = contactM02;
-        burnoutScale = contactM21;
+        wheelieTorqueAxis = wheel_RL->m_ContactMatrix.GetRow(0);
+        wheelieGroundNormalY = wheel_RL->m_ContactMatrix.m21;
         goto LABEL_112;
     }
 
-    torqueVec.Subtract(RRpos, RLpos);
-    torqueVec.Normalize();
-    burnoutScale = (m_CarSim->m_Wheels[3]->m_ContactMatrix.m21 + wheel_RL->m_ContactMatrix.m21) * 0.5f;
+    wheelieTorqueAxis.Subtract(RRpos, RLpos);
+    wheelieTorqueAxis.Normalize();
+    wheelieGroundNormalY = (wheel_RR->m_ContactMatrix.m21 + wheel_RL->m_ContactMatrix.m21) * 0.5f;
 
 LABEL_112:
-    gasBrakeInput = m_Input->m_GasBrake;
-    comPoint.X = torqueVec.Y * ics->m_WorldTransform.m12 - torqueVec.Z * ics->m_WorldTransform.m11;
-    comPoint.Y = torqueVec.Z * ics->m_WorldTransform.m10 - torqueVec.X * ics->m_WorldTransform.m12;
-    comPoint.Z = torqueVec.X * ics->m_WorldTransform.m11 - torqueVec.Y * ics->m_WorldTransform.m10;
+    // Cross product of torque axis with vehicle up
+    Vector3 wheelieCross;
+    wheelieCross.X = wheelieTorqueAxis.Y * ics->m_WorldTransform.m12 - wheelieTorqueAxis.Z * ics->m_WorldTransform.m11;
+    wheelieCross.Y = wheelieTorqueAxis.Z * ics->m_WorldTransform.m10 - wheelieTorqueAxis.X * ics->m_WorldTransform.m12;
+    wheelieCross.Z = wheelieTorqueAxis.X * ics->m_WorldTransform.m11 - wheelieTorqueAxis.Y * ics->m_WorldTransform.m10;
 
-    wheelieGravityRef = -wheelieParam;
-    wheelieParam = atan2(speed * speed, wheelieGravityRef) * gasBrakeInput * -0.79000002 * (m_Input->m_SteerRate + 1.0) * 0.5;
+    float wheelieGravity = -(gravityScale * -9.8f);
 
-    ics->ComputeForce(0.0f, axis);
-    double invMass = ics->m_InvMass;
-    axis.X *= invMass;
-    axis.Y *= invMass;
-    axis.Z *= invMass;
+    float wheelieTargetAngle =
+        atan2(speed * speed, wheelieGravity)
+        * gasBrake
+        * -0.79f
+        * (m_Input->m_SteerRate + 1.0f) * 0.5f;
 
-    wheelieDot = axis.X * comPoint.X + axis.Z * comPoint.Z + axis.Y * comPoint.Y;
-    wheelieAngleCorrection = 0.0;
-    if (wheelieDot < 0.0)
-        wheelieAngleCorrection = atan2(wheelieDot, wheelieGravityRef) * gasBrakeInput;
+    Vector3 wheelieAccelDir;
+    ics->ComputeForce(0.0f, wheelieAccelDir);
+    wheelieAccelDir = wheelieAccelDir * ics->m_InvMass;
 
-    Vector3 rlContact = m_CarSim->m_Wheels[1]->m_ContactMatrix.GetRow(3);
+    float wheelieAccelDot = wheelieAccelDir.Dot(wheelieCross);
+    float wheelieAngleCorrection = 0.0f;
+    if (wheelieAccelDot < 0.0f)
+        wheelieAngleCorrection = atan2(wheelieAccelDot, wheelieGravity) * gasBrake;
 
-    wheelieBaseTorque = (ics->m_WorldTransform.m21 - burnoutScale - sin(wheelieAngleCorrection * 0.25 + wheelieParam * 0.75))
-        * this->m_Wheelie
-        - (torqueVec.Z * ics->m_AngularVelocity.Z +
-            torqueVec.Y * ics->m_AngularVelocity.Y +
-            torqueVec.X * ics->m_AngularVelocity.X)
-        * datTimeManager::InvSeconds * 0.1;
+    // Force application point: midpoint between rear wheels
+    Vector3 rlContact = wheel_RL->m_ContactMatrix.GetRow(3);
+    Vector3 wheelieTorqueOffset;
 
     if (wheel_RR)
     {
-        forceOffset.X = (wheel_RR->m_ContactMatrix.m30 + rlContact.X) * 0.5;
-        forceOffset.Y = (wheel_RR->m_ContactMatrix.m31 + rlContact.Y) * 0.5;
-        forceOffset.Z = (wheel_RR->m_ContactMatrix.m32 + rlContact.Z) * 0.5;
+        wheelieTorqueOffset.X = (wheel_RR->m_ContactMatrix.m30 + rlContact.X) * 0.5;
+        wheelieTorqueOffset.Y = (wheel_RR->m_ContactMatrix.m31 + rlContact.Y) * 0.5;
+        wheelieTorqueOffset.Z = (wheel_RR->m_ContactMatrix.m32 + rlContact.Z) * 0.5;
     }
-    else
-    {
-        forceOffset = rlContact;
-    }
+    else wheelieTorqueOffset = rlContact;
 
-    forceOffset.X -= ics->m_WorldTransform.m30;
-    forceOffset.Y -= ics->m_WorldTransform.m31;
-    forceOffset.Z -= ics->m_WorldTransform.m32;
+    wheelieTorqueOffset = wheelieTorqueOffset - worldPos;
 
-    finalWheelieTorque = wheelieBaseTorque * ics->m_AngInertia.X;
-    applyOffset.X = torqueVec.X * finalWheelieTorque;
-    applyOffset.Y = torqueVec.Y * finalWheelieTorque;
-    applyOffset.Z = torqueVec.Z * finalWheelieTorque;
+    float wheelieTorqueScale =
+        (ics->m_WorldTransform.m21 - wheelieGroundNormalY - sin(wheelieAngleCorrection * 0.25f + wheelieTargetAngle * 0.75f))
+        * m_Wheelie
+        - (wheelieTorqueAxis.Dot(ics->m_AngularVelocity))
+        * datTimeManager::InvSeconds * 0.1f
+        * datTimeManager::PhysicsSecondsScale; // FPS dependency fix
+    
+    float wheelieTorque = wheelieTorqueScale * ics->m_AngInertia.X;
+    Vector3 wheelieTorqueVec = wheelieTorqueAxis * wheelieTorque;
 
-    ApplyScaledTorqueAndForce(applyOffset, forceOffset, ics->m_InvAngInertia.X);
+    ApplyScaledTorqueAndForce(wheelieTorqueVec, wheelieTorqueOffset, ics->m_InvAngInertia.X);
 
+    // -------------------------------------------------------------------------
     // Turn / Spin / 180 Assist
+    // -------------------------------------------------------------------------
 LABEL_118:
-    if (this->m_Turn <= 0.0)
+    if (m_Turn <= 0.0f)
         goto LABEL_148;
 
-    comPoint.X = (wheel_RL->m_ContactMatrix.m30 + wheel_RR->m_ContactMatrix.m30) * 0.5;
-    comPoint.Y = (wheel_RL->m_ContactMatrix.m31 + wheel_RR->m_ContactMatrix.m31) * 0.5;
-    comPoint.Z = (wheel_RL->m_ContactMatrix.m32 + wheel_RR->m_ContactMatrix.m32) * 0.5;
+    // Torque axis: average normal of rear wheels; origin: rear axle midpoint
+    Vector3 turnSpinTorqueOrigin =
+        (wheel_RL->m_ContactMatrix.GetRow(3) + wheel_RR->m_ContactMatrix.GetRow(3)) * 0.5f;
 
-    torqueVec.X = (wheel_RR->m_ContactMatrix.m10 + wheel_RL->m_ContactMatrix.m10) * 0.5;
-    torqueVec.Y = (wheel_RL->m_ContactMatrix.m11 + wheel_RR->m_ContactMatrix.m11) * 0.5;
-    torqueVec.Z = (wheel_RL->m_ContactMatrix.m12 + wheel_RR->m_ContactMatrix.m12) * 0.5;
-    torqueVec.Normalize();
+    Vector3 turnSpinTorqueAxis(
+        (wheel_RR->m_ContactMatrix.m10 + wheel_RL->m_ContactMatrix.m10) * 0.5f,
+        (wheel_RL->m_ContactMatrix.m11 + wheel_RR->m_ContactMatrix.m11) * 0.5f,
+        (wheel_RL->m_ContactMatrix.m12 + wheel_RR->m_ContactMatrix.m12) * 0.5f);
+    turnSpinTorqueAxis.Normalize();
 
-    spinAssistFlag = this->dword_18 & 0x10000;
-    applyOffset.X = comPoint.X - ics->m_WorldTransform.m30;
-    applyOffset.Y = comPoint.Y - ics->m_WorldTransform.m31;
-    applyOffset.Z = comPoint.Z - ics->m_WorldTransform.m32;
+    Vector3 turnSpinTorqueOffset = turnSpinTorqueOrigin - worldPos;
 
-    forceOffset = Vector3(0.0f, 0.0f, 0.0f);
+    float turnSpinTorqueScale = 0.0f;
+    float turnSpinTorque = 0.0f;
+    Vector3 turnSpinTorqueVec(0.0f, 0.0f, 0.0f);
 
-    if (spinAssistFlag && onGroundFactorFinal > 0.0)
+    bool spinAssist = dword_18 & 0x10000;
+    vehWheels* wheels = m_CarSim->m_WheelsStruct;
+
+    if (spinAssist && brake > 0.0f)
     {
-        float someSteer = m_CarSim->m_Steer;
-        if (absForwardSpeed < 25.0)
-            someSteer *= absForwardSpeed * 0.04f;
+        float steerScale = m_CarSim->m_Steer;
+        if (absForwardSpeed < 25.0f)
+            steerScale *= absForwardSpeed * 0.04f;
 
-        onGroundFactorFinal = (float)m_CarSim->OnGround();
-        spinTorque = groundRatio * someSteer * (ics->m_AngInertia.Y * this->m_Spin180);
+        turnSpinTorqueScale =
+            groundRatio
+            * steerScale
+            * (ics->m_AngInertia.Y
+                * m_Spin180);
     }
-    else if (spinAssistFlag && handbrake > 0.0)
+    else if (spinAssist && handbrake > 0.0f)
     {
-        if (m_CarSim->m_Transmission->m_CurrentGear || forwardSpeed >= -5.0)
+        // Reverse 180 spin assist (handbrake in reverse)
+        if (m_CarSim->m_Transmission->m_CurrentGear || forwardSpeed >= -5.0f)
             goto LABEL_147;
 
-        reverseSpinScale = -m_CarSim->m_Steer;
-        if (absForwardSpeed < 10.0)
-            reverseSpinScale = absForwardSpeed * reverseSpinScale * 0.1;
+        float reverseSpinScale = -steer;
+        if (absForwardSpeed < 10.0f)
+            reverseSpinScale *= absForwardSpeed * 0.1f;
 
-        onGroundFactorFinal = (float)m_CarSim->OnGround();
-        spinTorque = groundRatio * reverseSpinScale * (ics->m_AngInertia.Y * this->m_Reverse180);
+        turnSpinTorqueScale =
+            groundRatio
+            * reverseSpinScale
+            * (ics->m_AngInertia.Y
+                * m_Reverse180);
     }
     else
     {
-        if (this->m_TurnFactor > 0.0)
+        if (m_TurnFactor > 0.0f)
         {
-            lowSpeedTurnScale = 1.0;
-            if (absForwardSpeed < 5.0)
-                lowSpeedTurnScale = absForwardSpeed * 0.2;
+            float lowSpeedTurnScale = 1.0f;
+            if (absForwardSpeed < 5.0f)
+                lowSpeedTurnScale = absForwardSpeed * 0.2f;
 
-            double angularComponent = torqueVec.X * ics->m_AngularVelocity.X +
-                torqueVec.Y * ics->m_AngularVelocity.Y +
-                torqueVec.Z * ics->m_AngularVelocity.Z;
+            float angularVelDot = turnSpinTorqueAxis.Dot(ics->m_AngularVelocity);
 
-            vehWheels* wheelsStruct = m_CarSim->m_WheelsStruct;
-            wheelieParam = -1.0
-                / (wheelsStruct->m_Wheel_FR.m_LocalOffset.Z - wheelsStruct->m_Wheel_FL.m_LocalOffset.Z)
-                * ((1.0 - wheelsStruct->m_Wheel_FL.m_OptimumSlipPercent)
+            float turnParam = -1.0f
+                / (wheels->m_Wheel_FR.m_LocalOffset.Z - wheels->m_Wheel_FL.m_LocalOffset.Z)
+                * ((1.0f - wheels->m_Wheel_FL.m_OptimumSlipPercent)
                     * m_CarSim->m_Steer
-                    * wheelsStruct->m_Wheel_FL.m_SteeringLimit
+                    * wheels->m_Wheel_FL.m_SteeringLimit
                     * forwardSpeed)
-                * this->m_TurnFactor
-                + (1.0 - this->m_TurnFactor) * angularComponent
-                - angularComponent;
+                * m_TurnFactor
+                + (1.0f - m_TurnFactor) * angularVelDot
+                - angularVelDot;
 
-            onGroundFactorFinal = (float)m_CarSim->OnGround();
-            finalTurnTorque = (double)(int32_t)onGroundFactorFinal
-                / (double)m_CarSim->m_NumWheels
+            turnSpinTorque =
+                groundRatio
                 * lowSpeedTurnScale
-                * this->m_CarSim->m_WheelsStruct->m_Wheel_FL.m_SurfaceFriction
+                * wheels->m_Wheel_FL.m_SurfaceFriction
                 * ics->m_AngInertia.Y
-                * wheelieParam
-                * this->m_Turn;
+                * turnParam
+                * m_Turn;
             goto LABEL_146;
         }
 
-        if (forwardSpeed <= 0.0)
+        float directionSign = 0.0f;
+        if (forwardSpeed > 0.0f) directionSign = 1.0f;
+        else if (forwardSpeed < 0.0f) directionSign = -1.0f;
+
+        float steerInput = directionSign * m_CarSim->m_Steer;
+
+        if (absForwardSpeed > 0.0f)
         {
-            directionSign = (forwardSpeed >= 0.0) ? 0.0 : -1.0;
+            if (absForwardSpeed < 5.0f)
+                steerInput *= absForwardSpeed * 0.2f;
         }
         else
         {
-            directionSign = 1.0;
+            steerInput = 0.0f;
         }
 
-        handbrake = directionSign * m_CarSim->m_Steer;
-        lowSpeedFactor = fabs(forwardSpeed);
-        lowSpeedAbs = (float)lowSpeedFactor;
-
-        if (lowSpeedFactor > 0.0)
-        {
-            if (lowSpeedAbs < 5.0)
-                handbrake = lowSpeedAbs * handbrake * 0.2;
-        }
-        else
-        {
-            handbrake = 0.0;
-        }
-
-        onGroundFactorFinal = (float)m_CarSim->OnGround();
-        spinTorque = (double)(int32_t)onGroundFactorFinal
-            / (double)m_CarSim->m_NumWheels
-            * handbrake
-            * this->m_CarSim->m_WheelsStruct->m_Wheel_FL.m_SurfaceFriction
+        turnSpinTorqueScale =
+            groundRatio
+            * steerInput
+            * wheels->m_Wheel_FL.m_SurfaceFriction
             * ics->m_AngInertia.Y
-            * this->m_Turn;
+            * m_Turn;
     }
 
-    finalTurnTorque = -spinTorque;
+    turnSpinTorque = -turnSpinTorqueScale;
 
 LABEL_146:
-    forceOffset.X = torqueVec.X * finalTurnTorque;
-    forceOffset.Y = torqueVec.Y * finalTurnTorque;
-    forceOffset.Z = torqueVec.Z * finalTurnTorque;
+    turnSpinTorqueVec = turnSpinTorqueAxis * turnSpinTorque;
 
 LABEL_147:
-    ApplyScaledTorqueAndForce(forceOffset, applyOffset, ics->m_InvAngInertia.Y);
+    ApplyScaledTorqueAndForce(turnSpinTorqueVec, turnSpinTorqueOffset, ics->m_InvAngInertia.Y);
 
+    // -------------------------------------------------------------------------
+    // Air control
+    // -------------------------------------------------------------------------
 LABEL_148:
-    if ((dword_6957C0 & 0x1000) != 0)
-        airControlThreshold = 0.0;
-    else
-        airControlThreshold = 0.25;
+    float airControlThreshold = ((dword_6957C0 & 0x1000) != 0) ? 0.0f : 0.25f;
 
-    if ((m_CarSim->field_184 & 1) == 0 && (this->dword_18 & 0x40000) != 0)
+    if ((m_CarSim->field_184 & 1) == 0 && (dword_18 & 0x40000) != 0)
     {
         if ((m_Input->m_CurrentGearFlags & 0x10000) != 0
             && m_CarSim->m_Airtime > airControlThreshold
-            && (*(float*)&this->dword_2C > 0.0 || this->m_Pitch > 0.0 || this->m_RollTorque > 0.0))
+            && (*(float*)&dword_2C > 0.0f || m_Pitch > 0.0f || m_RollTorque > 0.0f))
         {
-            negLeanUpB = -(m_Input->m_2WheelSteer * *(float*)&this->dword_2C);
-            ics->ApplyUpTorque(negLeanUpB);
+            float airYawTorque = -(m_Input->m_2WheelSteer * *(float*)&dword_2C); // m_Yaw?
 
-            negLeanUpC = this->m_Input->m_SteerRate * this->m_Pitch;
-            ics->ApplyLateralTorque(negLeanUpC);
+            ics->ApplyUpTorque(airYawTorque);
 
-            ph_Some_Inst_Parent* instParent = this->m_CarSim->m_Collider->m_SomeInstParent;
-            rollLimitNeg = -this->m_RollLimit;
-            currentRollAngle = asin(instParent->m_SomeInstParentTransform.m01);
+            float airPitchTorque = m_Input->m_SteerRate * m_Pitch;
 
-            negLeanUpD = -(math::Clamp(currentRollAngle, rollLimitNeg, this->m_RollLimit) * this->m_RollTorque
-                - -(instParent->m_SomeInstParentTransform.m22 * ics->m_AngularVelocity.Z
-                    + instParent->m_SomeInstParentTransform.m21 * ics->m_AngularVelocity.Y
-                    + instParent->m_SomeInstParentTransform.m20 * ics->m_AngularVelocity.X)
-                * this->m_RollDamp
-                * datTimeManager::InvSeconds);
+            ics->ApplyLateralTorque(airPitchTorque);
 
-            ics->ApplyForwardTorque(negLeanUpD);
+            ph_Some_Inst_Parent* instParent = collider->m_SomeInstParent;
+
+            float airCurrentRoll = asin(instParent->m_SomeInstParentTransform.m01);
+            float airClampedRoll = math::Clamp(airCurrentRoll, -m_RollLimit, m_RollLimit);
+
+            float airRollRate =
+                instParent->m_SomeInstParentTransform.m22 * ics->m_AngularVelocity.Z
+                + instParent->m_SomeInstParentTransform.m21 * ics->m_AngularVelocity.Y
+                + instParent->m_SomeInstParentTransform.m20 * ics->m_AngularVelocity.X;
+
+            airRollRate *= datTimeManager::PhysicsSecondsScale; // FPS dependency fix
+
+            float airRollTorque =
+                -(airClampedRoll * m_RollTorque
+                    + airRollRate * m_RollDamp * datTimeManager::InvSeconds);
+
+            ics->ApplyForwardTorque(airRollTorque);
         }
     }
 }

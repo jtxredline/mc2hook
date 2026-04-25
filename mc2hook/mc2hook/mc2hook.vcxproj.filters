@@ -65,7 +65,6 @@
     <ClCompile Include="handlers\KinematicSteeringHandler.cpp" />
     <ClCompile Include="handlers\REHandler.cpp" />
     <ClCompile Include="handlers\TrafficDistanceHandler.cpp" />
-    <ClCompile Include="handlers\TwoWheelHandler.cpp" />
     <ClCompile Include="handlers\AddressPrinterHandler.cpp" />
     <ClCompile Include="handlers\BorderlessHandler.cpp" />
     <ClCompile Include="handlers\CarShadowHandler.cpp" />
@@ -116,7 +115,6 @@
     <ClCompile Include="age\physics\phcollider.cpp" />
     <ClCompile Include="age\physics\archetype.cpp" />
     <ClCompile Include="age\managers\layermgr.cpp" />
-    <ClCompile Include="age\vehicle\gyrotemp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="age\camera\playercamera.h" />
@@ -210,7 +208,6 @@
     <ClInclude Include="handlers\KinematicSteeringHandler.h" />
     <ClInclude Include="handlers\REHandler.h" />
     <ClInclude Include="handlers\TrafficDistanceHandler.h" />
-    <ClInclude Include="handlers\TwoWheelHandler.h" />
     <ClInclude Include="handlers\AddressPrinterHandler.h" />
     <ClInclude Include="handlers\BorderlessHandler.h" />
     <ClInclude Include="handlers\CarShadowHandler.h" />

@@ -29,7 +29,7 @@ public:
     float m_Realtime;
     int dword_54;
     int m_Framelock;
-    char m_Swapearly;
+    bool m_Swapearly;
     char field_5D;
     char field_5E;
 
@@ -37,6 +37,8 @@ public:
     static hook::Type<mcGameState*> Instance;
 
 public:
+    void InitTime();
+
     void EnterState(int state);
     void EnterStateBoot();
     void EnterStateMovie();

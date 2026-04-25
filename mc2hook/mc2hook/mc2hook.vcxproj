@@ -260,7 +260,6 @@
     <ClInclude Include="handlers\KinematicSteeringHandler.h" />
     <ClInclude Include="handlers\REHandler.h" />
     <ClInclude Include="handlers\TrafficDistanceHandler.h" />
-    <ClInclude Include="handlers\TwoWheelHandler.h" />
     <ClInclude Include="handlers\AddressPrinterHandler.h" />
     <ClInclude Include="handlers\BorderlessHandler.h" />
     <ClInclude Include="handlers\CarShadowHandler.h" />
@@ -357,7 +356,6 @@
     <ClCompile Include="age\vehicle\engine.h" />
     <ClCompile Include="age\vehicle\carmodel.cpp" />
     <ClCompile Include="age\vehicle\gyro.cpp" />
-    <ClCompile Include="age\vehicle\gyrotemp.cpp" />
     <ClCompile Include="age\vehicle\nitro.cpp" />
     <ClCompile Include="age\vehicle\vehinput.cpp" />
     <ClCompile Include="age\vehicle\transmission.cpp" />
@@ -390,7 +388,6 @@
     <ClCompile Include="handlers\KinematicSteeringHandler.cpp" />
     <ClCompile Include="handlers\REHandler.cpp" />
     <ClCompile Include="handlers\TrafficDistanceHandler.cpp" />
-    <ClCompile Include="handlers\TwoWheelHandler.cpp" />
     <ClCompile Include="handlers\AddressPrinterHandler.cpp" />
     <ClCompile Include="handlers\BorderlessHandler.cpp" />
     <ClCompile Include="handlers\CarShadowHandler.cpp" />

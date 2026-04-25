@@ -85,6 +85,13 @@ void REHandler::Install()
         });
 
     // mcGameState
+    InstallCallback("mcGameState::InitTime()", "mcGameState::InitTime()",
+        &mcGameState::InitTime, {
+            cb::call(0x402EE2),
+            cb::call(0x402F52),
+            cb::call(0x403091),
+        });
+
     InstallCallback("mcGameState::EnterState()", "mcGameState::EnterState()",
         &mcGameState::EnterState, {
             cb::call(0x404BAE),
@@ -275,6 +282,8 @@ void REHandler::Install()
     // vehInput
     InstallVTableHook("vehInput::Update()", &vehInput::Update, { 0x63D0C4 });
     InstallVTableHook("vehInput::ApplyReplayFrame()", &vehInput::ApplyReplayFrame, { 0x63D0D4 });
+
+    // ioInput
     
     // ioJoystick
     InstallCallback("ioJoystick::BeginAll()", "ioJoystick::BeginAll()", &ioJoystick::BeginAll, { cb::call(0x60481A) });
@@ -294,7 +303,6 @@ void REHandler::Install()
 
     // vehGyro
     InstallVTableHook("vehGyro::Update()", &vehGyro::Update, { 0x64556C });
-    //InstallCallback("vehGyro::ApplyScaledTorqueAndForce()", "vehGyro::ApplyScaledTorqueAndForce()", &vehGyro::ApplyScaledTorqueAndForce, { cb::call (0x4DCB48) });
 
     // mcLayerMgr
     InstallCallback("mcLayerMgr::BeginLoadLayer()", "mcLayerMgr::BeginLoadLayer()",

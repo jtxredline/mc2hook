@@ -1602,7 +1602,7 @@ void vehWheel::UpdateComp()
 
         if (toggle == false)
         {
-            Printf("CALLING ORIGINAL\n");
+            Printf("vehWheel: CALLING ORIGINAL\n");
             toggle = !toggle;
         }
     }
@@ -1612,7 +1612,7 @@ void vehWheel::UpdateComp()
 
         if (toggle == true)
         {
-            Printf("CALLING REWRITE\n");
+            Printf("vehWheel: CALLING REWRITE\n");
             toggle = !toggle;
         }
     }

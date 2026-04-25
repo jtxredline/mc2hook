@@ -1,10 +1,18 @@
 #include "gamestate.h"
-#include <mc2hook\mc2hook.h>
 #include <age/core/output.h>
 #include <discord-rpc/discord_rpc.h>
 #include <age/types.h>
+#include <age/data/timemgr.h>
 
 declfield(mcGameState::Instance)(0x6C3890);
+
+void mcGameState::InitTime()
+{
+    hook::Thunk<0x402E10>::Call<void>(this); // Call original
+
+    // General init for now
+    datTimeManager::InitPhysicsBaselineFPS();
+}
 
 void mcGameState::EnterState(int state)
 {

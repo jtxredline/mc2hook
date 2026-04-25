@@ -33,12 +33,12 @@
 // vehManager: 0x4CEA70, 0x644690
 
 void AddressPrinterHandler::PrintAddress() {
-    hook::Thunk<0x4D1710>::Call<void>(this);
+    hook::Thunk<0x4045E0>::Call<void>(this);
 
     if (ioKeyboard::GetKeyDown(DIK_LALT))
     {
         void* pt = getPtr<void*>(this, 0x0);
-        Printf("mcCar: %p\n", pt);
+        Printf("mcGameState: %p\n", pt);
     }
 }
 
@@ -47,7 +47,7 @@ void AddressPrinterHandler::Install()
     bool printAddress = HookConfig::GetBool("Debug", "PrintAddress", false);
     if (printAddress)
     {
-        InstallVTableHook("Print Address", &PrintAddress, { 0x644980 });
+        InstallVTableHook("Print Address", &PrintAddress, { 0x62D970 });
 
         //InstallCallback("Address Printer", "Address Printer", &PrintAddress, { cb::call(0x4CEA74) });
     }
