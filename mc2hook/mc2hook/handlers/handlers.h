@@ -32,7 +32,6 @@
 #include <handlers/GravityHandler.h>
 #include <handlers/CPUPlayerVehiclesHandler.h>
 #include <handlers/REHandler.h>
-#include <handlers\KinematicSteeringHandler.h>
 #include <handlers\TrafficDistanceHandler.h>
 #include <handlers/RenderDistanceHandler.h>
 #include <handlers\StateResearchHook.h>
@@ -54,7 +53,6 @@ static void InstallHandlersPostEngineInit()
     InstallHandler<PathHandler>("Path Handler");
     InstallHandler<MaxVelocityHandler>("Max Velocity Handler");
     InstallHandler<AddressPrinterHandler>("Address Printer Handler");
-    InstallHandler<KinematicSteeringHandler>("Kinematic Steering Handler");
     InstallHandler<TrafficDistanceHandler>("Traffic Distance Handler");
 
     //InstallHandler<TestPanelHandler>("Panel Handler (Keyboard input test really)");

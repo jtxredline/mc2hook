@@ -15,8 +15,77 @@
 #include <age/managers/mcaudiomgr.h>
 #include <age/input/joystick.h>
 #include <age/input/device.h>
+#include <age/physics/phcollider.h>
+#include <age/physics/phinertia.h>
+#include <age/vector/vector3.h>
+#include <age/vector/matrix34.h>
 
 #include <age/core/output.h>
+
+// Kinematic steering state
+static bool kinematicEnabled = false;
+static float steeringRate = 8.0f;
+static float steeringLock = 1.0f;
+static float speedEnd = 100.0f;
+static float sCurveSharpness = 0.1f;
+static float maxSteeringFactor = 1.0f;
+static float minSteeringFactor = 0.89f;
+static float gyroGain = 1.0f;
+static float slipAngleGain = 2.0f;
+static float steerRange = 0.0f;
+static float speedEndHalf = 0.0f;
+static float invSpeedEnd = 0.0f;
+static float steerValue = 0.0f;
+
+static void LoadKinematicConfig()
+{
+    steeringRate = HookConfig::GetFloat("KinematicSteer", "SteeringRate", 8.0f);
+    steeringLock = HookConfig::GetFloat("KinematicSteer", "SteeringLock", 1.0f);
+    speedEnd = HookConfig::GetFloat("KinematicSteer", "SpeedEnd", 100.0f);
+    sCurveSharpness = HookConfig::GetFloat("KinematicSteer", "SCurveSharpness", 0.1f);
+    maxSteeringFactor = HookConfig::GetFloat("KinematicSteer", "MaxSteeringFactor", 1.0f);
+    minSteeringFactor = HookConfig::GetFloat("KinematicSteer", "MinSteeringFactor", 0.89f);
+    gyroGain = HookConfig::GetFloat("KinematicSteer", "GyroGain", 1.0f);
+    slipAngleGain = HookConfig::GetFloat("KinematicSteer", "SlipAngleGain", 2.0f);
+    steerRange = maxSteeringFactor - minSteeringFactor;
+    speedEndHalf = speedEnd * 0.5f;
+    invSpeedEnd = 1.0f / speedEnd;
+}
+
+static float ComputeNormalizedSpeed(float velocityMagnitude)
+{
+    return fminf(velocityMagnitude * invSpeedEnd, 1.0f);
+}
+
+static float ComputeGyroCorrection(float angularVelocityY, float deltaTime)
+{
+    return (-angularVelocityY * deltaTime) * gyroGain;
+}
+
+static float ComputeSlipCorrection(float lateralVelocity, float longitudinalVelocity, float deltaTime, float normalizedSpeed)
+{
+    float slipAngle = (fabsf(lateralVelocity) > 0.1f) ? atan2f(lateralVelocity, -longitudinalVelocity) : 0.0f;
+    return -slipAngle * slipAngleGain * deltaTime * normalizedSpeed;
+}
+
+static float ComputeSpeedFactor(float normalizedSpeed)
+{
+    float expArg = -sCurveSharpness * (normalizedSpeed * speedEnd - speedEndHalf);
+    return fmaxf(minSteeringFactor, fminf(maxSteeringFactor - steerRange / (1.0f + expf(expArg)), maxSteeringFactor));
+}
+
+static float ClampSteering(float value)
+{
+    return fminf(fmaxf(value, -steeringLock), steeringLock);
+}
+
+static Vector3 ComputeAxleVelocity(const Vector3& worldVelocity, const Vector3& angularVelocity, const Matrix34& worldTransform, float axleOffsetX)
+{
+    Vector3 xAxis = worldTransform.GetRow(0);
+    Vector3 axleOffsetWorld = xAxis * axleOffsetX;
+    Vector3 rotVel = Vector3::Cross(angularVelocity, axleOffsetWorld);
+    return worldVelocity + rotVel;
+}
 
 void vehInput::Update()
 {
@@ -348,6 +417,49 @@ LABEL_61:
 
     // Sync gear
     flags = (flags & 0xFFFF0000) | (m_CarSim->m_Transmission->m_CurrentGear & 0xFFFF);
+
+    // Kinematic steering
+    {
+        static bool initialized = false;
+        if (!initialized)
+        {
+            kinematicEnabled = HookConfig::GetBool("KinematicSteer", "KinematicSteerEnable", false);
+            if (kinematicEnabled) LoadKinematicConfig();
+            initialized = true;
+        }
+
+        if (kinematicEnabled && m_CarSim && m_CarSim->m_Collider && m_CarSim->m_Collider->m_ICS)
+        {
+            float lastRequestedSteering = m_Steer;
+            float deltaTime = datTimeManager::GetSeconds();
+            phInertialCS* ics = m_CarSim->m_Collider->m_ICS;
+
+            Vector3 worldVel = ics->m_WorldVelocity;
+            Matrix34 worldTrans = ics->m_WorldTransform;
+            Vector3 angVel = ics->m_AngularVelocity;
+
+            float frontAxleX = m_CarSim->m_Wheels[0]->m_LocalOffset.X;
+            Vector3 axleVel = ComputeAxleVelocity(worldVel, angVel, worldTrans, frontAxleX);
+
+            float lateralVel = axleVel.Dot(worldTrans.GetRow(0));
+            float longitudinalVel = axleVel.Dot(worldTrans.GetRow(2));
+
+            float normalizedSpeed = ComputeNormalizedSpeed(worldVel.Mag());
+            float gyroCorr = ComputeGyroCorrection(angVel.Y, deltaTime);
+            float slipCorr = ComputeSlipCorrection(lateralVel, longitudinalVel, deltaTime, normalizedSpeed);
+
+            float directionSign = (longitudinalVel >= 0.0f) ? -1.0f : 1.0f;
+            float correctionDelta = slipCorr + gyroCorr * directionSign;
+            float driverDelta = lastRequestedSteering * steeringRate * deltaTime;
+
+            float speedFactor = ComputeSpeedFactor(normalizedSpeed);
+            float fpsCorrectionPower = deltaTime * 144.0f;
+            float normalizedDampening = powf(speedFactor, fpsCorrectionPower);
+
+            steerValue = ClampSteering((steerValue + driverDelta - correctionDelta) * normalizedDampening);
+            m_Steer = steerValue;
+        }
+    }
 
     // Apply to car
     if (!mcNetManager::IsNetworkMode)
