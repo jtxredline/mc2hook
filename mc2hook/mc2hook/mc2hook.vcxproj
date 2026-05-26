@@ -257,7 +257,7 @@
     <ClInclude Include="handlers\CPUPlayerVehiclesHandler.h" />
     <ClInclude Include="handlers\DeadZoneHandler.h" />
     <ClInclude Include="handlers\GravityHandler.h" />
-    <ClInclude Include="handlers\KinematicSteeringHandler.h" />
+
     <ClInclude Include="handlers\REHandler.h" />
     <ClInclude Include="handlers\TrafficDistanceHandler.h" />
     <ClInclude Include="handlers\AddressPrinterHandler.h" />
@@ -353,7 +353,7 @@
     <ClCompile Include="age\vehicle\damage.cpp" />
     <ClCompile Include="age\vehicle\drivetrain.cpp" />
     <ClCompile Include="age\vehicle\engine.cpp" />
-    <ClCompile Include="age\vehicle\engine.h" />
+    <ClInclude Include="age\vehicle\engine.h" />
     <ClCompile Include="age\vehicle\carmodel.cpp" />
     <ClCompile Include="age\vehicle\gyro.cpp" />
     <ClCompile Include="age\vehicle\nitro.cpp" />
@@ -385,7 +385,7 @@
     <ClCompile Include="handlers\CPUPlayerVehiclesHandler.cpp" />
     <ClCompile Include="handlers\DeadZoneHandler.cpp" />
     <ClCompile Include="handlers\GravityHandler.cpp" />
-    <ClCompile Include="handlers\KinematicSteeringHandler.cpp" />
+
     <ClCompile Include="handlers\REHandler.cpp" />
     <ClCompile Include="handlers\TrafficDistanceHandler.cpp" />
     <ClCompile Include="handlers\AddressPrinterHandler.cpp" />
