@@ -17,7 +17,7 @@ void datTimeManager::InitPhysicsBaselineFPS()
     PhysicsBaselineFPS = HookConfig::GetFloat("Physics", "PhysicsFixesBaselineFPS", 60.0f);
     
     // Cap physics fixes baseline fps
-    float minPhysicsFixesBaselineFPS = 30.0f;
+    float minPhysicsFixesBaselineFPS = 60.0f;
     if (PhysicsBaselineFPS < minPhysicsFixesBaselineFPS)
         PhysicsBaselineFPS = minPhysicsFixesBaselineFPS;
 }
