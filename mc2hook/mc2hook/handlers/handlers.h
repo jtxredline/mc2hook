@@ -59,7 +59,6 @@ static void InstallHandlersPostEngineInit()
 
     //InstallHandler<TestPanelHandler>("Panel Handler (Keyboard input test really)");
     //InstallHandler<OnlineBangersHandler>("Online Bangers Handler");
-    //InstallHandler<VelocityPrinterHandler>("Velocity Printer Handler");
 }
 
 // Installed at game launch
@@ -87,7 +86,6 @@ static void InstallMainHandlers()
     InstallHandler<GravityHandler>("Gravity Handler");
     InstallHandler<CPUPlayerVehiclesHandler>("CPU Player Vehicles Handler");
     InstallHandler<RenderDistanceHandler>("RenderDistance Handler");
-    //InstallHandler<REHandler>("RE Handler");
     
     //InstallHandler<StateResearchHook>("SRH");
 }

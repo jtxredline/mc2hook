@@ -17,7 +17,8 @@ public:
 	int dword_2c;
 
 public:
+	static hook::Type<phSimulator*> Instance;
+
+public:
 	bool ApplyForce(int bodyId, Vector3* force, Vector3* position, float mass);
 };
-
-extern phSimulator* g_phSimulator;

@@ -4,7 +4,8 @@
 class mcCar;
 class vehCarSim;
 
-class vehAutoMgr {
+class vehAutoMgr
+{
 public:
     void* m_Vtable;
     int m_NumCars;

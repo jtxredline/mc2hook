@@ -1,12 +1,19 @@
 #include "playercamera.h"
+
 #include <age/data/timemgr.h>
 #include <age/math/math.h>
 #include <age/core/output.h>
 #include <age/physics/phinertia.h>
-#include <age/input/keyboard.h>
-#include <dinput.h>
+#include <age/physics/phcollider.h>
+#include <age/vehicle/carSSTurbo.h>
+#include <age/vehicle/nitro.h>
+#include <age/vehicle/aero.h>
+#include <age/vehicle/transmission.h>
 #include <age/vehicle/automgr.h>
 #include <age/managers/netmanager.h>
+
+#include <age/input/keyboard.h>
+#include <dinput.h>
 
 void camTrackCS::UpdateSS()
 {

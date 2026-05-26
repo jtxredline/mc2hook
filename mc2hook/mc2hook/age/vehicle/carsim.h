@@ -1,16 +1,15 @@
 #pragma once
-#include <age/vector/vector3.h>
-#include <age/vehicle/transmission.h>
-#include <age/vehicle/aero.h>
 #include <age/vehicle/wheel.h>
-#include <age/physics/phcollider.h>
-#include <age/vehicle/nitro.h>
-#include <age/vehicle/carSSTurbo.h>
 
+class vehAero;
 class vehTransmission;
 class vehEngine;
 class vehDrivetrain;
 class phCollider;
+class vehNitro;
+class mcCarSSTurbo;
+class vehDamage;
+class vehWheel;
 
 struct vehWheels
 {
@@ -70,7 +69,7 @@ public:
 	float m_BoundGravity;
 	float m_AirGravity;
 	int m_DrivetrainType;
-	int dword_e8;
+	int* m_Freetrain;
 	vehWheel* m_Wheels[4];
 	//vehWheel* m_WheelFL;
 	//vehWheel* m_WheelRL;
@@ -98,31 +97,31 @@ public:
 	int dword_148;
 	int dword_14c;
 	int dword_150;
-	int dword_154;
-	int dword_158;
-	int dword_15c;
-	int dword_160;
+	float dword_154;
+	float dword_158;
+	float dword_15c;
+	float dword_160;
 	int dword_164;
-	int dword_168;
+	float dword_168;
 	int dword_16c;
 	int dword_170;
-	int dword_174;
-	int dword_178;
+	float dword_174;
+	float dword_178;
 	int dword_17c;
 	int dword_180;
 	char field_184;
 	bool m_BurnoutCharged;
 	char field_186;
 	char field_187;
-	int dword_188;
+	float dword_188;
 	float m_BurnoutValue;
 	float m_BurnoutIncreaseSpeed;
 	float m_BurnoutDecreaseSpeed;
 	float m_BurnoutDamageAmount;
 	float m_BurnoutBoostSpeed;
 	int m_BurnoutCharging;
-	int dword_1a4;
-	int dword_1a8;
+	float dword_1a4;
+	float dword_1a8;
 	float m_SteeringLimit;
 	float m_Airtime;
 	float m_SomeBrake;
@@ -134,11 +133,18 @@ public:
 	int dword_1cc;
 	vehNitro* m_Nitro;
 	mcCarSSTurbo* m_SSTurbo;
-	int dword_1d8;
+	vehDamage* m_Damage;
 
 public:
+	void UpdateControls();
+	void UpdateControlsComp();
+
 	int OnGround(); // Number of wheels on ground
+	int BottomedOut();
 	void SetDrivable(int a2);
 	void SetCenterOfMass(const Vector3& cg); // Set the simulation center of mass offset from instance origin
+	void SetFrictionHandling(float friction);
+
+	float sub_4D2860(float a2);
 };
 

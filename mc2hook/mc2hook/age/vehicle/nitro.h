@@ -24,4 +24,5 @@ public:
 public:
 	void sub_4D1F80();
 	bool sub_46A350();
+	void sub_4D1EE0();
 };

@@ -9,6 +9,8 @@
 #include <age/vehicle/caraudio.h>
 #include <age/vehicle/damage.h>
 #include <age/vehicle/carSSTurbo.h>
+#include <age/vehicle/nitro.h>
+#include <age/vehicle/transmission.h>
 #include <age/math/math.h>
 #include <age/data/replay.h>
 #include <age/data/timemgr.h>

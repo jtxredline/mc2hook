@@ -10,3 +10,8 @@ bool vehNitro::sub_46A350()
 {
 	return hook::Thunk<0x46A350>::Call<bool>(this); // Call original
 }
+
+void vehNitro::sub_4D1EE0()
+{
+	hook::Thunk<0x4D1EE0>::Call<void>(this); // Call original
+}
