@@ -20,7 +20,7 @@ void vehTransmission::Update()
 
             for (int i = 0; i < m_Drivetrain->m_NumWheels; i++)
             {
-                vehWheel* wheel = &m_Drivetrain->m_WheelBL[i];
+                vehWheel* wheel = m_Drivetrain->m_Wheels[i]; //&m_Drivetrain->m_WheelRL[i]; // m_WheelRL
                 if (wheel->m_SlidingStrength < 0.9f)
                     anyWheelSlipping = true;
                 if (wheel->m_OnGround)
@@ -90,6 +90,17 @@ int vehTransmission::SetCurrentGear(int g)
         m_CurrentGear = g;
     }
     return m_CurrentGear;
+}
+
+void vehTransmission::SetNeutral()
+{
+    SetCurrentGear(1);
+}
+
+void vehTransmission::SetForward()
+{
+    if (m_CurrentGear <= 1)
+        SetCurrentGear(2);
 }
 
 float vehTransmission::GetRatio() const

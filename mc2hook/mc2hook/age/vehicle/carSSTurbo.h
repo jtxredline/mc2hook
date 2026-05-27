@@ -46,4 +46,5 @@ public:
 public:
 	void sub_4D4270();
 	bool sub_4D4230();
+	void sub_4D41F0();
 };

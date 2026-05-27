@@ -1,13 +1,13 @@
 #pragma once
 
-class phBound;
+class phSurface;
 
-class phArchetype // TODO: Expand on this
+class phBound // TODO: Expand on this
 {
 public:
     int dword_00;
     int dword_04;
-    phBound* m_Bound;
+    int dword_08;
     int dword_0C;
     int dword_10;
     int dword_14;
@@ -20,8 +20,8 @@ public:
     int dword_30;
     int dword_34;
     int dword_38;
-    float dword_3C;
+    int dword_3C;
 
 public:
-    float sub_47B9D0();
+    phSurface* sub_5A5550(int a2, int a3);
 };

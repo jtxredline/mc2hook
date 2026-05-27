@@ -18,6 +18,10 @@
 #include <age/managers/layermgr.h>
 #include <age/input/joystick.h>
 #include <age/gfx/pipeline.h>
+#include <age/vehicle/carsim.h>
+#include <age/vehicle/aero.h>
+#include <age/vehicle/drivetrain.h>
+#include <age/physics/phlevel.h>
 
 void REHandler::Install()
 {
@@ -61,9 +65,10 @@ void REHandler::Install()
     // vehEngine
     InstallVTableHook("vehEngine Update", &vehEngine::Update, { 0x650F9C });
 
+    // TODO: Check vehWheel
     // vehWheel
     InstallVTableHook("vehWheel Update", &vehWheel::UpdateComp, { 0x650E30 });
-    InstallCallback("RE Handler (2)", "vehWheel::UpdateSuspensionRay()",
+    /*InstallCallback("RE Handler (2)", "vehWheel::UpdateSuspensionRay()",
         &vehWheel::UpdateSuspensionRay, {
             cb::call(0x56A615),
             cb::call(0x56C656),
@@ -83,6 +88,7 @@ void REHandler::Install()
             cb::call(0x56DF6B),
             cb::call(0x56DFE2),
         });
+    */
 
     // mcGameState
     InstallCallback("mcGameState::InitTime()", "mcGameState::InitTime()",
@@ -331,4 +337,26 @@ void REHandler::Install()
         &mcLayerMgr::AfterLoadLayer, {
             cb::call(0x4038D1), // After loading movie
         });
+
+    // vehCarSim (WIP)
+    //InstallVTableHook("vehCarSim::UpdateControls()", &vehCarSim::UpdateControlsComp, { 0x644A6C });
+
+    // vehAero (Seems broken)
+    //InstallVTableHook("vehAero::Update()", &vehAero::Update, { 0x646710 });
+
+    // phLevel
+    //InstallVTableHook("phLevel::GetMaterialFromIsect()", &phLevel::GetMaterialFromIsect, { 0x63E430 });
+    //InstallVTableHook("phLevel::GetMaterialFromIsect()", &phLevel::GetMaterialFromIsect, { 0x652128 });
+    //InstallVTableHook("phLevel::GetMaterialFromIsect()", &phLevel::GetMaterialFromIsect, { 0x652460 });
+
+    //InstallCallback("vehWheel::ComputeDwtdw()", "vehWheel::ComputeDwtdw()", &vehWheel::ComputeDwtdw, { cb::call(0x573ED5) });
+
+    /*// vehDrivetrain (Needs cleanup)
+    
+    InstallCallback("vehDrivetrain::Update()", "vehDrivetrain::Update()",
+        &vehDrivetrain::Update, {
+            cb::call(0x56A686),
+            cb::call(0x56A69C),
+            cb::call(0x56C696),
+        });*/
 };

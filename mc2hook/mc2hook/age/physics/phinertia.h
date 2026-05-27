@@ -68,10 +68,15 @@ public:
 
 public:
 	void ApplyContactForce(Vector3* someForce,Vector3* somePos, Matrix34* a4, Vector3* a5);
-	void AddForce(const Vector3& f); // Vector3* a3);
+	void AddForce(Vector3* a2, Vector3* a3);
 	void AccumulateForce(const Vector3& force);
 	void ComputeForce(float impulseScale, Vector3& out) const;
 	void ApplyForwardTorque(float amount);
 	void ApplyUpTorque(float amount);
 	void ApplyLateralTorque(float amount);
+	void ApplyPush(Vector3* a2, Vector3* a3, int a4);
+	void GetLocalVelocity(Vector3* position, Vector3* velocity, int a4); // Get velocity at point
+	void GetLocalFilteredVelocity2(Vector3* out, Vector3* vel);
+
+	float CalcCollisionNoFriction(Vector3* a2, float a3, Vector3* a4);
 };

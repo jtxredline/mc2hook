@@ -1,13 +1,14 @@
 #pragma once
 
-class phBound;
+class Vector3;
+class phArchetype;
 
-class phArchetype // TODO: Expand on this
+class phIntersection // TODO: Needs checking
 {
 public:
     int dword_00;
-    int dword_04;
-    phBound* m_Bound;
+    int dword_04;//phArchetype* m_Archetype;
+    int m_LevelIndex;
     int dword_0C;
     int dword_10;
     int dword_14;
@@ -20,8 +21,8 @@ public:
     int dword_30;
     int dword_34;
     int dword_38;
-    float dword_3C;
+    int dword_3C;
 
 public:
-    float sub_47B9D0();
+    Vector3* sub_58FDD0(Vector3* a1, Vector3* a2); //(int a1, Vector3* a2);
 };

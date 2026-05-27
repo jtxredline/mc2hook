@@ -1,7 +1,7 @@
 #pragma once
 #include <mc2hook\mc2hook.h>
 #include <age/vector/matrix34.h>
-#include <age/physics/phinst.h>
+#include <age/physics/phinst_old.h>
 #include <age/vehicle/carsim.h>
 
 class camTrackCS {
@@ -12,7 +12,7 @@ private:
 	int dword_08;
 	Matrix34 m_GlobalMatrix;
 	Matrix34 m_SomeGlobalMatrixCopy;
-	phInst* m_Instance;
+	phInstOld* m_Instance;
 	int dword_70;
 	float m_BlendTime;
 	float m_BlendGoal;

@@ -5,6 +5,14 @@
 #include <age/math/math.h>
 #include <age/vehicle/vehinput.h>
 #include <age/physics/archetype.h>
+#include <age/physics/phcollider.h>
+#include <age/physics/ph_some_inst_parent.h>
+#include <age/vehicle/drivetrain.h>
+#include <age/vehicle/engine.h>
+#include <age/vehicle/transmission.h>
+
+#include "dinput.h"
+#include <age/core/output.h>
 
 declfield(vehGyro::dword_6957C0)(0x6957C0);
 
@@ -172,7 +180,7 @@ void vehGyro::Update()
                     m_DriftThrust *
                     dword_44 *
                     m_CarSim->m_Throttle *
-                    m_CarSim->m_Drivetrain->m_WheelBL->m_SurfaceFriction);
+                    m_CarSim->m_Drivetrain->m_Wheels[0]->m_SurfaceFriction); // m_WheelRL
 
             Vector3 driftForce = ics->m_WorldTransform.GetRow(2) * driftForceScale;
 

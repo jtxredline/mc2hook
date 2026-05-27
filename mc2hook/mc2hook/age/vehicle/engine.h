@@ -3,7 +3,7 @@
 #include <age/vehicle/transmission.h>
 #include <age/vehicle/drivetrain.h>
 #include <age/physics/phinertia.h>
-#include <age/physics/phinst.h>
+#include <age/physics/phinst_old.h>
 
 class vehTransmission;
 class vehDrivetrain;
@@ -26,10 +26,7 @@ public:
     float m_MaxRPS;
     float m_OptRPS;
     float m_IdleRPS;
-    char field_3C;
-    char field_3D;
-    char field_3E;
-    char field_3F;
+    int dword_3c;
     float m_InvOptRPSDiffSq;
     float m_UnkComputed_1;
     float m_Fib;
@@ -53,7 +50,7 @@ public:
     vehDrivetrain* m_Drivetrain;
     vehTransmission* m_Transmission;
     phInertialCS* m_ICS;
-    phInst* m_Instance;
+    phInstOld* m_Instance;
 
 public:
     void Update();
@@ -61,5 +58,7 @@ public:
     float CalcTorqueAtZeroThrottle() const;
     float GetMaxHP() const;
     void StopBoost();
+    void StartBoost(float boost);
 };
-//ASSERT_SIZEOF(vehEngine, 0x90);
+
+static_assert(sizeof(vehEngine) == 0x90, "vehEngine size mismatch");

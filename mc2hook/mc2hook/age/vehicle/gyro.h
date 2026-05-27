@@ -1,10 +1,10 @@
 #pragma once
 #include <mc2hook/mc2hook.h>
-#include <age/vector/vector3.h>
 
 class vehCarSim;
 class vehDrivetrain;
 class vehInput;
+class Vector3;
 
 class vehGyro {
 public:

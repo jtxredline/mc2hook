@@ -1,7 +1,8 @@
+#include "engine.h"
+
 #include <mc2hook\mc2hook.h>
 #include <age/data/timemgr.h>
 #include <age/math/math.h>
-#include "engine.h"
 
 void vehEngine::Update()
 {
@@ -51,7 +52,7 @@ void vehEngine::Update()
     // Torque computation
     float minTorque = CalcTorqueAtZeroThrottle() * (1.0f - m_ThrottleValue);
     float maxTorque = CalcTorqueAtFullThrottle(m_CurrentRPS);
-    m_Torque = maxTorque * m_ThrottleValue + minTorque; // Actual force
+    m_Torque = maxTorque * m_ThrottleValue + minTorque; // Actual force (used in vehDrivetrain?)
 
     // Drivetrain attach / detach
     bool shouldDetach = currentRatio == 0.0f || m_GearChangeForced || m_Transmission->m_Clutch;
@@ -202,4 +203,12 @@ void vehEngine::StopBoost()
 {
     m_BoostTimer = 0.0f;
     m_Transmission->m_Clutch = 0;
+}
+
+void vehEngine::StartBoost(float boost)
+{
+    if (boost <= 0.0f)
+        m_BoostTimer = m_BoostDuration;
+    else
+        m_BoostTimer = boost;
 }

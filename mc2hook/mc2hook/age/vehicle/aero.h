@@ -17,5 +17,9 @@ public:
 	int dword_3c;
 	float m_DragSlipstream;
 	float m_Drag;
-	int dword_48;
+	float dword_48;
+
+public:
+	void Update();
+	void Update2(); // Temp name
 };

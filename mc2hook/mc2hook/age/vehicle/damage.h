@@ -51,4 +51,5 @@ public:
 public:
 	void sub_4CF500(int a2);
 	bool sub_4CEC50();
+	void sub_4CFCE0(float a2);
 };

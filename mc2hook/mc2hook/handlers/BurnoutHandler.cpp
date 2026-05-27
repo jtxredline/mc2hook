@@ -37,14 +37,5 @@ void BurnoutHandler::vehCarSimUpdate()
 
 void BurnoutHandler::Install()
 {
-    physicsFixesBaselineFPS = HookConfig::GetFloat("Physics", "PhysicsFixesBaselineFPS", 60.0f);
-    float minPhysicsFixesBaselineFPS = 30.0f;
-
-    // Cap physics fixes baseline fps
-    if (physicsFixesBaselineFPS < minPhysicsFixesBaselineFPS)
-    {
-        physicsFixesBaselineFPS = minPhysicsFixesBaselineFPS;
-    }
-
     InstallVTableHook("vehCarSim Some Update", &vehCarSimUpdate, { 0x644A6C });
 }

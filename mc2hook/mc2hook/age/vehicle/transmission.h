@@ -42,8 +42,12 @@ public:
 
 public:
     void Update();
+    
     void SetGearChangeFlag(int flag);
     int SetCurrentGear(int g);
+    void SetNeutral();
+    void SetForward();
+
     float GetRatio() const;
     void Upshift();
     void Downshift();

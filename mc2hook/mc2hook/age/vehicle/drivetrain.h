@@ -1,7 +1,14 @@
 #pragma once
 #include <age/vehicle/carsim.h>
 
+static constexpr float diffRatioMax = 1.25f;
+static constexpr float diffRatioMaxHighSpeed = 1.03f;
+static constexpr float diffRatioHighSpeedLevel = 50.0f;
+static constexpr float dRHSLinv = 0.02f;
+
 class vehCarSim;
+class vehEngine;
+class vehTransmission;
 class vehWheel;
 
 class vehDrivetrain
@@ -9,15 +16,18 @@ class vehDrivetrain
 public:
 	void* m_Vtable;
 	vehCarSim* m_CarSim;
-	void* m_Engine;
-	void* m_Transmission;
+	vehEngine* m_Engine;
+	vehTransmission* m_Transmission;
 	int m_NumWheels;
-	vehWheel* m_WheelBL;
-	vehWheel* m_WheelBR;
+	vehWheel* m_Wheels[6];
+	/*
+	vehWheel* m_WheelRL;
+	vehWheel* m_WheelRR;
 	vehWheel* m_WheelCL;
 	vehWheel* m_WheelCR;
 	vehWheel* m_WheelFL;
 	vehWheel* m_WheelFR;
+	*/
 	float m_SomeRPS;
 	float dword_30;
 	float m_AngInertia;
@@ -44,4 +54,5 @@ public:
 public:
 	void Detach();
 	void Attach();
+	void Update();
 };

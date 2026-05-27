@@ -62,7 +62,7 @@
     <ClCompile Include="handlers\CPUPlayerVehiclesHandler.cpp" />
     <ClCompile Include="handlers\DeadZoneHandler.cpp" />
     <ClCompile Include="handlers\GravityHandler.cpp" />
-    <ClCompile Include="handlers\KinematicSteeringHandler.cpp" />
+
     <ClCompile Include="handlers\REHandler.cpp" />
     <ClCompile Include="handlers\TrafficDistanceHandler.cpp" />
     <ClCompile Include="handlers\AddressPrinterHandler.cpp" />
@@ -115,6 +115,11 @@
     <ClCompile Include="age\physics\phcollider.cpp" />
     <ClCompile Include="age\physics\archetype.cpp" />
     <ClCompile Include="age\managers\layermgr.cpp" />
+    <ClCompile Include="age\vehicle\aero.cpp" />
+    <ClCompile Include="age\physics\phsurface.cpp" />
+    <ClCompile Include="age\physics\phlevel.cpp" />
+    <ClCompile Include="age\physics\intersection.cpp" />
+    <ClCompile Include="age\physics\bound.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="age\camera\playercamera.h" />
@@ -144,7 +149,7 @@
     <ClInclude Include="age\memory\memory.h" />
     <ClInclude Include="age\model\getpivot.h" />
     <ClInclude Include="age\physics\phcollider.h" />
-    <ClInclude Include="age\physics\phinst.h" />
+    <ClInclude Include="age\physics\phinst_old.h" />
     <ClInclude Include="age\physics\phinertia.h" />
     <ClInclude Include="age\physics\ph_some_inst_parent.h" />
     <ClInclude Include="age\physics\simulator.h" />
@@ -205,7 +210,7 @@
     <ClInclude Include="handlers\CPUPlayerVehiclesHandler.h" />
     <ClInclude Include="handlers\DeadZoneHandler.h" />
     <ClInclude Include="handlers\GravityHandler.h" />
-    <ClInclude Include="handlers\KinematicSteeringHandler.h" />
+
     <ClInclude Include="handlers\REHandler.h" />
     <ClInclude Include="handlers\TrafficDistanceHandler.h" />
     <ClInclude Include="handlers\AddressPrinterHandler.h" />
@@ -268,6 +273,11 @@
     <ClInclude Include="age\hud\hudMap.h" />
     <ClInclude Include="age\physics\archetype.h" />
     <ClInclude Include="age\managers\layermgr.h" />
+    <ClInclude Include="age\physics\phsurface.h" />
+    <ClInclude Include="age\physics\intersection.h" />
+    <ClInclude Include="age\physics\phlevel.h" />
+    <ClInclude Include="age\physics\bound.h" />
+    <ClInclude Include="age\physics\phinst.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="discord-rpc\lib\discord_game_sdk.dll.lib" />
