@@ -883,93 +883,19 @@ void vehWheel::ComputeDwtdw(float a2, float* a3, float* a4, float* a5)
     }*/
 }
 
-// WIP
 void vehWheel::Update()
 {
-    float* p_dword_00; // ecx
-    double v4; // st7
-    double v5; // st7
-    double m10; // st7
-    double m11; // st6
-    double v11; // st7
-    double v12; // st5
-    double v13; // st4
-    double v14; // st2
-    double v15; // st7
-    double v16; // st7
-    float* p_slip_percent_lat; // edi
-    float* slip_percent_long; // ebp
-    double m_SlipVelLong; // st7
-    double v20; // st7
-    double v21; // st7
-    double v22; // st7
-    long double abs_slip_percent_long; // st7
-    double tire_disp_long; // st7
-    double v28; // st7
-    double tire_disp_lat; // st7
-    double v33; // st7
-    double v34; // st7
-    char v35; // cl
-    double v36; // st6
-    double v37; // st7
-    float v38; // ebp
-    bool v40; // dl
-    bool v41; // cl
-    double v42; // st7
-    double v43; // st6
-    double v44; // st7
-    long double v45; // st5
-    long double v46; // st7
-    double tire_force_long; // st7
-    double v50; // st7
-    double v51; // st6
-    double v52; // rt1
-    double v53; // st6
-    double z; // st7
-    double some_tire_load; // st6
-    Vector3* p_dword_48; // eax
-    double v59; // st7
-    double v60; // st6
-    Vector3* p_torque; // eax
-    float vel_lat; // [esp-10h] [ebp-C0h]
-    float vel_long; // [esp-Ch] [ebp-BCh]
-    float v71; // [esp+8h] [ebp-A8h]
-    float v74; // [esp+Ch] [ebp-A4h] BYREF
-    float tire_disp_limit_lat; // [esp+10h] [ebp-A0h]
-    float some_normal_load; // [esp+14h] [ebp-9Ch] BYREF
-    Vector3 v77; // [esp+18h] [ebp-98h] BYREF
-    float a2; // [esp+24h] [ebp-8Ch]
-    bool a6; // [esp+2Ah] [ebp-86h] BYREF
-    bool a6_1; // [esp+2Bh] [ebp-85h] BYREF
-    float a6_2; // [esp+2Ch] [ebp-84h]
-    float v82; // [esp+30h] [ebp-80h]
-    float a5; // [esp+34h] [ebp-7Ch] BYREF
-    float available_friction; // [esp+38h] [ebp-78h]
-    float v85; // [esp+3Ch] [ebp-74h]
-    Vector3 some_force; // [esp+40h] [ebp-70h] BYREF
-    float v88; // [esp+58h] [ebp-58h]
-    float a3; // [esp+5Ch] [ebp-54h] BYREF
-    float v90; // [esp+60h] [ebp-50h]
-    float v91; // [esp+64h] [ebp-4Ch]
-    float a4; // [esp+68h] [ebp-48h]
-    float v93; // [esp+6Ch] [ebp-44h] BYREF
-    float v94; // [esp+70h] [ebp-40h]
-    float v95; // [esp+74h] [ebp-3Ch]
-    float v96; // [esp+78h] [ebp-38h]
-    float v97; // [esp+7Ch] [ebp-34h]
-    Matrix34 contact_response; // [esp+80h] [ebp-30h] BYREF
-
     // Wheel not in contact with ground
     if (!this->m_HasIntersection)
     {
         this->m_OnGround = 0;
-        this->m_SlidingStrength = 0.0;
+        this->m_SlidingStrength = 0.0f;
         this->m_IsSliding = 0;
-        this->m_TireDispLat = 0.0;
-        this->m_TireDispLong = 0.0;
-        this->m_WheelDriveTorque = 0.0;
-        this->m_TireForceLong = 0.0;
-        this->m_TireForceLat = 0.0;
+        this->m_TireDispLat = 0.0f;
+        this->m_TireDispLong = 0.0f;
+        this->m_WheelDriveTorque = 0.0f;
+        this->m_TireForceLong = 0.0f;
+        this->m_TireForceLat = 0.0f;
         UpdateVisuals();
         return;
     }
@@ -980,266 +906,307 @@ void vehWheel::Update()
     // Contact point relative to car transform
     Vector3 relContactPos = m_ContactMatrix.GetRow(3) - m_CarSim->m_Collider->m_SomeInstParent->m_SomeInstParentTransform.GetRow(3);
 
-    float comX = m_ICS->m_WorldTransform.m20 * m_CarSim->m_CenterOfMass.Z
+    float comX = m_ICS->m_WorldTransform.m00 * m_CarSim->m_CenterOfMass.X
                + m_ICS->m_WorldTransform.m10 * m_CarSim->m_CenterOfMass.Y
-               + m_ICS->m_WorldTransform.m00 * m_CarSim->m_CenterOfMass.X;
+               + m_ICS->m_WorldTransform.m20 * m_CarSim->m_CenterOfMass.Z;
 
     float comY = m_ICS->m_WorldTransform.m01 * m_CarSim->m_CenterOfMass.X
-               + m_ICS->m_WorldTransform.m21 * m_CarSim->m_CenterOfMass.Z
-               + m_ICS->m_WorldTransform.m11 * m_CarSim->m_CenterOfMass.Y;
+               + m_ICS->m_WorldTransform.m11 * m_CarSim->m_CenterOfMass.Y
+               + m_ICS->m_WorldTransform.m21 * m_CarSim->m_CenterOfMass.Z;
 
     float comZ = m_ICS->m_WorldTransform.m02 * m_CarSim->m_CenterOfMass.X
-               + m_ICS->m_WorldTransform.m22 * m_CarSim->m_CenterOfMass.Z
-               + m_ICS->m_WorldTransform.m12 * m_CarSim->m_CenterOfMass.Y;
+               + m_ICS->m_WorldTransform.m12 * m_CarSim->m_CenterOfMass.Y
+               + m_ICS->m_WorldTransform.m22 * m_CarSim->m_CenterOfMass.Z;
 
     relContactPos.X -= comX;
     relContactPos.Y -= comY;
     relContactPos.Z -= comZ;
 
     // Apply suspension/contact load
-    if (this->m_SomeNormalLoad > 0.0)
+    if (this->m_SomeNormalLoad > 0.0f)
     {
-        m10 = this->m_ContactMatrix.m10;
-        m11 = this->m_ContactMatrix.m11;
-        some_force.Z = this->m_ContactMatrix.m12;
-        some_normal_load = this->m_SomeNormalLoad;
-        memset(&contact_response.m30, 0, 0xC);
-        some_force.X = some_normal_load * m10;
-        v11 = some_normal_load * m11;
-        v12 = some_force.X * this->m_ContactMatrix.m11;
-        v13 = some_force.X * this->m_ContactMatrix.m12;
-        tire_disp_limit_lat = v11 * this->m_ContactMatrix.m12;
-        v14 = some_force.X * this->m_ContactMatrix.m10;
-        contact_response.m21 = tire_disp_limit_lat;
-        contact_response.m00 = v14;
-        contact_response.m01 = v12;
-        contact_response.m02 = v13;
-        contact_response.m10 = v12;
-        contact_response.m11 = v11 * this->m_ContactMatrix.m11;
-        contact_response.m12 = tire_disp_limit_lat;
-        contact_response.m20 = v13;
-        contact_response.m22 = some_normal_load * some_force.Z * this->m_ContactMatrix.m12;
-        if (this->m_SuspensionValue >= (double)this->m_SuspensionLimit)
+        Matrix34 contactResponse;
+        
+        float normalLoad = this->m_SomeNormalLoad;
+
+        contactResponse.SetRow(3, Vector3(0.0f, 0.0f, 0.0f));
+
+        float nX = this->m_ContactMatrix.m10;
+        float nY = this->m_ContactMatrix.m11;
+        float nZ = this->m_ContactMatrix.m12;
+
+        float loadX = normalLoad * nX;
+        float loadY = normalLoad * nY;
+
+        contactResponse.m00 = loadX * nX;
+        contactResponse.m01 = loadX * nY;
+        contactResponse.m02 = loadX * nZ;
+
+        contactResponse.m10 = loadX * nY;
+        contactResponse.m11 = loadY * nY;
+        contactResponse.m12 = loadY * nZ;
+
+        contactResponse.m20 = loadX * nZ;
+        contactResponse.m21 = loadY * nZ;
+        contactResponse.m22 = normalLoad * nZ * nZ;
+
+        // Suspension force
+        Vector3 suspensionForce;
+
+        if (this->m_SuspensionValue >= this->m_SuspensionLimit)
         {
-            memset(&some_force, 0, sizeof(some_force));
+            suspensionForce = Vector3(0.0f, 0.0f, 0.0f);
         }
         else
         {
-            v15 = this->m_SomeSuspensionForceOrLoad * this->m_SuspensionVelocity * datTimeManager::GetSeconds();
-            some_force.X = v15 * this->m_ContactMatrix.m10;
-            some_force.Y = v15 * this->m_ContactMatrix.m11;
-            some_force.Z = v15 * this->m_ContactMatrix.m12;
+            float suspensionLoad = this->m_SomeSuspensionForceOrLoad * this->m_SuspensionVelocity * datTimeManager::GetSeconds();
+
+            suspensionForce = m_ContactMatrix.GetRow(1) * suspensionLoad;
         }
+
         m_ICS->ApplyContactForce(
-            &some_force,
-            (Vector3*)&this->m_ContactMatrix.m30,
-            &contact_response,
+            &suspensionForce,
+            &this->m_ContactMatrix.GetRow(3),
+            &contactResponse,
             &relContactPos);
     }
-    v16 = this->m_SomeAngularVelocity * this->m_Radius;
-    vel_long = this->m_WheelVelLong;
-    vel_lat = this->m_WheelVelLat;
-    p_slip_percent_lat = &this->m_SlipPercentLat;
-    this->m_SlipVelLong = v16 + vel_long;
-    a4 = v16;
-    v97 = fabs(this->m_WheelVelLat);
-    v82 = fabs(this->m_WheelVelLong);
-    ComputeSlipPercent(&this->m_SlipPercentLat, vel_lat, vel_long);
-    slip_percent_long = &this->m_SlipPercentLong;
-    ComputeSlipPercent(&this->m_SlipPercentLong, this->m_SlipVelLong, vel_long);
-    m_SlipVelLong = this->m_SlipVelLong;
+
+    // Wheel slip setup
+    float wheelSurfaceVel = this->m_SomeAngularVelocity * this->m_Radius;
+
+    this->m_SlipVelLong = wheelSurfaceVel + m_WheelVelLong;
+
+    float absWheelVelLat = fabs(this->m_WheelVelLat);
+    float absWheelVelLong = fabs(this->m_WheelVelLong);
+
+    ComputeSlipPercent(&this->m_SlipPercentLat, m_WheelVelLat, m_WheelVelLong);
+    ComputeSlipPercent(&this->m_SlipPercentLong, this->m_SlipVelLong, m_WheelVelLong);
     
-    if (m_SlipVelLong <= 0.0)
-    {
-        if (m_SlipVelLong >= 0.0)
-            v20 = 0.0;
-        else
-            v20 = -1.0;
-    }
-    else
-    {
-        v20 = 1.0;
-    }
-    v74 = v20 / this->m_StiffnessLong * this->m_SomeTireLoad;
-    v21 = this->m_WheelVelLat;
-    if (v21 <= 0.0)
-    {
-        if (v21 >= 0.0)
-            v22 = 0.0;
-        else
-            v22 = -1.0;
-    }
-    else
-    {
-        v22 = 1.0;
-    }
-    a5 = v22 / this->m_StiffnessLat * this->m_SomeTireLoad;
-    v88 = datTimeManager::GetSeconds() * this->m_WheelVelLat;
-    v90 = datTimeManager::GetSeconds() * this->m_SlipVelLong;
-    available_friction = this->m_StaticFric * this->m_SurfaceFriction;
-    a6_2 = available_friction;
-    a2 = available_friction * v74;
-    tire_disp_limit_lat = fabs(*p_slip_percent_lat);
-    abs_slip_percent_long = fabs(*slip_percent_long);
-    v85 = abs_slip_percent_long;
-    if (abs_slip_percent_long <= this->m_OptimumSlipPercent)
+    // Tire displacement targets
+    float slipSignLong = math::Sign(this->m_SlipVelLong);
+    float slipSignLat = math::Sign(this->m_WheelVelLat);
+
+    float targetDispLong = slipSignLong / this->m_StiffnessLong * this->m_SomeTireLoad;
+    float targetDispLat = slipSignLat / this->m_StiffnessLat * this->m_SomeTireLoad;
+
+    float slipTravelLat = datTimeManager::GetSeconds() * this->m_WheelVelLat;
+    float slipTravelLong = datTimeManager::GetSeconds() * this->m_SlipVelLong;
+
+    // Friction setup
+    float staticFriction = this->m_StaticFric * this->m_SurfaceFriction;
+
+    float frictionLong = staticFriction;
+    float targetDispLongScaled = frictionLong * targetDispLong;
+
+    float absSlipLat = fabs(m_SlipPercentLat);
+    float absSlipLong = fabs(m_SlipPercentLong);
+
+    float slideStrengthLong;
+    float slideStrengthLat;
+
+    // Longitudinal friction
+    if (absSlipLong <= this->m_OptimumSlipPercent)
         goto LABEL_21;
-    tire_disp_long = this->m_TireDispLong;
-    if (tire_disp_long >= m_OptimumSlipPercent)
+
+    if (m_TireDispLong >= m_OptimumSlipPercent)
     {
-        if (tire_disp_long <= a2 || a2 - this->m_TireDispLong > v90)
+        if (m_TireDispLong <= targetDispLongScaled || targetDispLongScaled - this->m_TireDispLong > slipTravelLong)
             goto LABEL_21;
     }
-    else if (tire_disp_long >= a2 || a2 - this->m_TireDispLong < v90)
+    else if (m_TireDispLong >= targetDispLongScaled || targetDispLongScaled - this->m_TireDispLong < slipTravelLong)
     {
     LABEL_21:
-        v28 = ComputeFriction(*slip_percent_long, &a3);
-        a6_2 = v28;
-        a2 = v28 * v74;
+        frictionLong = ComputeFriction(m_SlipPercentLong, &slideStrengthLong);
+        targetDispLongScaled = frictionLong * targetDispLong;
         goto LABEL_22;
     }
-    a3 = 0.0;
+
+    slideStrengthLong = 0.0f;
+
 LABEL_22:
-    v91 = available_friction;
-    v71 = available_friction * a5;
-    if (tire_disp_limit_lat <= (double)this->m_OptimumSlipPercent)
+
+    // Lateral friction
+    float frictionLat = staticFriction;
+    float targetDispLatScaled = frictionLat * targetDispLat;
+
+    if (absSlipLat <= this->m_OptimumSlipPercent)
     {
     LABEL_26:
-        v33 = ComputeFriction(*p_slip_percent_lat, &some_normal_load);
-        v91 = v33;
-        v71 = v33 * a5;
+        frictionLat = ComputeFriction(m_SlipPercentLat, &slideStrengthLat);
+        targetDispLatScaled = frictionLat * targetDispLat;
         goto LABEL_27;
     }
-    tire_disp_lat = this->m_TireDispLat;
-    if (tire_disp_lat >= m_OptimumSlipPercent)
+
+    if (m_TireDispLat >= m_OptimumSlipPercent)
     {
-        if (tire_disp_lat <= v71 || v71 - this->m_TireDispLat > v88)
+        if (m_TireDispLat <= targetDispLatScaled || targetDispLatScaled - this->m_TireDispLat > slipTravelLat)
             goto LABEL_26;
     }
-    else if (tire_disp_lat >= v71 || v71 - this->m_TireDispLat < v88)
+    else if (m_TireDispLat >= targetDispLatScaled || targetDispLatScaled - this->m_TireDispLat < slipTravelLat)
     {
         goto LABEL_26;
     }
-    some_normal_load = 0.0;
+
+    slideStrengthLat = 0.0f;
+    
 LABEL_27:
-    v34 = v85;
-    v35 = 1;
-    if (*p_slip_percent_lat > (double)v85)
+
+    bool longitudinalDominant = 1;
+
+    if (m_SlipPercentLat > absSlipLong)
     {
-        v34 = *p_slip_percent_lat;
+        absSlipLong = m_SlipPercentLat;
+
     LABEL_37:
-        v35 = 0;
+        longitudinalDominant = 0;
         goto LABEL_38;
     }
-    v36 = -*p_slip_percent_lat;
-    v96 = v36;
-    if (v36 > v85)
+
+    if (-m_SlipPercentLat > absSlipLong)
     {
-        v34 = v96;
+        absSlipLong = -m_SlipPercentLat;
         goto LABEL_37;
     }
+
 LABEL_38:
-    if (v34 < this->m_OptimumSlipPercent)
+
+    if (absSlipLong < this->m_OptimumSlipPercent)
     {
-        a6_2 = available_friction;
+        frictionLong = staticFriction;
     }
     else
     {
-        if (v35)
-            v37 = a6_2;
+        float minFriction;
+
+        if (longitudinalDominant)
+            minFriction = frictionLong;
         else
-            v37 = v91;
-        if (v91 > v37)
-            v71 = a5 * v37;
-        if (a6_2 > v37)
-            a2 = v74 * v37;
-        a6_2 = v37;
+            minFriction = frictionLat;
+
+        if (frictionLat > minFriction)
+            targetDispLatScaled = targetDispLat * minFriction;
+        if (frictionLong > minFriction)
+            targetDispLongScaled = targetDispLong * minFriction;
+
+        frictionLong = minFriction;
     }
-    a4 = fabs(a4) * datTimeManager::GetSeconds() * LRelaxCoef;
-    a5 = 0.0;
-    v38 = a4;
-    v74 = 0.0;
-    CalcDispAndDamp(&this->m_TireDispLong, a2, v90, a4, &a5, &a6_1);
-    //p_tire_disp_lat = &this->m_TireDispLat;
-    CalcDispAndDamp(&this->m_TireDispLat, v71, v88, v38, &v74, &a6);
-    v40 = a6_1;
-    v41 = a6;
+
+    // Tire relaxation / damping
+    float relaxation = fabs(wheelSurfaceVel) * datTimeManager::GetSeconds() * LRelaxCoef;
+    
+    float dampingLong = 0.0f;
+    float dampingLat = 0.0f;
+
+    bool hitLongLimit;
+    bool hitLatLimit;
+
+    CalcDispAndDamp(&this->m_TireDispLong, targetDispLongScaled, slipTravelLong, relaxation, &dampingLong, &hitLongLimit);
+    CalcDispAndDamp(&this->m_TireDispLat, targetDispLatScaled, slipTravelLat, relaxation, &dampingLat, &hitLatLimit);
+
+    // Tire forces
     this->m_TireForceLat = -(this->m_TireDispLat * this->m_StiffnessLat)
-        - v74 * datTimeManager::GetInvSeconds() * this->m_DampingLat;
-    v42 = -(this->m_StiffnessLong * this->m_TireDispLong) - a5 * datTimeManager::GetInvSeconds() * this->m_DampingLong;
-    this->m_TireForceLong = v42;
-    v74 = this->m_TireForceLat * this->m_TireForceLat + v42 * v42;
-    v43 = a6_2 * this->m_SomeTireLoad;
-    v44 = v43 * v43;
-    if (v74 > v43 * v43)
+        - dampingLat * datTimeManager::GetInvSeconds() * this->m_DampingLat;
+
+    this->m_TireForceLong = -(this->m_StiffnessLong * this->m_TireDispLong) - dampingLong * datTimeManager::GetInvSeconds() * this->m_DampingLong;
+
+    float combinedForceSq = this->m_TireForceLat * this->m_TireForceLat + m_TireForceLong * m_TireForceLong;
+
+    float frictionLimit = frictionLong * this->m_SomeTireLoad; // Might not be frictionLong anymore
+    float frictionLimitSq = frictionLimit * frictionLimit;
+
+    if (combinedForceSq > frictionLimit * frictionLimit)
     {
-        if ((v40 || v85 <= (double)this->m_OptimumSlipPercent)
-            && (v41 || tire_disp_limit_lat <= (double)this->m_OptimumSlipPercent))
+        if ((hitLongLimit || absSlipLong <= this->m_OptimumSlipPercent)
+            && (hitLatLimit || absSlipLat <= this->m_OptimumSlipPercent))
         {
-            v46 = sqrt(v44 / v74);
-            this->m_TireForceLat = v46 * this->m_TireForceLat;
-            this->m_TireForceLong = v46 * this->m_TireForceLong;
+            float scale = sqrt(frictionLimitSq / combinedForceSq);
+
+            this->m_TireForceLat *= scale;
+            this->m_TireForceLong *= scale;
         }
         else
         {
-            v45 = sqrt(v44 / (this->m_SlipVelLong * this->m_SlipVelLong + this->m_WheelVelLat * this->m_WheelVelLat));
-            this->m_TireForceLat = -v45 * this->m_WheelVelLat;
-            this->m_TireForceLong = -v45 * this->m_SlipVelLong;
+            float velScale = sqrt(frictionLimitSq / (this->m_SlipVelLong * this->m_SlipVelLong + this->m_WheelVelLat * this->m_WheelVelLat));
+
+            this->m_TireForceLat = -velScale * this->m_WheelVelLat;
+            this->m_TireForceLong = -velScale * this->m_SlipVelLong;
         }
     }
-    if (v40)
+
+    // Sliding state
+    if (hitLongLimit)
     {
-        if (v41)
-            this->m_SlidingStrength = 0.0;
+        if (hitLatLimit)
+            this->m_SlidingStrength = 0.0f;
         else
-            this->m_SlidingStrength = some_normal_load;
+            this->m_SlidingStrength = slideStrengthLat;
     }
-    else if (v41)
+    else if (hitLatLimit)
     {
-        this->m_SlidingStrength = a3;
+        this->m_SlidingStrength = slideStrengthLong;
     }
-    else if (some_normal_load <= (double)a3)
+    else if (slideStrengthLat <= slideStrengthLong)
     {
-        this->m_SlidingStrength = a3;
+        this->m_SlidingStrength = slideStrengthLong;
     }
     else
     {
-        this->m_SlidingStrength = some_normal_load;
+        this->m_SlidingStrength = slideStrengthLat;
     }
-    tire_force_long = this->m_TireForceLong;
-    this->m_IsSliding = this->m_SlidingStrength > 0.5;
-    this->m_WheelDriveTorque = tire_force_long * this->m_Radius;
-    v50 = this->m_SurfaceDrag * this->m_SomeTireLoad;
-    v51 = this->m_TireForceLat - this->m_TireDragCoefLat * this->m_WheelVelLat * v50 * v97;
-    v77.X = v51 * this->m_ContactMatrix.m00;
-    v77.Y = v51 * this->m_ContactMatrix.m01;
-    v52 = v51 * this->m_ContactMatrix.m02;
-    v53 = -this->m_TireForceLong - -(v50 * this->m_TireDragCoefLong * this->m_WheelVelLong * v82) * (this->m_SurfaceDepth + 1.0);
-    v77.X = v53 * this->m_ContactMatrix.m20 + v77.X;
-    v77.Y = v53 * this->m_ContactMatrix.m21 + v77.Y;
-    v77.Z = v53 * this->m_ContactMatrix.m22 + v52;
-    v93 = -v77.X;
-    v94 = -v77.Y;
-    v95 = -v77.Z;
 
-    v77.X = -v93;
-    v77.Y = -v94;
-    z = -v95;
+    this->m_IsSliding = this->m_SlidingStrength > 0.5f;
 
-    some_tire_load = this->m_SomeTireLoad;
-    v77.X = some_tire_load * this->m_ContactMatrix.m10 + v77.X;
-    v77.Y = some_tire_load * this->m_ContactMatrix.m11 + v77.Y;
-    v77.Z = some_tire_load * this->m_ContactMatrix.m12 + z;
-    m_ICS->AddForce(&v77, (Vector3*)&this->m_ContactMatrix.m30);
-    p_dword_48 = &this->m_CarSim->dword_48;
-    some_force.Z = v77.Y * relContactPos.X - relContactPos.Y * v77.X;
-    some_force.X = (v77.Z * relContactPos.Y - v77.Y * relContactPos.Z) * p_dword_48->X;
-    v59 = (relContactPos.Z * v77.X - v77.Z * relContactPos.X) * p_dword_48->Y;
-    v60 = some_force.Z * p_dword_48->Z;
-    p_torque = &this->m_ICS->m_Torque;
-    p_torque->X = some_force.X + p_torque->X;
-    p_torque->Y = v59 + p_torque->Y;
-    p_torque->Z = v60 + p_torque->Z;
+    // Build final tire force vector
+    this->m_WheelDriveTorque = m_TireForceLong * this->m_Radius;
+
+    float surfaceDrag = this->m_SurfaceDrag * this->m_SomeTireLoad;
+
+    float lateralForce = this->m_TireForceLat - this->m_TireDragCoefLat * this->m_WheelVelLat * surfaceDrag * absWheelVelLat;
+
+    Vector3 tireForce = m_ContactMatrix.GetRow(0) * lateralForce;
+
+    float longitudinalDrag = surfaceDrag * this->m_TireDragCoefLong * this->m_WheelVelLong * absWheelVelLong * (this->m_SurfaceDepth + 1.0f);
+    float longitudinalForce = -this->m_TireForceLong + longitudinalDrag;
+
+    //v93 = -tireForce.X;
+    //v94 = -tireForce.Y;
+    //v95 = -tireForce.Z;
+    //m_Mass = m_ICS->m_Mass;
+    //LOWORD(m_ICS) = m_Isect->m_LevelIndex;
+    //v82 = m_Mass;
+    //if (phSimulator::ApplyForce(simulator_6C8EEC, m_ICS, &v93, &this->m_LastContactPosition.X, m_Mass))
+    //{
+    //    tireForce.X = -v93;
+    //    tireForce.Y = -v94;
+    //    Z = -v95;
+    //}
+    //else
+    //{
+    //    Z = tireForce.Z;
+    //}
+
+    //// Replaces the above for now
+    tireForce.X = longitudinalForce * this->m_ContactMatrix.m20 + tireForce.X;
+    tireForce.Y = longitudinalForce * this->m_ContactMatrix.m21 + tireForce.Y;
+    tireForce.Z = longitudinalForce * this->m_ContactMatrix.m22 + tireForce.Z;
+
+    // or
+    //tireForce = m_ContactMatrix.GetRow(2) * longitudinalForce + tireForce;
+    ////
+
+    tireForce = m_ContactMatrix.GetRow(1) * m_SomeTireLoad + tireForce;
+
+    m_ICS->AddForce(&tireForce, &m_ContactMatrix.GetRow(3));
+
+    Vector3 inertiaScale = this->m_CarSim->m_InertiaScale;
+
+    float torqueX = (relContactPos.Y * tireForce.Z - relContactPos.Z * tireForce.Y) * inertiaScale.X;
+    float torqueY = (relContactPos.Z * tireForce.X - relContactPos.X * tireForce.Z) * inertiaScale.Y;
+    float torqueZ = (relContactPos.X * tireForce.Y - relContactPos.Y * tireForce.X) * inertiaScale.Z;
+
+    m_ICS->m_Torque.X += torqueX;
+    m_ICS->m_Torque.Y += torqueY;
+    m_ICS->m_Torque.Z += torqueZ;
 
     UpdateVisuals();
 }

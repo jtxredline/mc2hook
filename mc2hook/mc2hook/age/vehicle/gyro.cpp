@@ -600,7 +600,7 @@ void vehGyro::ApplyScaledTorqueAndForce(const Vector3& torque, const Vector3& of
     ics->m_Force.Z += force.Z * mul;
 
     // Apply scaled torque
-    ics->m_Torque.X += torque.X * m_CarSim->dword_48.X;
-    ics->m_Torque.Y += torque.Y * m_CarSim->dword_48.Y;
-    ics->m_Torque.Z += torque.Z * m_CarSim->dword_48.Z;
+    ics->m_Torque.X += torque.X * m_CarSim->m_InertiaScale.X;
+    ics->m_Torque.Y += torque.Y * m_CarSim->m_InertiaScale.Y;
+    ics->m_Torque.Z += torque.Z * m_CarSim->m_InertiaScale.Z;
 }

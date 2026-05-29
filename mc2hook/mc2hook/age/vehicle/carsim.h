@@ -39,7 +39,7 @@ public:
 	int dword_3c;
 	int dword_40;
 	int dword_44;
-	Vector3 dword_48;
+	Vector3 m_InertiaScale;
 	Vector3 m_ModelOffset;
 	Vector3 m_CenterOfMass;
 	phCollider* m_Collider;
