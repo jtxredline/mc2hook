@@ -263,7 +263,7 @@
     <ClInclude Include="handlers\CPUPlayerVehiclesHandler.h" />
     <ClInclude Include="handlers\DeadZoneHandler.h" />
     <ClInclude Include="handlers\GravityHandler.h" />
-
+    <ClInclude Include="handlers\ShaderHandler.h" />
     <ClInclude Include="handlers\REHandler.h" />
     <ClInclude Include="handlers\TrafficDistanceHandler.h" />
     <ClInclude Include="handlers\AddressPrinterHandler.h" />
@@ -395,7 +395,7 @@
     <ClCompile Include="handlers\CPUPlayerVehiclesHandler.cpp" />
     <ClCompile Include="handlers\DeadZoneHandler.cpp" />
     <ClCompile Include="handlers\GravityHandler.cpp" />
-
+    <ClCompile Include="handlers\ShaderHandler.cpp" />
     <ClCompile Include="handlers\REHandler.cpp" />
     <ClCompile Include="handlers\TrafficDistanceHandler.cpp" />
     <ClCompile Include="handlers\AddressPrinterHandler.cpp" />

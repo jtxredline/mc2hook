@@ -33,6 +33,7 @@
 #include <handlers/CPUPlayerVehiclesHandler.h>
 #include <handlers/REHandler.h>
 #include <handlers\TrafficDistanceHandler.h>
+#include <handlers/ShaderHandler.h>
 #include <handlers/RenderDistanceHandler.h>
 #include <handlers\StateResearchHook.h>
 
@@ -84,7 +85,9 @@ static void InstallMainHandlers()
     InstallHandler<GravityHandler>("Gravity Handler");
     InstallHandler<CPUPlayerVehiclesHandler>("CPU Player Vehicles Handler");
     InstallHandler<RenderDistanceHandler>("RenderDistance Handler");
-    
+    InstallHandler<ShaderHandler>("Shader Handler");
+    //InstallHandler<REHandler>("RE Handler");
+
     //InstallHandler<StateResearchHook>("SRH");
 }
 
