@@ -76,7 +76,7 @@ static void InstallMainHandlers()
     InstallHandler<FreeCamHandler>("Free Cam Handler");
     InstallHandler<ControllerScrollingFixHandler>("Controller Scrolling Fix");
     InstallHandler<RDTSCFixHandler>("RDTSC Fix Handler");
-    InstallHandler<CityModelLimitHandler>("City Model Limit Handler"); // Breaks headlights
+    //InstallHandler<CityModelLimitHandler>("City Model Limit Handler"); // Breaks headlights
     InstallHandler<LevelExtentsHandler>("Level Extents Handler");
     InstallHandler<CarShadowHandler>("Car Shadow Handler");
     InstallHandler<FPSCounterHandler>("FPS Counter Handler");
@@ -86,29 +86,6 @@ static void InstallMainHandlers()
     InstallHandler<CPUPlayerVehiclesHandler>("CPU Player Vehicles Handler");
     InstallHandler<RenderDistanceHandler>("RenderDistance Handler");
     InstallHandler<ShaderHandler>("Shader Handler");
-    //InstallHandler<REHandler>("RE Handler");
 
     //InstallHandler<StateResearchHook>("SRH");
 }
-
-/*#pragma once
-#include <handlers\InitHandler.h>
-#include <handlers\OpenSpyHandler.h>
-#include <handlers/MiniFPSCounterHandler.h>
-
-// Installed before engine init
-static void InstallHandlersPreEngineInit()
-{
-}
-
-// Installed after engine init
-static void InstallHandlersPostEngineInit()
-{
-}
-
-// Installed at game launch
-static void InstallMainHandlers()
-{
-    InstallHandler<OpenSpyHandler>("OpenSpy Handler");
-    InstallHandler<MiniFPSCounterHandler>("Mini FPS Counter Handler");
-}*/
