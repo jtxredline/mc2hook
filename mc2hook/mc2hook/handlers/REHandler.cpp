@@ -290,6 +290,13 @@ void REHandler::Install()
     InstallVTableHook("vehInput::ApplyReplayFrame()", &vehInput::ApplyReplayFrame, { 0x63D0D4 });
 
     // ioInput
+
+    // ioKeyboard
+    InstallCallback("ioKeyboard::Update()", "ioKeyboard::Update()",
+        &ioKeyboard::Update, {
+            cb::call(0x404955),
+            cb::call(0x60487E),
+        });
     
     // ioJoystick
     InstallCallback("ioJoystick::BeginAll()", "ioJoystick::BeginAll()", &ioJoystick::BeginAll, { cb::call(0x60481A) });
