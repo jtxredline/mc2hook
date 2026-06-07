@@ -297,6 +297,12 @@ void REHandler::Install()
             cb::call(0x404955),
             cb::call(0x60487E),
         });
+
+    InstallCallback("ioKeyboard::ScancodesToAscii()", "ioKeyboard::ScancodesToAscii()",
+        &ioKeyboard::ScancodesToAscii, {
+            cb::call(0x44E08E),
+            cb::call(0x44F632),
+        });
     
     // ioJoystick
     InstallCallback("ioJoystick::BeginAll()", "ioJoystick::BeginAll()", &ioJoystick::BeginAll, { cb::call(0x60481A) });
