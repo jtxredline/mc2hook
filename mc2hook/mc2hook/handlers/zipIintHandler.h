@@ -6,7 +6,7 @@ class zipInitHandler
 {
 public:
     static void zipAutoInit();
-    static void zipMultiAutoInit(LPCSTR filter);
+    static void zipMultiAutoInit(LPCSTR folder, LPCSTR filter);
     static void zipInit();
     static void Install();
 };

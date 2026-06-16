@@ -76,7 +76,7 @@ static void InstallMainHandlers()
     InstallHandler<FreeCamHandler>("Free Cam Handler");
     InstallHandler<ControllerScrollingFixHandler>("Controller Scrolling Fix");
     InstallHandler<RDTSCFixHandler>("RDTSC Fix Handler");
-    //InstallHandler<CityModelLimitHandler>("City Model Limit Handler"); // Breaks headlights
+    InstallHandler<CityModelLimitHandler>("City Model Limit Handler"); // Breaks headlights, can be disabled in mc2hook.ini under Experimental
     InstallHandler<LevelExtentsHandler>("Level Extents Handler");
     InstallHandler<CarShadowHandler>("Car Shadow Handler");
     InstallHandler<FPSCounterHandler>("FPS Counter Handler");

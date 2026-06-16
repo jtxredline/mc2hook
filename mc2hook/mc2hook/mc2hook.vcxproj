@@ -113,7 +113,7 @@
       <EnableUAC>false</EnableUAC>
       <AdditionalDependencies>dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/pdbaltpath:%_PDB% %(AdditionalOptions)</AdditionalOptions>
-      <OutputFile>D:\MC\MC2\Midnight Club 2 Test2\dinput8.dll</OutputFile>
+      <OutputFile>D:\MC\MC2\Midnight Club 2 Simple - Copy\dinput8.dll</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

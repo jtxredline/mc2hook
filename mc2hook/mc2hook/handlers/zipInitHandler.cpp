@@ -5,6 +5,7 @@
 #include <age/core/output.h>
 #include <age\string\string.h>
 #include <age\memory\memory.h>
+#include <direct.h>
 
 static int ZipFileSortFunc(const void* a, const void* b)
 {
@@ -17,7 +18,7 @@ void zipInitHandler::zipAutoInit()
     hook::StaticThunk<0x5FDD20>::Call<void>();
 }
 
-void zipInitHandler::zipMultiAutoInit(LPCSTR filter)
+void zipInitHandler::zipMultiAutoInit(LPCSTR folder, LPCSTR filter)
 {
     char FileName[MAX_PATH];
     WIN32_FIND_DATA FindFileData;
@@ -25,6 +26,7 @@ void zipInitHandler::zipMultiAutoInit(LPCSTR filter)
     HANDLE hFindFile;
 
     strcpy_s(FileName, datAssetManager::GetPath());
+    strcat_s(FileName, folder);
     strcat_s(FileName, filter);
 
     int foundFiles = 0;
@@ -36,6 +38,7 @@ void zipInitHandler::zipMultiAutoInit(LPCSTR filter)
         do
         {
             strcpy_s(FileName, datAssetManager::GetPath());
+            strcat_s(FileName, folder);
             strcat_s(FileName, FindFileData.cFileName);
             _strupr_s(FileName);
             foundFileNames[foundFiles] = StringDuplicate(FileName);
@@ -69,7 +72,10 @@ void zipInitHandler::zipInit()
     }
     else if(!datArgParser::Get("unpacked"))
     {
-        zipMultiAutoInit("*.dat");
+        _mkdir("mods"); // Create "mods" folder if it doesn't already exist, is there a built in function for this?
+
+        zipMultiAutoInit("", "*.dat");
+        zipMultiAutoInit("mods\\", "*.dat");
     }
 }
 

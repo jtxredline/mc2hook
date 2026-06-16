@@ -86,48 +86,48 @@ void vehWheel::UpdateSuspensionRay()
 
 void vehWheel::CalcDispAndDamp(float* disp, float dispTarget, float step, float limit, float* outStep, bool* outFree)
 {
-    hook::Thunk<0x56DAD0>::Call<void>(this, disp, dispTarget, step, limit, outStep, outFree); // Call original
+    //hook::Thunk<0x56DAD0>::Call<void>(this, disp, dispTarget, step, limit, outStep, outFree); // Call original
 
-    //float nextDisp;
-    //float clamped;
+    float nextDisp;
+    float clamped;
 
-    //nextDisp = step + *disp;
+    nextDisp = step + *disp;
 
-    //if (step < 0.0f)
-    //{
-    //    if (dispTarget > nextDisp)
-    //    {
-    //        clamped = limit + *disp;
-    //        if (dispTarget < clamped)
-    //            clamped = dispTarget;
+    if (step < 0.0f)
+    {
+        if (dispTarget > nextDisp)
+        {
+            clamped = limit + *disp;
+            if (dispTarget < clamped)
+                clamped = dispTarget;
 
-    //        *disp = clamped;
-    //        *outStep = 0.0f;
-    //        *outFree = false;
-    //    }
-    //    else
-    //    {
-    //        *disp = nextDisp;
-    //        *outStep = step;
-    //        *outFree = true;
-    //    }
-    //}
-    //else if (dispTarget < nextDisp)
-    //{
-    //    clamped = *disp - limit;
-    //    if (dispTarget > clamped)
-    //        clamped = dispTarget;
+            *disp = clamped;
+            *outStep = 0.0f;
+            *outFree = false;
+        }
+        else
+        {
+            *disp = nextDisp;
+            *outStep = step;
+            *outFree = true;
+        }
+    }
+    else if (dispTarget < nextDisp)
+    {
+        clamped = *disp - limit;
+        if (dispTarget > clamped)
+            clamped = dispTarget;
 
-    //    *disp = clamped;
-    //    *outStep = 0.0f;
-    //    *outFree = false;
-    //}
-    //else
-    //{
-    //    *disp = nextDisp;
-    //    *outStep = step;
-    //    *outFree = true;
-    //}
+        *disp = clamped;
+        *outStep = 0.0f;
+        *outFree = false;
+    }
+    else
+    {
+        *disp = nextDisp;
+        *outStep = step;
+        *outFree = true;
+    }
 }
 
 void vehWheel::ComputeSlipPercent(float* slipPercent, float slipVelocity, float referenceVelocity)
