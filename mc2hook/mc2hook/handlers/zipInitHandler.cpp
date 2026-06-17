@@ -75,9 +75,10 @@ void zipInitHandler::zipInit()
         _mkdir("mods"); // Create "mods" folder if it doesn't already exist, is there a built in function for this?
 
         zipMultiAutoInit("", "*.dat");
-        zipMultiAutoInit("mods\\", "*.dat");
-
         zipMultiAutoInit("", "*.zip");
+
+        // Mods folder takes priority over root
+        zipMultiAutoInit("mods\\", "*.dat");
         zipMultiAutoInit("mods\\", "*.zip");
     }
 }
