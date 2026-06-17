@@ -76,6 +76,9 @@ void zipInitHandler::zipInit()
 
         zipMultiAutoInit("", "*.dat");
         zipMultiAutoInit("mods\\", "*.dat");
+
+        zipMultiAutoInit("", "*.zip");
+        zipMultiAutoInit("mods\\", "*.zip");
     }
 }
 
