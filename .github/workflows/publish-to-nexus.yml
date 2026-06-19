@@ -28,8 +28,13 @@ jobs:
             -o "$ASSET_NAME" \
             "$ASSET_URL"
 
-          # Store the filename for later steps
+          # Strip the 'v' prefix from tag name for version
+          VERSION="${{ github.event.release.tag_name }}"
+          VERSION="${VERSION#v}"  # Remove leading 'v' if present
+
+          # Store values for later steps
           echo "ASSET_FILENAME=$ASSET_NAME" >> $GITHUB_ENV
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Upload to Nexus Mods
         uses: Nexus-Mods/upload-action@v1.0.0-beta.8
@@ -37,8 +42,8 @@ jobs:
           api_key: ${{ secrets.NEXUS_MODS_API_KEY }}
           file_id: ${{ secrets.NEXUS_MODS_FILE_GROUP }}
           filename: ${{ env.ASSET_FILENAME }}
-          version: ${{ github.event.release.tag_name }}
-          display_name: mc2hook ${{ github.event.release.tag_name }}
+          version: ${{ env.VERSION }}
+          display_name: mc2hook v
           description: ${{ github.event.release.body }}
           archive_existing_version: true
           primary_mod_manager_download: true
