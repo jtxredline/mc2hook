@@ -10,30 +10,24 @@ jobs:
 
     steps:
       - name: Download release asset
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        id: download
+        uses: robinraju/release-downloader@v1.13
+        with:
+          tag: ${{ github.event.release.tag_name }}
+          fileName: '*.zip'
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Prepare version and filename
         run: |
-          # Get the release assets
-          ASSET_URL=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
-            https://api.github.com/repos/${{ github.repository }}/releases/${{ github.event.release.id }} \
-            | jq -r '.assets[] | select(.name | endswith(".zip")) | .url')
-
-          ASSET_NAME=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
-            https://api.github.com/repos/${{ github.repository }}/releases/${{ github.event.release.id }} \
-            | jq -r '.assets[] | select(.name | endswith(".zip")) | .name')
-
-          # Download the asset
-          curl -L -H "Authorization: token $GITHUB_TOKEN" \
-            -H "Accept: application/octet-stream" \
-            -o "$ASSET_NAME" \
-            "$ASSET_URL"
+          # Get the downloaded filename
+          ASSET_FILENAME=$(echo '${{ steps.download.outputs.downloaded_files }}' | jq -r '.[0]' | xargs basename)
 
           # Strip the 'v' prefix from tag name for version
           VERSION="${{ github.event.release.tag_name }}"
           VERSION="${VERSION#v}"  # Remove leading 'v' if present
 
           # Store values for later steps
-          echo "ASSET_FILENAME=$ASSET_NAME" >> $GITHUB_ENV
+          echo "ASSET_FILENAME=$ASSET_FILENAME" >> $GITHUB_ENV
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Upload to Nexus Mods
