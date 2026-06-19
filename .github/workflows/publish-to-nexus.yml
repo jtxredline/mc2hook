@@ -1,0 +1,44 @@
+name: Publish to Nexus Mods
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  upload-to-nexus:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download release asset
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Get the release assets
+          ASSET_URL=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+            https://api.github.com/repos/${{ github.repository }}/releases/${{ github.event.release.id }} \
+            | jq -r '.assets[] | select(.name | endswith(".zip")) | .url')
+
+          ASSET_NAME=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+            https://api.github.com/repos/${{ github.repository }}/releases/${{ github.event.release.id }} \
+            | jq -r '.assets[] | select(.name | endswith(".zip")) | .name')
+
+          # Download the asset
+          curl -L -H "Authorization: token $GITHUB_TOKEN" \
+            -H "Accept: application/octet-stream" \
+            -o "$ASSET_NAME" \
+            "$ASSET_URL"
+
+          # Store the filename for later steps
+          echo "ASSET_FILENAME=$ASSET_NAME" >> $GITHUB_ENV
+
+      - name: Upload to Nexus Mods
+        uses: Nexus-Mods/upload-action@v1.0.0-beta.8
+        with:
+          api_key: ${{ secrets.NEXUS_MODS_API_KEY }}
+          file_id: ${{ secrets.NEXUS_MODS_FILE_GROUP }}
+          filename: ${{ env.ASSET_FILENAME }}
+          version: ${{ github.event.release.tag_name }}
+          display_name: Mc2hook v${{ github.event.release.tag_name }}
+          description: ${{ github.event.release.body }}
+          archive_existing_version: true
+          primary_mod_manager_download: true
