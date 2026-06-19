@@ -43,7 +43,7 @@ jobs:
           file_id: ${{ secrets.NEXUS_MODS_FILE_GROUP }}
           filename: ${{ env.ASSET_FILENAME }}
           version: ${{ env.VERSION }}
-          display_name: mc2hook v
+          display_name: mc2hook ${{ github.event.release.tag_name }}
           description: ${{ github.event.release.body }}
           archive_existing_version: true
           primary_mod_manager_download: true
