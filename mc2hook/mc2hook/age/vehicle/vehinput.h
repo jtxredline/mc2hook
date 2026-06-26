@@ -66,7 +66,7 @@ public:
 public:
     void Update();
     void UpdateFFB();
-    void SomeAssignInputs();
+    void UpdateReplay();
     void UpdateNetworkInput();
     void ApplyReplayFrame();
     float sub_46AA90(float speed);

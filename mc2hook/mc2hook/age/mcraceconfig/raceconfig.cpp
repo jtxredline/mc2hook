@@ -8,3 +8,4 @@ declfield(mcRaceConfig::g_NumPlayerSlots)(0x6C2EC4);
 declfield(mcRaceConfig::g_RaceName)(0x6C2EE0);
 declfield(mcRaceConfig::g_CurrentCar)(0x6C2FF4);
 declfield(mcRaceConfig::g_CurrentCarColor)(0x6C3018);
+declfield(mcRaceConfig::g_NumPlayers)(0x6C3304);

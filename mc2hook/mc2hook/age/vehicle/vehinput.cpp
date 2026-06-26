@@ -618,7 +618,7 @@ void vehInput::UpdateNetworkInput()
     }
 }
 
-void vehInput::SomeAssignInputs()
+void vehInput::UpdateReplay()
 {
     hook::Thunk<0x5684C0>::Call<void>(this);
 }

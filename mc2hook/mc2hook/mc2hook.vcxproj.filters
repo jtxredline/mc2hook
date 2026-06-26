@@ -120,6 +120,10 @@
     <ClCompile Include="age\physics\phlevel.cpp" />
     <ClCompile Include="age\physics\intersection.cpp" />
     <ClCompile Include="age\physics\bound.cpp" />
+    <ClCompile Include="age\mcreplay\mcreplay.cpp" />
+    <ClCompile Include="age\managers\playermgr.cpp" />
+    <ClCompile Include="age\mcplayer\mcplayer.cpp" />
+    <ClCompile Include="age\mcgame\factory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="age\camera\playercamera.h" />
@@ -278,6 +282,10 @@
     <ClInclude Include="age\physics\phlevel.h" />
     <ClInclude Include="age\physics\bound.h" />
     <ClInclude Include="age\physics\phinst.h" />
+    <ClInclude Include="age\mcreplay\mcreplay.h" />
+    <ClInclude Include="age\managers\playermgr.h" />
+    <ClInclude Include="age\mcplayer\mcplayer.h" />
+    <ClInclude Include="age\mcgame\factory.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="discord-rpc\lib\discord_game_sdk.dll.lib" />

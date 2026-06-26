@@ -22,6 +22,11 @@
 #include <age/vehicle/aero.h>
 #include <age/vehicle/drivetrain.h>
 #include <age/physics/phlevel.h>
+#include <age/data/memstream.h>
+#include <age/data/replay.h>
+#include <age/mcreplay/mcreplay.h>
+#include <age/mcgame/factory.h>
+#include <age/vehicle/automgr.h>
 
 void REHandler::Install()
 {
@@ -372,4 +377,50 @@ void REHandler::Install()
             cb::call(0x56A69C),
             cb::call(0x56C696),
         });*/
+
+    // datMemStream
+    InstallCallback("datMemStream::Write()", "datMemStream::Write()",
+        &datMemStream::Write, {
+            cb::call(0x6148EC),
+            cb::call(0x617A47),
+        });
+
+    // datReplay
+    InstallCallback("datReplay::BeginRecording()", "datReplay::BeginRecording()",
+        &datReplay::BeginRecording, {
+            cb::call(0x404D05),
+        });
+
+    InstallCallback("datReplay::Reset()", "datReplay::Reset()",
+        &datReplay::Reset, {
+            cb::jmp(0x404EB0),
+            cb::call(0x6148A6),
+            cb::call(0x6148C0),
+            cb::call(0x614911),
+        });
+
+    //InstallCallback("datReplay::datReplay_614770()", "datReplay::datReplay_614770()",
+    //    &datReplay::datReplay_614770, {
+    //        cb::call(0x404D69),
+    //    });
+
+    // mcReplay
+    InstallCallback("mcReplay::StartPlayback()", "mcReplay::StartPlayback()",
+        &mcReplay::StartPlayback, {
+            cb::call(0x4053BB),
+        });
+
+    InstallCallback("mcReplay::Update()", "mcReplay::Update()",
+        &mcReplay::Update, {
+            cb::call(0x40531B),
+        });
+
+    // mcPlayerFactory
+    InstallCallback("mcPlayerFactory::MakeEntity()", "mcPlayerFactory::MakeEntity()",
+        &mcPlayerFactory::MakeEntity, {
+            cb::call(0x468A41),
+        });
+
+    // vehManager / vehAutoMgr
+    InstallVTableHook("vehAutoMgr::ManagerAddEntry()", &vehAutoMgr::ManagerAddEntry, { 0x644684 });
 };

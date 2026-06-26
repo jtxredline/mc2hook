@@ -113,7 +113,7 @@
       <EnableUAC>false</EnableUAC>
       <AdditionalDependencies>dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/pdbaltpath:%_PDB% %(AdditionalOptions)</AdditionalOptions>
-      <OutputFile>D:\MC\MC2\Midnight Club 2 Simple - Copy\dinput8.dll</OutputFile>
+      <OutputFile>D:\MC\MC2\Midnight Club 2 Test2\dinput8.dll</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -148,6 +148,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <OutputFile>D:\MC\MC2\Midnight Club 2 Test2\dinput8.dll</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -177,13 +178,17 @@
     <ClInclude Include="age\input\mouse.h" />
     <ClInclude Include="age\managers\layermgr.h" />
     <ClInclude Include="age\managers\mcaudiomgr.h" />
+    <ClInclude Include="age\managers\playermgr.h" />
     <ClInclude Include="age\mcconfig\mcconfig.h" />
     <ClInclude Include="age\mcdata\mcdata.h" />
     <ClInclude Include="age\mcfe\hub.h" />
     <ClInclude Include="age\managers\netmanager.h" />
     <ClInclude Include="age\math\math.h" />
+    <ClInclude Include="age\mcgame\factory.h" />
     <ClInclude Include="age\mclobby\lobbyderived.h" />
+    <ClInclude Include="age\mcplayer\mcplayer.h" />
     <ClInclude Include="age\mcraceconfig\raceconfig.h" />
+    <ClInclude Include="age\mcreplay\mcreplay.h" />
     <ClInclude Include="age\memory\age_alloc_baseclass.h" />
     <ClInclude Include="age\memory\memory.h" />
     <ClInclude Include="age\model\getpivot.h" />
@@ -331,13 +336,17 @@
     <ClCompile Include="age\input\mouse.cpp" />
     <ClCompile Include="age\managers\layermgr.cpp" />
     <ClCompile Include="age\managers\mcaudiomgr.cpp" />
+    <ClCompile Include="age\managers\playermgr.cpp" />
     <ClCompile Include="age\mcconfig\mcconfig.cpp" />
     <ClCompile Include="age\mcdata\mcdata.cpp" />
     <ClCompile Include="age\mcfe\hub.cpp" />
     <ClCompile Include="age\managers\netmanager.cpp" />
     <ClCompile Include="age\math\math.cpp" />
+    <ClCompile Include="age\mcgame\factory.cpp" />
     <ClCompile Include="age\mclobby\lobbyderived.cpp" />
+    <ClCompile Include="age\mcplayer\mcplayer.cpp" />
     <ClCompile Include="age\mcraceconfig\raceconfig.cpp" />
+    <ClCompile Include="age\mcreplay\mcreplay.cpp" />
     <ClCompile Include="age\memory\age_alloc_baseclass.cpp" />
     <ClCompile Include="age\memory\allocator.cpp" />
     <ClCompile Include="age\model\getpivot.cpp" />
