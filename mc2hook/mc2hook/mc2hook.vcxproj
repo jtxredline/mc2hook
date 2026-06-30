@@ -153,6 +153,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="age\ai\opponent.h" />
+    <ClInclude Include="age\ai\opponentmgr.h" />
     <ClInclude Include="age\camera\playercamera.h" />
     <ClInclude Include="age\core\file.h" />
     <ClInclude Include="age\core\output.h" />
@@ -316,6 +317,7 @@
     <ClInclude Include="thirdparty\inicpp.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="age\ai\opponentmgr.cpp" />
     <ClCompile Include="age\camera\playercamera.cpp" />
     <ClCompile Include="age\core\output.cpp" />
     <ClCompile Include="age\core\stream.cpp" />

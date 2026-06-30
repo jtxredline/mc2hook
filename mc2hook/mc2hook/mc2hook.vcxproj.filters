@@ -125,6 +125,7 @@
     <ClCompile Include="age\mcgame\player.cpp" />
     <ClCompile Include="age\mcgame\factory.cpp" />
     <ClCompile Include="age\vehicle\car.cpp" />
+    <ClCompile Include="age\ai\opponentmgr.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="age\camera\playercamera.h" />
@@ -288,6 +289,7 @@
     <ClInclude Include="age\mcgame\player.h" />
     <ClInclude Include="age\mcgame\factory.h" />
     <ClInclude Include="age\ai\opponent.h" />
+    <ClInclude Include="age\ai\opponentmgr.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="discord-rpc\lib\discord_game_sdk.dll.lib" />
