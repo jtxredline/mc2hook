@@ -4,10 +4,11 @@
 #include <age/physics/phinertia.h>
 #include <age/math/math.h>
 #include <age/data/timemgr.h>
+#include <age/vehicle/vehinput.h>
 
 void vehAero::Update()
 {
-    if (this->dword_3c && (*(unsigned char*)(this->dword_3c + 0x2A) & 1) != 0 && *(float*)(this->dword_3c + 0x20) < -0.5f)
+    if (this->m_BikeInput && (*(unsigned char*)(this->m_BikeInput + 0x2A) & 1) != 0 && *(float*)(this->m_BikeInput + 0x20) < -0.5f)
     {
         this->dword_34 = this->m_DragSlipstream;
         this->dword_34 += this->dword_48;
@@ -157,4 +158,9 @@ void vehAero::Update2()
         ics->m_Force.Y += dragScale * ics->m_WorldVelocity.Y;
         ics->m_Force.Z += dragScale * ics->m_WorldVelocity.Z;
     }
+}
+
+void vehAero::sub_4E5450(vehCarSim* sim, vehInput* input)
+{
+    hook::Thunk<0x4E5450>::Call<void>(this, sim, input); // Call original
 }

@@ -5,17 +5,17 @@
 #include <age/vehicle/wheel.h>
 #include <age/state/gamestate.h>
 #include <age/data/timemgr.h>
-#include <age/managers/netmanager.h>
+#include <age/mcnetwork/netmanager.h>
 #include <age/mcfe/hub.h>
-#include <age/mclobby/lobbyderived.h>
+#include <age/mcnetwork/lobbyderived.h>
 #include <age/gfx/rstate.h>
 #include <age/vehicle/vehinput.h>
-#include <age/mcdata/mcdata.h>
-#include <age/mcconfig/mcconfig.h>
+#include <age/mcgame/mcdata.h>
+#include <age/mcgame/mcconfig.h>
 #include <age/input/input.h>
 #include <age/vehicle/gyro.h>
 #include <age/hud/hudMap.h> //
-#include <age/managers/layermgr.h>
+#include <age/mcgame/layermgr.h>
 #include <age/input/joystick.h>
 #include <age/gfx/pipeline.h>
 #include <age/vehicle/carsim.h>
@@ -24,9 +24,10 @@
 #include <age/physics/phlevel.h>
 #include <age/data/memstream.h>
 #include <age/data/replay.h>
-#include <age/mcreplay/mcreplay.h>
+#include <age/mcgame/mcreplay.h>
 #include <age/mcgame/factory.h>
 #include <age/vehicle/automgr.h>
+#include <age/vehicle/car.h>
 
 void REHandler::Install()
 {
@@ -423,4 +424,7 @@ void REHandler::Install()
 
     // vehManager / vehAutoMgr
     InstallVTableHook("vehAutoMgr::ManagerAddEntry()", &vehAutoMgr::ManagerAddEntry, { 0x644684 });
+
+    // mcCar
+    InstallVTableHook("mcCar::Update()", &mcCar::Update, { 0x644980 });
 };

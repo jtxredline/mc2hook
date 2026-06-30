@@ -1,4 +1,4 @@
-#pragma once
+#pragma oncemcnetwork/netmanager.h
 #include <mc2hook\mc2hook.h>
 
 class mcNetManager

@@ -1,15 +1,15 @@
 #include "mcreplay.h"
 #include <mc2hook\mc2hook.h>
 #include <age/core/output.h> //
-#include <age/mcraceconfig/raceconfig.h>
+#include <age/mcgame/raceconfig.h>
 #include <age/data/replay.h>
-#include <age/managers/playermgr.h>
-#include <age/mcplayer/mcplayer.h>
+#include <age/mcgame/playermgr.h>
+#include <age/mcgame/player.h>
 #include <age/vehicle/entity.h>
 #include <age/vehicle/carsim.h>
 #include <age/physics/phcollider.h>
 #include <age/physics/phinertia.h>
-#include <age/managers/netmanager.h>
+#include <age/mcnetwork/netmanager.h>
 
 // TODO: Put all mc classes into a mcgame folder
 
@@ -55,7 +55,7 @@ bool mcReplay::Update()
     this->dword_10 = 0;
 
     mcPlayer* player = mcPlayerManager::GetPlayer(0); //(mcNetManager::IsNetworkMode ? mcNetManager::LocalPlayerID : 0);
-    phInertialCS* ics = player->m_Entity->m_CarSim->m_Collider->m_ICS;
+    phInertialCS* ics = player->m_Entity->m_Car.m_CarSim->m_Collider->m_ICS;
 
     float x = ics->m_WorldTransform.m30;
     float y = ics->m_WorldTransform.m31;

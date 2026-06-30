@@ -1,6 +1,6 @@
 #include "vehinput.h"
 #include <mc2hook\mc2hook.h>
-#include <age/managers/netmanager.h>
+#include <age/mcnetwork/netmanager.h>
 #include <age/state/gamestate.h>
 #include <age/state/racestate.h>
 #include <age/vehicle/entity.h>
@@ -14,7 +14,7 @@
 #include <age/math/math.h>
 #include <age/data/replay.h>
 #include <age/data/timemgr.h>
-#include <age/managers/mcaudiomgr.h>
+#include <age/mcaudio/mcaudiomgr.h>
 #include <age/input/joystick.h>
 #include <age/input/device.h>
 #include <age/physics/phcollider.h>
@@ -264,7 +264,7 @@ LABEL_61:
     }
     else
     {
-        vehDamage* damage = m_Entity->m_Damage;
+        vehDamage* damage = m_Entity->m_Car.m_Damage;
         if (damage && damage->sub_4CEC50())
         {
             // Set bit 0x10
@@ -288,8 +288,8 @@ LABEL_61:
     }
     else
     {
-        mcCarSSTurbo* ssturbo = m_Entity->m_CarSim->m_SSTurbo;
-        vehNitro* nitro = m_Entity->m_CarSim->m_Nitro;
+        mcCarSSTurbo* ssturbo = m_Entity->m_Car.m_CarSim->m_SSTurbo;
+        vehNitro* nitro = m_Entity->m_Car.m_CarSim->m_Nitro;
 
         if (ssturbo && ssturbo->sub_4D4230())
         {
@@ -363,12 +363,12 @@ LABEL_61:
 
     if (!mcGameState::Instance->m_IsPausedLocally && m_Device->sub_467E90(0x1C))
     {
-        sndAudioManager::Instance->sub_52B3D0();
+        mcAudioManager::Instance->sub_52B3D0();
     }
 
     if (!mcGameState::Instance->m_IsPausedLocally && m_Device->sub_467E90(0x1B))
     {
-        sndAudioManager::Instance->sub_52B3C0();
+        mcAudioManager::Instance->sub_52B3C0();
     }
 
     //
@@ -466,29 +466,29 @@ LABEL_61:
     // Apply to car
     if (!mcNetManager::IsNetworkMode)
     {
-        m_Entity->m_CarSim->SetDrivable(m_Drivable);
-        m_Entity->m_CarSim->m_Steer = m_Steer;
-        m_Entity->m_CarSim->m_Throttle = m_GasBrake;
-        m_Entity->m_CarSim->m_Brake = m_Brake;
-        m_Entity->m_CarSim->m_Handbrake = m_Handbrake;
+        m_Entity->m_Car.m_CarSim->SetDrivable(m_Drivable);
+        m_Entity->m_Car.m_CarSim->m_Steer = m_Steer;
+        m_Entity->m_Car.m_CarSim->m_Throttle = m_GasBrake;
+        m_Entity->m_Car.m_CarSim->m_Brake = m_Brake;
+        m_Entity->m_Car.m_CarSim->m_Handbrake = m_Handbrake;
 
-        if (!isAuto) m_Entity->m_CarSim->m_Transmission->SetCurrentGear((int16_t)(flags & 0xFFFF));
+        if (!isAuto) m_Entity->m_Car.m_CarSim->m_Transmission->SetCurrentGear((int16_t)(flags & 0xFFFF));
 
-        m_Entity->m_Model->sub_4C4BC0((flags & 0x20000) != 0);
+        m_Entity->m_Car.m_Model->sub_4C4BC0((flags & 0x20000) != 0);
 
         if (mcRaceState::Instance->m_CurrentState < 6 && !mcGameState::Instance->m_IsPaused)
-            m_Entity->m_Audio->sub_4D6800((flags & 0x400000) != 0);
+            m_Entity->m_Car.m_Audio->sub_4D6800((flags & 0x400000) != 0);
 
         // Boost triggers
         if (flags & 0x40000)
         {
-            if (mcCarSSTurbo* ssturbo = m_Entity->m_CarSim->m_SSTurbo)
+            if (mcCarSSTurbo* ssturbo = m_Entity->m_Car.m_CarSim->m_SSTurbo)
                 ssturbo->sub_4D4270();
         }
 
         if (flags & 0x80000)
         {
-            if (vehNitro* nitro = m_Entity->m_CarSim->m_Nitro)
+            if (vehNitro* nitro = m_Entity->m_Car.m_CarSim->m_Nitro)
                 nitro->sub_4D1F80();
         }
 
@@ -497,7 +497,7 @@ LABEL_61:
 
         if (hi & 0x10)
         {
-            if (vehDamage* damage = m_Entity->m_Damage)
+            if (vehDamage* damage = m_Entity->m_Car.m_Damage)
             {
                 damage->sub_4CF500((hi >> 5) & 0xFFFFFF01);
             }
@@ -567,7 +567,7 @@ void vehInput::UpdateNetworkInput()
     m_Drivable = (int8_t)net_8C[1];
 
     // Apply to simulation
-    m_Entity->m_CarSim->SetDrivable(m_Drivable);
+    m_Entity->m_Car.m_CarSim->SetDrivable(m_Drivable);
 
     m_CarSim->m_Throttle = m_GasBrake;
     m_CarSim->m_Brake = m_Brake;
@@ -585,24 +585,24 @@ void vehInput::UpdateNetworkInput()
     }
     
     // Headlights
-    m_Entity->m_Model->sub_4C4BC0((m_CurrentGearFlags & 0x20000) != 0);
+    m_Entity->m_Car.m_Model->sub_4C4BC0((m_CurrentGearFlags & 0x20000) != 0);
 
     // Horn
     if (mcRaceState::Instance->m_CurrentState < 6 && !mcGameState::Instance->m_IsPaused)
     {
-        m_Entity->m_Audio->sub_4D6800((m_CurrentGearFlags & 0x400000) != 0);
+        m_Entity->m_Car.m_Audio->sub_4D6800((m_CurrentGearFlags & 0x400000) != 0);
     }
 
     // SST
     if (m_CurrentGearFlags & 0x40000)
     {
-        if (mcCarSSTurbo* turbo = m_Entity->m_CarSim->m_SSTurbo) turbo->sub_4D4270();
+        if (mcCarSSTurbo* turbo = m_Entity->m_Car.m_CarSim->m_SSTurbo) turbo->sub_4D4270();
     }
 
     // Nitro
     if (m_CurrentGearFlags & 0x80000)
     {
-        if (vehNitro* nitro = m_Entity->m_CarSim->m_Nitro) nitro->sub_4D1F80();
+        if (vehNitro* nitro = m_Entity->m_Car.m_CarSim->m_Nitro) nitro->sub_4D1F80();
     }
 
     // Damage / extra flags (high word usage)
@@ -610,7 +610,7 @@ void vehInput::UpdateNetworkInput()
 
     if (highFlags & 0x10)
     {
-        if (vehDamage* damage = m_Entity->m_Damage)
+        if (vehDamage* damage = m_Entity->m_Car.m_Damage)
         {
             uint32_t param = (highFlags >> 5) & 0xFFFFFF01;
             damage->sub_4CF500(param);
@@ -651,7 +651,7 @@ void vehInput::ApplyReplayFrame()
     datTimeManager::InvSeconds = 1.0f / datTimeManager::Seconds;
 
     // Apply base state
-    m_Entity->m_CarSim->SetDrivable(m_Drivable);
+    m_Entity->m_Car.m_CarSim->SetDrivable(m_Drivable);
 
     m_CarSim->m_Steer = m_Steer;
     m_CarSim->m_Throttle = m_GasBrake;
@@ -687,20 +687,20 @@ void vehInput::ApplyReplayFrame()
     }
 
     // Visual / audio
-    m_Entity->m_Model->sub_4C4BC0((m_CurrentGearFlags & 0x20000) != 0);
-    m_Entity->m_Audio->sub_4D6800((m_CurrentGearFlags & 0x400000) != 0);
+    m_Entity->m_Car.m_Model->sub_4C4BC0((m_CurrentGearFlags & 0x20000) != 0);
+    m_Entity->m_Car.m_Audio->sub_4D6800((m_CurrentGearFlags & 0x400000) != 0);
 
     // SST
     if (m_CurrentGearFlags & 0x40000)
     {
-        mcCarSSTurbo*  ssturbo = m_Entity->m_CarSim->m_SSTurbo;
+        mcCarSSTurbo*  ssturbo = m_Entity->m_Car.m_CarSim->m_SSTurbo;
         if (ssturbo) ssturbo->sub_4D4270();
     }
 
     // Nitro
     if (m_CurrentGearFlags & 0x80000)
     {
-        vehNitro* nitro = m_Entity->m_CarSim->m_Nitro;
+        vehNitro* nitro = m_Entity->m_Car.m_CarSim->m_Nitro;
         if (nitro) nitro->sub_4D1F80();
     }
 
@@ -709,7 +709,7 @@ void vehInput::ApplyReplayFrame()
 
     if (highFlags & 0x10)
     {
-        vehDamage* damage = m_Entity->m_Damage;
+        vehDamage* damage = m_Entity->m_Car.m_Damage;
         if (damage)
         {
             uint32_t param = (highFlags >> 5) & 0xFFFFFF01;

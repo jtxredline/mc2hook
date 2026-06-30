@@ -3,6 +3,7 @@
 
 class mcCar;
 class vehCarSim;
+//class vehEntity;
 
 class vehAutoMgr
 {
@@ -54,6 +55,6 @@ public:
     mcCar* GetCar() { return *m_Car; }
     vehCarSim* GetSim() { return *m_Sim; }
 
-    int ManagerAddEntry(int a2);
-    int AddEntry(int a2);
+    int ManagerAddEntry(mcCar* a2);
+    //int AddEntry(int a2);
 };

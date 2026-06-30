@@ -2,6 +2,7 @@
 #include <age/vector/vector3.h>
 
 class vehCarSim;
+class vehInput;
 
 class vehAero {
 public:
@@ -14,7 +15,7 @@ public:
 	Vector3 m_AngVel2Damp;
 	float dword_34;
 	float m_Down;
-	int dword_3c;
+	vehInput* m_BikeInput;
 	float m_DragSlipstream;
 	float m_Drag;
 	float dword_48;
@@ -22,4 +23,5 @@ public:
 public:
 	void Update();
 	void Update2(); // Temp name
+	void sub_4E5450(vehCarSim* sim, vehInput* input); // Assign bike input
 };

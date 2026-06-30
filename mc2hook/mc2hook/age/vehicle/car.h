@@ -1,41 +1,33 @@
 #pragma once
-#include <age/physics/phinertia.h>
+#include <mc2hook\mc2hook.h>
 
 // Forward declarations
 class vehCarSim;
+class vehInput;
+class vehModel;
+class vehAudio;
+class vehStuck;
+class vehGyro;
+class vehDamage;
 
 class mcCar {
 public:
 	void* m_Vtable;
-	int dword_04;
+	vehInput* m_Input;
 	vehCarSim* m_CarSim;
-	int dword_0c;
-	int dword_10;
-	void* m_Damage;
-	int dword_18;
-	int dword_1c;
-	int dword_20;
-	int dword_24;
-	int dword_28;
-	int dword_2c;
-	int dword_30;
-	int dword_34;
-	int dword_38;
-	int dword_3c;
-	int dword_40;
-	int dword_44;
-	int dword_48;
-	int dword_4c;
-	int dword_50;
-	int dword_54;
-	int dword_58;
-	int dword_5c;
-	int dword_60;
-	int dword_64;
+	vehModel* m_Model;
+	vehAudio* m_Audio;
+	void* m_Damage2;
+	void* m_Feedback;
+	void* m_MaybePhysBehavior;
+	vehStuck* m_Stuck;
+	vehGyro* m_Gyro;
 	int dword_68;
 	int dword_6c;
-	int dword_70;
+	void* m_WheelPtx;
 	int dword_74;
-	int dword_78;
-	int dword_7c;
+	vehDamage* m_Damage;
+
+public:
+	void Update();
 };

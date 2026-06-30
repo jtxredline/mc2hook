@@ -152,6 +152,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="age\ai\opponent.h" />
     <ClInclude Include="age\camera\playercamera.h" />
     <ClInclude Include="age\core\file.h" />
     <ClInclude Include="age\core\output.h" />
@@ -176,19 +177,19 @@
     <ClInclude Include="age\input\joystick.h" />
     <ClInclude Include="age\input\keyboard.h" />
     <ClInclude Include="age\input\mouse.h" />
-    <ClInclude Include="age\managers\layermgr.h" />
-    <ClInclude Include="age\managers\mcaudiomgr.h" />
-    <ClInclude Include="age\managers\playermgr.h" />
-    <ClInclude Include="age\mcconfig\mcconfig.h" />
-    <ClInclude Include="age\mcdata\mcdata.h" />
+    <ClInclude Include="age\mcgame\layermgr.h" />
+    <ClInclude Include="age\mcaudio\mcaudiomgr.h" />
+    <ClInclude Include="age\mcgame\playermgr.h" />
+    <ClInclude Include="age\mcgame\mcconfig.h" />
+    <ClInclude Include="age\mcgame\mcdata.h" />
     <ClInclude Include="age\mcfe\hub.h" />
-    <ClInclude Include="age\managers\netmanager.h" />
+    <ClInclude Include="age\mcnetwork\netmanager.h" />
     <ClInclude Include="age\math\math.h" />
     <ClInclude Include="age\mcgame\factory.h" />
-    <ClInclude Include="age\mclobby\lobbyderived.h" />
-    <ClInclude Include="age\mcplayer\mcplayer.h" />
-    <ClInclude Include="age\mcraceconfig\raceconfig.h" />
-    <ClInclude Include="age\mcreplay\mcreplay.h" />
+    <ClInclude Include="age\mcnetwork\lobbyderived.h" />
+    <ClInclude Include="age\mcgame\player.h" />
+    <ClInclude Include="age\mcgame\raceconfig.h" />
+    <ClInclude Include="age\mcgame\mcreplay.h" />
     <ClInclude Include="age\memory\age_alloc_baseclass.h" />
     <ClInclude Include="age\memory\memory.h" />
     <ClInclude Include="age\model\getpivot.h" />
@@ -334,19 +335,19 @@
     <ClCompile Include="age\input\joystick.cpp" />
     <ClCompile Include="age\input\keyboard.cpp" />
     <ClCompile Include="age\input\mouse.cpp" />
-    <ClCompile Include="age\managers\layermgr.cpp" />
-    <ClCompile Include="age\managers\mcaudiomgr.cpp" />
-    <ClCompile Include="age\managers\playermgr.cpp" />
-    <ClCompile Include="age\mcconfig\mcconfig.cpp" />
-    <ClCompile Include="age\mcdata\mcdata.cpp" />
+    <ClCompile Include="age\mcgame\layermgr.cpp" />
+    <ClCompile Include="age\mcaudio\mcaudiomgr.cpp" />
+    <ClCompile Include="age\mcgame\playermgr.cpp" />
+    <ClCompile Include="age\mcgame\mcconfig.cpp" />
+    <ClCompile Include="age\mcgame\mcdata.cpp" />
     <ClCompile Include="age\mcfe\hub.cpp" />
-    <ClCompile Include="age\managers\netmanager.cpp" />
+    <ClCompile Include="age\mcnetwork\netmanager.cpp" />
     <ClCompile Include="age\math\math.cpp" />
     <ClCompile Include="age\mcgame\factory.cpp" />
-    <ClCompile Include="age\mclobby\lobbyderived.cpp" />
-    <ClCompile Include="age\mcplayer\mcplayer.cpp" />
-    <ClCompile Include="age\mcraceconfig\raceconfig.cpp" />
-    <ClCompile Include="age\mcreplay\mcreplay.cpp" />
+    <ClCompile Include="age\mcnetwork\lobbyderived.cpp" />
+    <ClCompile Include="age\mcgame\player.cpp" />
+    <ClCompile Include="age\mcgame\raceconfig.cpp" />
+    <ClCompile Include="age\mcgame\mcreplay.cpp" />
     <ClCompile Include="age\memory\age_alloc_baseclass.cpp" />
     <ClCompile Include="age\memory\allocator.cpp" />
     <ClCompile Include="age\model\getpivot.cpp" />
@@ -367,6 +368,7 @@
     <ClCompile Include="age\vector\vector4.cpp" />
     <ClCompile Include="age\vehicle\aero.cpp" />
     <ClCompile Include="age\vehicle\automgr.cpp" />
+    <ClCompile Include="age\vehicle\car.cpp" />
     <ClCompile Include="age\vehicle\caraudio.cpp" />
     <ClCompile Include="age\vehicle\carsim.cpp" />
     <ClCompile Include="age\vehicle\carSSTurbo.cpp" />

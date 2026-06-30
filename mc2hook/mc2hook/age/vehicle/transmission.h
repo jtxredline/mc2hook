@@ -52,4 +52,5 @@ public:
     void Upshift();
     void Downshift();
 };
-//ASSERT_SIZEOF(vehTransmission, 0xEC);
+
+static_assert(sizeof(vehTransmission) == 0xEC, "vehTransmission size mismatch");

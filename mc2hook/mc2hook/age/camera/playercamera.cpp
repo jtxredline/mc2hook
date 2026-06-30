@@ -10,7 +10,7 @@
 #include <age/vehicle/aero.h>
 #include <age/vehicle/transmission.h>
 #include <age/vehicle/automgr.h>
-#include <age/managers/netmanager.h>
+#include <age/mcnetwork/netmanager.h>
 
 #include <age/input/keyboard.h>
 #include <dinput.h>

@@ -4,7 +4,7 @@
 
 //#include <age/data/timemgr.h>
 //#include <age/state/gamestate.h> //
-//#include <age/managers/layermgr.h>
+//#include <age/mcgame/layermgr.h>
 //#include <age/types.h>
 //#include <age/input/keyboard.h>
 //#include <dinput.h>
