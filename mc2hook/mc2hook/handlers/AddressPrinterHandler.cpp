@@ -1,6 +1,6 @@
 #include "AddressPrinterHandler.h"
-#include <age/core/output.h>
-#include <age/input/keyboard.h>
+#include <core/output.h>
+#include <input/keyboard.h>
 #include <dinput.h>
 
 // camBaseCS: 

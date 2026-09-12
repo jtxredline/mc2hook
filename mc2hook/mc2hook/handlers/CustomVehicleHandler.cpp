@@ -1,8 +1,8 @@
 #include "CustomVehicleHandler.h"
-#include <age\data\args.h>
+#include <data\args.h>
 #include <age\string\string.h>
-#include <age\text\stringtable.h>
-#include <age\data\asset.h>
+#include <text\stringtable.h>
+#include <data\asset.h>
 #include <mcgame/ui/asyncio.h>
 #include <mcgame/ui/vehicle3d.h>
 #include <mcgame/ui/mainmenu.h>

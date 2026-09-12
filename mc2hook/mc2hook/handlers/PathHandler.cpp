@@ -1,6 +1,6 @@
 #include "PathHandler.h"
-#include <age\data\asset.h>
-#include <age\data\args.h>
+#include <data\asset.h>
+#include <data\args.h>
 
 bool PathHandler::ArgGetHook(LPCSTR arg, int index, const char** out)
 {

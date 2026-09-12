@@ -1,9 +1,9 @@
 #include "age.h"
 #include "dllmain.h"
-#include <age/gfx/rstate.h>
-#include <age/gfx/font.h>
-#include <age/gfx/pipeline.h>
-#include <age/data/timemgr.h>
+#include <gfx/state.h>
+#include <gfx/font.h>
+#include <gfx/pipeline.h>
+#include <data/timemgr.h>
 
 declfield(Timer::s_HostTimer)(0x85835C);
 declfield(Timer::s_HostTime)(0x858338);

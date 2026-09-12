@@ -1,15 +1,15 @@
 #include "FreecamHandler.h"
-#include <age/vector/matrix34.h>
-#include <age/vector/matrix44.h>
-#include <age/gfx/rstate.h>
-#include <age/gfx/viewport.h>
-#include <age/core/output.h>
-#include <age/input/keyboard.h>
-#include <age/input/mouse.h>
-#include <age/data/timemgr.h>
+#include <vector/matrix34.h>
+#include <vector/matrix44.h>
+#include <gfx/state.h>
+#include <gfx/viewport.h>
+#include <core/output.h>
+#include <input/keyboard.h>
+#include <input/mouse.h>
+#include <data/timemgr.h>
 #include <dinput.h>
 
-#include <age/gfx/rstate.h> //
+#include <gfx/state.h> //
 //#include <age/camera/playercamera.h>
 
 // TODO:

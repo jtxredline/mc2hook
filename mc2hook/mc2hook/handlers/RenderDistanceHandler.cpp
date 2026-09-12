@@ -1,5 +1,5 @@
 #include "RenderDistanceHandler.h"
-#include <age/core/output.h>
+#include <core/output.h>
 
 static float ccMultiplier = 1.0f;
 

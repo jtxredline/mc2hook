@@ -1,6 +1,6 @@
 #include "zipEnumHandler.h"
-#include <age/zipfile/zipfile.h>
-#include <age/core/output.h>
+#include <zipfile/zipfile.h>
+#include <core/output.h>
 
 /// Angel never updated EnumFiles to address compressed names
 /// We deal with that here

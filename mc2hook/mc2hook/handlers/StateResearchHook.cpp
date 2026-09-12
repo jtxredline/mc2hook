@@ -1,5 +1,5 @@
 #include "StateResearchHook.h"
-#include <age/core/output.h>
+#include <core/output.h>
 #include <mc2hook\mc2hook.h>
 
 void StateResearchHook::EnterState(int num)

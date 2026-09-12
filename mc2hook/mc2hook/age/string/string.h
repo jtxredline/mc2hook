@@ -1,6 +1,6 @@
 #pragma once
 #include <string.h>
-#include <age\memory\memory.h>
+#include <memory\memory.h>
 
 static char* StringDuplicate(const char* str)
 {

@@ -1,7 +1,7 @@
 #include "HybridFileMethodsHandler.h"
-#include <age/zipfile/zipfile.h>
-#include <age/core/file.h>
-#include <age/core/output.h>
+#include <zipfile/zipfile.h>
+#include <core/file.h>
+#include <core/output.h>
 
 /*
 * WORK IN PROGRESS

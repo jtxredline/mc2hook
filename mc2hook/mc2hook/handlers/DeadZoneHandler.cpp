@@ -1,5 +1,5 @@
 #include "DeadZoneHandler.h"
-#include <age/input/input.h>
+#include <input/input.h>
 
 float deadZoneMultiplier;
 

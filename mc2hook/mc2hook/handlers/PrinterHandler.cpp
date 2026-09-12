@@ -1,5 +1,5 @@
 #include "PrinterHandler.h"
-#include <age/core/output.h>
+#include <core/output.h>
 
 void PrinterHandler::Install()
 {

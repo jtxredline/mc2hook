@@ -1,6 +1,6 @@
 #include "BurnoutHandler.h"
-#include <age/data/timemgr.h>
-#include <age/data/args.h>
+#include <data/timemgr.h>
+#include <data/args.h>
 
 static float burnoutIncreaseSpeed = 0.0f;
 static float burnoutDecreaseSpeed = 0.0f;

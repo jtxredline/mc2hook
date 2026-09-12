@@ -1,5 +1,5 @@
 #include "ghostmgr.h"
-#include <age/core/output.h>
+#include <core/output.h>
 
 mcGhostManager mcGhostManager::Instance;
 

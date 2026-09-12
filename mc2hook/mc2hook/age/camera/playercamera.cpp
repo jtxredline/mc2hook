@@ -1,19 +1,19 @@
 #include "playercamera.h"
 #include <age/age.h>
-#include <age/data/timemgr.h>
-#include <age/math/math.h>
-#include <age/core/output.h>
-#include <age/physics/phinertia.h>
-#include <age/physics/phcollider.h>
-#include <age/vehicle/carSSTurbo.h>
+#include <data/timemgr.h>
+#include <math/math.h>
+#include <core/output.h>
+#include <phinertia/inertia.h>
+#include <physics/collider.h>
+#include <mccar/carSSTurbo.h>
 #include <age/vehicle/nitro.h>
-#include <age/vehicle/aero.h>
-#include <age/vehicle/transmission.h>
-#include <age/vehicle/automgr.h>
-#include <age/mcnetwork/netmanager.h>
+#include <veh_dyna/aero.h>
+#include <veh_dyna/transmission.h>
+#include <veh_dyna/automgr.h>
+#include <mcnet/manager.h>
 #include <mccar/carsim.h>
 
-#include <age/input/keyboard.h>
+#include <input/keyboard.h>
 #include <dinput.h>
 
 

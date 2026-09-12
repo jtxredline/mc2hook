@@ -1,0 +1,56 @@
+#pragma once
+#include <veh_dyna/engine.h>
+#include <veh_dyna/drivetrain.h>
+
+class vehEngine;
+
+enum TransmissionMode
+{
+    Manual = 0,
+    Auto = 1,
+    NumModes = 2
+};
+
+class vehTransmission {
+public:
+    void* m_Vtable;
+    vehEngine* m_Engine;
+    vehDrivetrain* m_Drivetrain;
+    int m_GearChangeFlag;
+    float m_GearChangeTimer;
+    int m_Mode;
+    int m_CurrentGear;
+    float m_ManualGearRatios[8];
+    int m_ManualNumGears;
+    int m_AutoNumGears;
+    float m_AutoRatios[8];
+    float m_UpshiftRPMs[8];
+    float m_MaxDownshiftRPMs[8];
+    float m_MinDownshiftRPMs[8];
+    float m_GearChangeTime;
+    float m_ReverseSpeed;
+    float m_MaxSpeedLow;
+    float m_MaxSpeedHigh;
+    float m_UpshiftBias;
+    float m_DownshiftBiasMin;
+    float m_DownshiftBiasMax;
+    int m_MaxDownshifts;
+    float m_GearBias;
+    bool m_Clutch;
+    bool m_CallOriginal; // Debug flag
+    char m_Padding[2];
+
+public:
+    void Update();
+    
+    void SetGearChangeFlag(int flag);
+    int SetCurrentGear(int g);
+    void SetNeutral();
+    void SetForward();
+
+    float GetRatio() const;
+    void Upshift();
+    void Downshift();
+};
+
+static_assert(sizeof(vehTransmission) == 0xEC, "vehTransmission size mismatch");

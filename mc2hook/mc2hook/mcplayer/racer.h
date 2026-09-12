@@ -1,6 +1,6 @@
 #pragma once
 #include <mc2hook/mc2hook.h>
-#include <age/memory/age_alloc_baseclass.h>
+#include <memory/age_alloc_baseclass.h>
 
 class mcRacer : public AGEAllocatedClass
 {

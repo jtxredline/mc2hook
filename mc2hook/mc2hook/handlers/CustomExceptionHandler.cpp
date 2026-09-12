@@ -1,5 +1,5 @@
 #include "CustomExceptionHandler.h"
-#include <age\data\stack.h>
+#include <data\stack.h>
 
 void CustomExceptionHandler::Install()
 {

@@ -1,7 +1,7 @@
 #include "TestPanelHandler.h"
-#include <age\input\keyboard.h>
-#include <age/core/output.h>
-#include <age/text/stringtable.h>
+#include <input\keyboard.h>
+#include <core/output.h>
+#include <text/stringtable.h>
 #include <dinput.h>
 
 void* TestPanelHandler::GetPanelModel(int panelNum, int lod)

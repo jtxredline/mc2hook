@@ -1,11 +1,11 @@
 #include "zipIintHandler.h"
-#include <age\data\args.h>
-#include <age\zipfile\zipfile.h>
-#include <age\data\asset.h>
-#include <age/core/output.h>
+#include <data\args.h>
+#include <zipfile\zipfile.h>
+#include <data\asset.h>
+#include <core/output.h>
 #include <age\string\string.h>
-#include <age\memory\memory.h>
-#include <age/data/timemgr.h>
+#include <memory\memory.h>
+#include <data/timemgr.h>
 #include <direct.h>
 
 static int ZipFileSortFunc(const void* a, const void* b)

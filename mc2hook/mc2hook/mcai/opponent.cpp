@@ -1,5 +1,5 @@
 #include "opponent.h"
-//#include <age/core/output.h>
+//#include <core/output.h>
 
 bool aiOpponent::Init(int index, const char* carName, const aiOpponentDesc* desc, int a5, bool a6)
 {	

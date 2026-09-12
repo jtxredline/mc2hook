@@ -1,19 +1,19 @@
 #include "ghost.h"
 #include <mc2hook/mc2hook.h>
-#include <age/memory/memory.h>
-//#include <age/mcgame/factory.h>
-#include <age/vehicle/entity.h>
+#include <memory/memory.h>
+//#include <mcplayer/factory.h>
+#include <veh_base/entity.h>
 #include <mccar/carsim.h>
-#include <age/vehicle/carmodel.h>
+#include <veh_base/model.h>
 #include <age/vehicle/nitro.h>
-#include <age/vehicle/carSSTurbo.h>
+#include <mccar/carSSTurbo.h>
 #include <age/vehicle/aiinfo.h>
-#include <age/data/parse.h>
-#include <age/physics/archetype.h>
-#include <age/data/args.h>
-#include <age/physics/phcollider.h>
+#include <parse/parse.h>
+#include <physics/archetype.h>
+#include <data/args.h>
+#include <physics/collider.h>
 
-#include <age/core/output.h> //
+#include <core/output.h> //
 
 bool mcGhostCar::Spawn(const char* carName)
 {

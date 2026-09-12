@@ -1,6 +1,6 @@
 #include "InputHandler.h"
-#include <age\data\args.h>
-#include <age\input\input.h>
+#include <data\args.h>
+#include <input\input.h>
 
 void InputHandler::Install()
 {

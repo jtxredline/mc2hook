@@ -1,19 +1,19 @@
 #include "carsim.h"
-#include <age/math/math.h>
-#include <age/vehicle/entity.h>
-#include <age/vehicle/transmission.h>
-#include <age/vehicle/aero.h>
-#include <age/vehicle/wheel.h>
-#include <age/physics/phcollider.h>
+#include <math/math.h>
+#include <veh_base/entity.h>
+#include <veh_dyna/transmission.h>
+#include <veh_dyna/aero.h>
+#include <veh_dyna/wheel.h>
+#include <physics/collider.h>
 #include <age/vehicle/nitro.h>
-#include <age/vehicle/carSSTurbo.h>
+#include <mccar/carSSTurbo.h>
 #include <veh_base/damage.h>
-#include <age/physics/archetype.h>
-#include <age/memory/memory.h>
-#include <age/physics/bound.h>
-#include <age/core/output.h>
-#include <age/physics/archmgr.h>
-#include <age/physics/phlevel.h>
+#include <physics/archetype.h>
+#include <memory/memory.h>
+#include <phbound/bound.h>
+#include <core/output.h>
+#include <physics/archmgr.h>
+#include <physics/level.h>
 
 void mcCarSim::MakeCollider(const char* carName, vehEntity* entity)
 {

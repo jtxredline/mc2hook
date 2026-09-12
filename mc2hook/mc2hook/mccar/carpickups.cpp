@@ -1,6 +1,6 @@
 #include "carpickups.h"
 #include <mc2hook\mc2hook.h>
-#include <age/core/output.h>
+#include <core/output.h>
 
 bool mcCarPickups::sub_4CEC50()
 {

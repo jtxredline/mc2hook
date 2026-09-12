@@ -1,6 +1,6 @@
 #pragma once
-#include <age/vector/vector3.h>
-#include <age/vehicle/wheel.h>
+#include <vector/vector3.h>
+#include <veh_dyna/wheel.h>
 
 class vehAero;
 class vehFluid;

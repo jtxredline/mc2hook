@@ -1,7 +1,7 @@
 #pragma once
 #include <veh_base/damage.h>
-#include <age/vector/vector3.h>
-#include <age/vector/vector4.h>
+#include <vector/vector3.h>
+#include <vector/vector4.h>
 
 class vehEntity;
 class mcCarSim;

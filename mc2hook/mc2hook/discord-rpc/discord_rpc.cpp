@@ -1,13 +1,13 @@
 #include "discord_rpc.h"
 #include <discord-rpc/gamesdk/discord.h> // SDK
 #include <chrono>
-#include <age/mcgame/raceconfig.h>
-#include <age/mcnetwork/netmanager.h>
-#include <age/vehicle/automgr.h>
+#include <mcdata/raceconfig.h>
+#include <mcnet/manager.h>
+#include <veh_dyna/automgr.h>
 #include <age/types.h>
 #include <age/globals.h>
 #include <age/string/string.h>
-#include <age/math/math.h>
+#include <math/math.h>
 
 static const int64_t DISCORD_APP_ID = 1472018278317555722;
 static discord::Core* g_core = nullptr;

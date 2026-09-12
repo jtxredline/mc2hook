@@ -1,9 +1,9 @@
 #pragma once
 #include <mc2hook\mc2hook.h>
-#include <age\data\refcount.h>
-#include <age\memory\age_alloc_baseclass.h>
-#include <age/memory/memory.h>
-#include <age/core/output.h>
+#include <data\refcount.h>
+#include <memory\age_alloc_baseclass.h>
+#include <memory/memory.h>
+#include <core/output.h>
 
 class mcVehicleResource : public datRefCount, public AGEAllocatedClass
 {
