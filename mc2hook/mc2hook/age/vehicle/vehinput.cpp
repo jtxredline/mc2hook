@@ -5,11 +5,11 @@
 #include <age/state/racestate.h>
 #include <age/vehicle/entity.h>
 #include <mccar/carsim.h>
-#include <age/vehicle/carmodel.h>
-#include <age/vehicle/caraudio.h>
+#include <veh_base/model.h>
+#include <mccar/caraudio.h>
 #include <age/vehicle/carSSTurbo.h>
 #include <age/vehicle/nitro.h>
-#include <age/vehicle/transmission.h>
+#include <veh_dyna/transmission.h>
 #include <age/math/math.h>
 #include <age/data/replay.h>
 #include <age/data/timemgr.h>
@@ -89,7 +89,7 @@ static Vector3 ComputeAxleVelocity(const Vector3& worldVelocity, const Vector3& 
     return worldVelocity + rotVel;
 }
 
-void vehInput::Init(vehEntity* entity, const char* carName)
+void vehPlayerInput::Init(vehEntity* entity, const char* carName)
 {
     //hook::Thunk<0x46A3A0>::Call<void>(this, entity, carName); // Call original
 
@@ -106,7 +106,7 @@ void vehInput::Init(vehEntity* entity, const char* carName)
     if (m_Device) m_Device->sub_468500(); // Some update?
 }
 
-void vehInput::Update()
+void vehPlayerInput::Update()
 {
     // hook::Thunk<0x46B330>::Call<void>(this); // Call original
 
@@ -524,12 +524,12 @@ NETWORK:
     UpdateNetworkInput();
 }
 
-void vehInput::UpdateFFB()
+void vehPlayerInput::UpdateFFB()
 {
     hook::Thunk<0x46A450>::Call<void>(this);
 }
 
-void vehInput::UpdateNetworkInput()
+void vehPlayerInput::UpdateNetworkInput()
 {
     // hook::Thunk<0x46AE60>::Call<void>(this); // Call original
 
@@ -634,12 +634,12 @@ void vehInput::UpdateNetworkInput()
     }
 }
 
-void vehInput::UpdateReplay()
+void vehPlayerInput::PlaybackReplay()
 {
     hook::Thunk<0x5684C0>::Call<void>(this);
 }
 
-void vehInput::ApplyReplayFrame()
+void vehPlayerInput::ApplyReplayFrame()
 {
     // hook::Thunk<0x46AB50>::Call<void>(this); // Call original
 
@@ -734,37 +734,37 @@ void vehInput::ApplyReplayFrame()
     }
 }
 
-float vehInput::sub_46AA90(float speed)
+float vehPlayerInput::sub_46AA90(float speed)
 {
     return hook::Thunk<0x46AA90>::Call<float>(this, speed);
 }
 
-void vehInput::sub_46A760(int a2, int a3)
+void vehPlayerInput::sub_46A760(int a2, int a3)
 {
     hook::Thunk<0x46A760>::Call<void>(this, a2, a3);
 }
 
-void vehInput::sub_46A7A0(float steer, float* gasbrake, float* brake, int* drivable)
+void vehPlayerInput::sub_46A7A0(float steer, float* gasbrake, float* brake, int* drivable)
 {
     hook::Thunk<0x46A7A0>::Call<void>(this, steer, gasbrake, brake, drivable);
 }
 
-void vehInput::SomethingReplay()
+void vehPlayerInput::SomethingReplay()
 {   
     hook::Thunk<0x568460>::Call<void>(this);
 }
 
-void vehInput::sub_46A3A0(vehEntity* entity, const char* carName)
+void vehPlayerInput::sub_46A3A0(vehEntity* entity, const char* carName)
 {
     hook::Thunk<0x46A3A0>::Call<void>(this, entity, carName);
 }
 
-void vehInput::sub_46A3F0(int playerId)
+void vehPlayerInput::sub_46A3F0(int playerId)
 {
     hook::Thunk<0x46A3F0>::Call<void>(this, playerId);
 }
 
-void vehInput::sub_46A410(int playerId)
+void vehPlayerInput::sub_46A410(int playerId)
 {
     hook::Thunk<0x46A410>::Call<void>(this, playerId);
 }

@@ -1,9 +1,13 @@
+#include "transmission.h"
 #include <mc2hook\mc2hook.h>
 #include <age/data/timemgr.h>
-#include "transmission.h"
+#include <veh_dyna/wheel.h>
+#include <veh_dyna/drivetrain.h>
+#include <veh_dyna/engine.h>
 
-#include <age/input/keyboard.h> //
-#include <dinput.h> //
+// Debug
+#include <age/input/keyboard.h>
+#include <dinput.h>
 
 void vehTransmission::Update()
 {

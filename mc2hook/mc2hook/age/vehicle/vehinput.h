@@ -5,11 +5,11 @@
 class vehEntity;
 class mcCarSim;
 class vehModel;
-class vehAudio;
+class mcCarAudio;
 class mcCarDamage;
 class ioDeviceWrapper;
 
-class vehInput : public AGEAllocatedClass // Rename to vehPlayerInput?
+class vehPlayerInput : public AGEAllocatedClass // TODO: Redo inheritance chain
 {
 public:
     void* m_Vtable;
@@ -38,7 +38,7 @@ public:
                                        //   Bit 24 (0x1000000): Upshift request
                                        //   Bit 25 (0x2000000): Downshift request
                                        //   Bit 31 (0x80000000): Counter-steer detect
-    mcCarSim* m_CarSim;               // Pointer to the vehicle car simulation
+    mcCarSim* m_CarSim;                // Pointer to the vehicle car simulation
     int dword_30;
     int dword_34;
     int dword_38;
@@ -66,14 +66,14 @@ public:
     uint8_t net_8C[4];
 
 public:
-    vehInput(int a2, int a3, int a4)  { hook::Thunk<0x46B1D0>::Call<void>(this, a2, a3, a4); }
-    ~vehInput()                       { hook::Thunk<0x46B2F0>::Call<void>(this); }
+    vehPlayerInput(int a2, int a3, int a4)  { hook::Thunk<0x46B1D0>::Call<void>(this, a2, a3, a4); }
+    ~vehPlayerInput()                       { hook::Thunk<0x46B2F0>::Call<void>(this); }
 
 public:
     void Init(vehEntity* entity, const char* carName);
     void Update();
     void UpdateFFB();
-    void UpdateReplay();
+    void PlaybackReplay();
     void UpdateNetworkInput();
     void ApplyReplayFrame();
     float sub_46AA90(float speed);

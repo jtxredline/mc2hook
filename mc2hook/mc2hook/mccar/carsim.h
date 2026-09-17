@@ -9,7 +9,7 @@ class mcCarSSTurbo;
 class mcCarDamage;
 class vehEntity;
 
-class mcCarSim : public vehChassis//, public AGEAllocatedClass
+class mcCarSim : public vehChassis, public AGEAllocatedClass
 {
 public:
 	int dword_144;
@@ -71,16 +71,7 @@ public:
 	void sub_575060(void* a2);
 
 	void MakeCollider(const char* carName, vehEntity* entity);
-	void MakeColliderChassis(const char* carName, vehEntity* entity);
-
-	void MakeAero(const char* carName)                        { hook::Thunk<0x4D2490>::Call<void>(this, carName); }
-	void MakeFluid(const char* carName)                       { hook::Thunk<0x4D24E0>::Call<void>(this, carName); }
-	void MakeTransmission(const char* carName)                { hook::Thunk<0x569370>::Call<void>(this, carName); }
-	void MakeEngine(const char* carName)                      { hook::Thunk<0x569320>::Call<void>(this, carName); }
-	void MakeWheels(const char* carName)                      { hook::Thunk<0x56AAB0>::Call<void>(this, carName); }
-	void MakeDrivetrains(const char* carName)                 { hook::Thunk<0x5693C0>::Call<void>(this, carName); }
-	void MakeAxles(const char* carName)                       { hook::Thunk<0x5694B0>::Call<void>(this, carName); }
-	void MakeSuspensions(const char* carName)                 { hook::Thunk<0x5695E0>::Call<void>(this, carName); }
+	void MakeWheels(const char* carName);
 };
 
 static_assert(sizeof(mcCarSim) == 0x1DC, "mcCarSim size mismatch");

@@ -1,9 +1,9 @@
 #include "REHandler.h"
 #include <age/age.h>
 #include <age/camera/playercamera.h>
-#include <age/vehicle/transmission.h>
-#include <age/vehicle/engine.h>
-#include <age/vehicle/wheel.h>
+#include <veh_dyna/transmission.h>
+#include <veh_dyna/engine.h>
+#include <veh_dyna/wheel.h>
 #include <age/state/gamestate.h>
 #include <age/data/timemgr.h>
 #include <age/mcnetwork/netmanager.h>
@@ -20,8 +20,8 @@
 #include <age/input/joystick.h>
 #include <age/gfx/pipeline.h>
 #include <mccar/carsim.h>
-#include <age/vehicle/aero.h>
-#include <age/vehicle/drivetrain.h>
+#include <mccar/caraero.h>
+#include <veh_dyna/drivetrain.h>
 #include <age/physics/phlevel.h>
 #include <age/data/memstream.h>
 #include <age/data/replay.h>
@@ -306,9 +306,9 @@ void REHandler::Install()
 
     //InstallVTableHook("hudMap::sub_4A93C0()", &hudMap::sub_4A93C0, { 0x642C38 });
 
-    // vehInput
-    InstallVTableHook("vehInput::Update()", &vehInput::Update, { 0x63D0C4 });
-    InstallVTableHook("vehInput::ApplyReplayFrame()", &vehInput::ApplyReplayFrame, { 0x63D0D4 });
+    // vehPlayerInput
+    InstallVTableHook("vehPlayerInput::Update()", &vehPlayerInput::Update, { 0x63D0C4 });
+    InstallVTableHook("vehPlayerInput::ApplyReplayFrame()", &vehPlayerInput::ApplyReplayFrame, { 0x63D0D4 });
 
     // ioInput
 

@@ -1,8 +1,9 @@
 #pragma once
-#include <age/vehicle/engine.h>
-#include <age/vehicle/drivetrain.h>
+#include <mc2hook/mc2hook.h>
+#include <age/memory/age_alloc_baseclass.h>
 
 class vehEngine;
+class vehDrivetrain;
 
 enum TransmissionMode
 {
@@ -11,7 +12,8 @@ enum TransmissionMode
     NumModes = 2
 };
 
-class vehTransmission {
+class vehTransmission : public AGEAllocatedClass
+{
 public:
     void* m_Vtable;
     vehEngine* m_Engine;
@@ -41,6 +43,9 @@ public:
     char m_Padding[2];
 
 public:
+    vehTransmission()  { hook::Thunk<0x567940>::Call<void>(this); }
+    ~vehTransmission() { hook::Thunk<0x567750>::Call<void>(this); }
+
     void Update();
     
     void SetGearChangeFlag(int flag);

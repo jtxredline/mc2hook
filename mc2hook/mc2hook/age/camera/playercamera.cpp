@@ -7,8 +7,8 @@
 #include <age/physics/phcollider.h>
 #include <age/vehicle/carSSTurbo.h>
 #include <age/vehicle/nitro.h>
-#include <age/vehicle/aero.h>
-#include <age/vehicle/transmission.h>
+#include <mccar/caraero.h>
+#include <veh_dyna/transmission.h>
 #include <age/vehicle/automgr.h>
 #include <age/mcnetwork/netmanager.h>
 #include <mccar/carsim.h>

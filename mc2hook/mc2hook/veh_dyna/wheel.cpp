@@ -3,10 +3,12 @@
 #include <age/data/timemgr.h>
 #include <age/math/math.h>
 #include <mccar/carsim.h>
-#include <age/vehicle/transmission.h>
+#include <veh_dyna/transmission.h>
 #include <age/physics/phcollider.h>
+#include <age/physics/phinertia.h>
 #include <age/physics/phsurface.h>
 #include <age/physics/phlevel.h>
+#include <age/physics/phinst_old.h>
 #include <age/physics/intersection.h>
 #include <age/physics/simulator.h>
 

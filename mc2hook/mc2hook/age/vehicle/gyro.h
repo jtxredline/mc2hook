@@ -24,7 +24,7 @@ public:
 	float m_Drift;
 	float m_Spin180;
 	float m_Reverse180;
-	int dword_2C;
+	float dword_2C;
 	float m_Pitch;
 	float m_RollTorque;
 	int dword_38;

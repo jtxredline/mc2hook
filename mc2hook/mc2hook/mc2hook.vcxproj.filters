@@ -32,12 +32,12 @@
     <ClCompile Include="age\vector\vector4.cpp" />
     <ClCompile Include="age\vehicle\automgr.cpp" />
     <ClCompile Include="mccar\carsim.cpp" />
-    <ClCompile Include="age\vehicle\drivetrain.cpp" />
-    <ClCompile Include="age\vehicle\engine.cpp" />
-    <ClInclude Include="age\vehicle\engine.h" />
+    <ClCompile Include="veh_dyna\drivetrain.cpp" />
+    <ClCompile Include="veh_dyna\engine.cpp" />
+    <ClInclude Include="veh_dyna\engine.h" />
     <ClCompile Include="age\vehicle\vehinput.cpp" />
-    <ClCompile Include="age\vehicle\transmission.cpp" />
-    <ClCompile Include="age\vehicle\wheel.cpp" />
+    <ClCompile Include="veh_dyna\transmission.cpp" />
+    <ClCompile Include="veh_dyna\wheel.cpp" />
     <ClCompile Include="age\zipfile\zipfile.cpp" />
     <ClCompile Include="discord-rpc\discord_rpc.cpp" />
     <ClCompile Include="discord-rpc\gamesdk\achievement_manager.cpp" />
@@ -94,9 +94,9 @@
     <ClCompile Include="handlers\OpenSpyHandler.cpp" />
     <ClCompile Include="age\mcgame\mcdata.cpp" />
     <ClCompile Include="age\mcgame\mcconfig.cpp" />
-    <ClCompile Include="age\vehicle\carmodel.cpp" />
+    <ClCompile Include="veh_base\model.cpp" />
     <ClCompile Include="age\state\racestate.cpp" />
-    <ClCompile Include="age\vehicle\caraudio.cpp" />
+    <ClCompile Include="mccar\caraudio.cpp" />
     <ClCompile Include="age\vehicle\carSSTurbo.cpp" />
     <ClCompile Include="age\vehicle\nitro.cpp" />
     <ClCompile Include="veh_base\damage.cpp" />
@@ -112,7 +112,7 @@
     <ClCompile Include="age\physics\phcollider.cpp" />
     <ClCompile Include="age\physics\archetype.cpp" />
     <ClCompile Include="age\mcgame\layermgr.cpp" />
-    <ClCompile Include="age\vehicle\aero.cpp" />
+    <ClCompile Include="veh_dyna\aero.cpp" />
     <ClCompile Include="age\physics\phsurface.cpp" />
     <ClCompile Include="age\physics\phlevel.cpp" />
     <ClCompile Include="age\physics\intersection.cpp" />
@@ -136,6 +136,12 @@
     <ClCompile Include="mcai\factory.cpp" />
     <ClCompile Include="mccar\carpickups.cpp" />
     <ClCompile Include="veh_dyna\chassis.cpp" />
+    <ClCompile Include="mccar\caraero.cpp" />
+    <ClCompile Include="veh_dyna\fluid.cpp" />
+    <ClCompile Include="mccar\cardamage.cpp" />
+    <ClCompile Include="snd_control\audiomgr.cpp" />
+    <ClCompile Include="mccar\character.cpp" />
+    <ClCompile Include="veh_dyna\driver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="age\camera\playercamera.h" />
@@ -188,16 +194,16 @@
     <ClInclude Include="age\vector\vector2.h" />
     <ClInclude Include="age\vector\vector3.h" />
     <ClInclude Include="age\vector\vector4.h" />
-    <ClInclude Include="age\vehicle\aero.h" />
+    <ClInclude Include="veh_dyna\aero.h" />
     <ClInclude Include="age\vehicle\automgr.h" />
     <ClInclude Include="age\vehicle\car.h" />
     <ClInclude Include="mccar\carsim.h" />
     <ClInclude Include="age\vehicle\carSSTurbo.h" />
-    <ClInclude Include="age\vehicle\drivetrain.h" />
+    <ClInclude Include="veh_dyna\drivetrain.h" />
     <ClInclude Include="age\vehicle\vehinput.h" />
     <ClInclude Include="age\vehicle\nitro.h" />
-    <ClInclude Include="age\vehicle\transmission.h" />
-    <ClInclude Include="age\vehicle\wheel.h" />
+    <ClInclude Include="veh_dyna\transmission.h" />
+    <ClInclude Include="veh_dyna\wheel.h" />
     <ClInclude Include="age\zipfile\zipfile.h" />
     <ClInclude Include="discord-rpc\discord_rpc.h" />
     <ClInclude Include="discord-rpc\gamesdk\achievement_manager.h" />
@@ -271,9 +277,9 @@
     <ClInclude Include="age\mcgame\mcdata.h" />
     <ClInclude Include="age\mcgame\mcconfig.h" />
     <ClInclude Include="age\vehicle\entity.h" />
-    <ClInclude Include="age\vehicle\carmodel.h" />
+    <ClInclude Include="veh_base\model.h" />
     <ClInclude Include="age\state\racestate.h" />
-    <ClInclude Include="age\vehicle\caraudio.h" />
+    <ClInclude Include="mccar\caraudio.h" />
     <ClInclude Include="veh_base\damage.h" />
     <ClInclude Include="age\data\replay.h" />
     <ClInclude Include="age\data\memstream.h" />
@@ -312,6 +318,19 @@
     <ClInclude Include="veh_base\factory.h" />
     <ClInclude Include="veh_base\sim.h" />
     <ClInclude Include="veh_dyna\chassis.h" />
+    <ClInclude Include="mccar\caraero.h" />
+    <ClInclude Include="veh_dyna\fluid.h" />
+    <ClInclude Include="mccar\carfluid.h" />
+    <ClInclude Include="veh_dyna\axle.h" />
+    <ClInclude Include="veh_dyna\suspension.h" />
+    <ClInclude Include="veh_base\input.h" />
+    <ClInclude Include="mcai\input.h" />
+    <ClInclude Include="veh_base\audio.h" />
+    <ClInclude Include="snd_control\audiomgr.h" />
+    <ClInclude Include="snd_control\volumegroup.h" />
+    <ClInclude Include="veh_dyna\driver.h" />
+    <ClInclude Include="mccar\character.h" />
+    <ClInclude Include="mccar\cardriver.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="discord-rpc\lib\discord_game_sdk.dll.lib" />

@@ -2,6 +2,7 @@
 #include <veh_base/sim.h>
 
 class vehWheel;
+class vehEntity;
 
 class vehChassis : public vehSim
 {
@@ -43,6 +44,16 @@ public:
 public:
 	int OnGround(); // Number of wheels on ground
 	int BottomedOut();
+	void MakeCollider(const char* carName, vehEntity* entity);
+
+	void MakeAero(const char* carName);
+	void MakeFluid(const char* carName);
+	void MakeTransmission(const char* carName);
+	void MakeEngine(const char* carName);
+	void MakeWheels(const char* carName);
+	void MakeDrivetrains(const char* carName);
+	void MakeAxles(const char* carName);
+	void MakeSuspensions(const char* carName);
 };
 
 static_assert(sizeof(vehChassis) == 0x144, "vehChassis size mismatch");

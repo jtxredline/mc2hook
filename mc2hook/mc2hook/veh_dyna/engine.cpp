@@ -1,8 +1,17 @@
 #include "engine.h"
-
 #include <mc2hook\mc2hook.h>
 #include <age/data/timemgr.h>
 #include <age/math/math.h>
+#include <age/vector/matrix34.h>
+#include <veh_dyna/transmission.h>
+#include <veh_dyna/drivetrain.h>
+#include <age/physics/phinst_old.h>
+#include <age/physics/phinertia.h>
+
+void vehEngine::Init(vehSim* sim, const char* carName, const char* partName)
+{
+    hook::Thunk<0x5700B0>::Call<void>(this, sim, carName, partName); // Call original
+}
 
 void vehEngine::Update()
 {

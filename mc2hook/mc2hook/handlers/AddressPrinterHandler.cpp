@@ -14,13 +14,13 @@
 // mcCarDamage: 0x4CFAF0, 0x6446D4
 // vehDrivetrain: 0x573CB0, 0x56C696 (cb)
 // vehEngine: 0x56FBD0, 0x650F9C
-// vehFluid:
+// mcCarFluid:
 // vehGyro: 0x4DC190, 0x64556C
 // vehNitro:
 // vehStuck:
 // vehSuspension:
 // vehTransmission:
-// vehInput: 0x46B330, 0x63D0C4
+// vehPlayerInput: 0x46B330, 0x63D0C4
 // vehWheel: 0x56DB90, 0x650E30
 // mcCar: 0x4D1710, 0x644980
 // mcRaceStateDerived: 0x482580, 0x63EC04

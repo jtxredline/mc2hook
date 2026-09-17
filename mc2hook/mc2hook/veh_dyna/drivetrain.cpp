@@ -1,6 +1,15 @@
 #include "drivetrain.h"
-#include <age/vehicle/transmission.h>
+#include <mccar/carsim.h>
+#include <veh_dyna/transmission.h>
+#include <veh_dyna/engine.h>
 #include <age/data/timemgr.h>>
+
+void vehDrivetrain::Init(vehChassis* chassis, vehTransmission* transmission, vehEngine* engine)
+{
+    m_CarSim = (mcCarSim*)chassis;
+    m_Transmission = transmission;
+    m_Engine = engine;
+}
 
 void vehDrivetrain::Update() // TODO: Cleanup
 {

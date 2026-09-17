@@ -2,7 +2,7 @@
 
 //class mcCarSim;
 
-class mcCarDamage
+class vehDamage
 {
 public:
 	void* m_Vtable;

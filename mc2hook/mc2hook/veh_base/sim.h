@@ -1,13 +1,14 @@
 #pragma once
 #include <age/vector/vector3.h>
-#include <age/vehicle/wheel.h>
+#include <veh_dyna/wheel.h>
 
-class vehAero;
-class vehFluid;
+class mcCarAero;
+class mcCarFluid;
 class vehEngine;
 class vehTransmission;
 class vehDrivetrain;
 class vehAxle;
+class vehSuspension;
 class vehSuspension;
 class phCollider;
 class vehWheel;
@@ -26,18 +27,18 @@ public:
 	void* m_Vtable;
 	int dword_04;
 	int dword_08;
-	vehAero* m_Aero;
-	void* m_Fluid;
+	mcCarAero* m_Aero;
+	mcCarFluid* m_Fluid;
 	vehEngine* m_Engine;
 	vehTransmission* m_Transmission;
 	int m_NumWheels;
-	vehWheels* m_WheelsStruct; //vehWheel* m_WheelFL; // TODO: Unify how wheels are retrieved, f.e using m_Wheels in vehGyro::Update crashes
+	vehWheels* m_WheelsStruct; //vehWheel* m_WheelFL; // TODO: Unify how wheels are retrieved, f.e using m_Wheels array (in vehChassis) in vehGyro::Update crashes
 	int m_NumDrivetrains;
 	vehDrivetrain* m_Drivetrain;
 	int m_NumAxles;
-	void* m_Axle;
+	vehAxle* m_Axle;
 	int m_NumSuspensions;
-	void* m_Suspension;
+	vehSuspension* m_Suspension;
 	int dword_3c;
 	int dword_40;
 	int dword_44;

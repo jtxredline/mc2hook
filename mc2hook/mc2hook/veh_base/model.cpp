@@ -1,4 +1,4 @@
-#include "carmodel.h"
+#include "model.h"
 
 void vehModel::Init(const char* carName, Matrix34* mtx, mcCarSim* sim, bool a5, bool a6, bool isBike)
 {

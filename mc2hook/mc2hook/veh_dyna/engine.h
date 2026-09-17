@@ -1,14 +1,20 @@
 #pragma once
-#include <age/vector/matrix34.h>
-#include <age/vehicle/transmission.h>
-#include <age/vehicle/drivetrain.h>
-#include <age/physics/phinertia.h>
-#include <age/physics/phinst_old.h>
+#include <mc2hook/mc2hook.h>
+#include <age/memory/age_alloc_baseclass.h>
+//#include <age/vector/matrix34.h>
+//#include <veh_dyna/transmission.h>
+//#include <veh_dyna/drivetrain.h>
+//#include <age/physics/phinertia.h>
+//#include <age/physics/phinst_old.h>
 
-class vehTransmission;
+class Matrix34;
 class vehDrivetrain;
+class vehTransmission;
+class phInertialCS;
+class phInstOld;
+class vehSim;
 
-class vehEngine
+class vehEngine : public AGEAllocatedClass
 {
 public:
     void* m_Vtable;
@@ -53,6 +59,10 @@ public:
     phInstOld* m_Instance;
 
 public:
+    vehEngine()  { hook::Thunk<0x56FFF0>::Call<void>(this); }
+    ~vehEngine() { hook::Thunk<0x56F810>::Call<void>(this); }
+
+    void Init(vehSim* sim, const char* carName, const char* partName);
     void Update();
     float CalcTorqueAtFullThrottle(float angVel) const;
     float CalcTorqueAtZeroThrottle() const;

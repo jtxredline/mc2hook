@@ -1,7 +1,9 @@
 #pragma once
 #include <mc2hook\mc2hook.h>
-#include <age/vector/matrix34.h> //
-#include <age/physics/phinertia.h> //
+#include <age/memory/age_alloc_baseclass.h>
+#include <age/vector/matrix34.h>
+
+class phInertialCS;
 
 static constexpr float flt_673E50 = 0.17f;
 static constexpr float flt_673E54 = 0.25f;
@@ -14,7 +16,8 @@ class phInertialCS;
 class phSurface;
 class phIntersection;
 
-class vehWheel {
+class vehWheel : public AGEAllocatedClass
+{
 public:
 	static hook::Type<bool> byte_6C5210;
 	static hook::Type<bool> byte_6C5211;
@@ -27,8 +30,8 @@ public:
 	Matrix34 m_GlobalMatrixWheelCenter;
 	float m_TireDispLimitLat;
 	float m_TireDispLimitLong;
-	float m_TireDispCoefLat; // TODO: Check if not damp
-	float m_TireDispCoefLong; //
+	float m_TireDampCoefLat;
+	float m_TireDampCoefLong;
 	float m_TireDragCoefLat;
 	float m_TireDragCoefLong;
 	float m_SteeringLimit;

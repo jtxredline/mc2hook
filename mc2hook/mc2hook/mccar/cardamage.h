@@ -6,7 +6,7 @@
 class vehEntity;
 class mcCarSim;
 
-class mcCarDamage : mcCarDamage
+class mcCarDamage : public vehDamage
 {
 public:
 	vehEntity* m_Entity;
@@ -46,4 +46,7 @@ public:
 	bool m_IsDamagedOut;
 	char field_C3;
 	char field_C4;
+
+public:
+	void Init(vehEntity* entity, const char* carName);
 };

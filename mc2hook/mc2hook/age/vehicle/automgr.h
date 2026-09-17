@@ -3,6 +3,8 @@
 
 class mcCar;
 class mcCarSim;
+class vehSuspension;
+class vehAxle;
 
 class vehAutoMgr
 {
@@ -25,9 +27,9 @@ public:
     int m_NumWheels;
     void* m_Wheel;
     int m_NumSuspensions;
-    void* m_Suspension;
+    vehSuspension** m_Suspension;
     int m_NumAxles;
-    void* m_Axle;
+    vehAxle** m_Axle;
     int m_NumStucks;
     void* m_Stuck;
     int m_NumGyros;
@@ -47,6 +49,7 @@ public:
     int dword_94;
     int dword_98;
     int dword_9c;
+
 public:
     static hook::Type<vehAutoMgr*> Instance;
 public:

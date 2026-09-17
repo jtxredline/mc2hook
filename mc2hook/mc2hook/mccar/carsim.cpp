@@ -1,25 +1,16 @@
 #include "carsim.h"
-#include <age/math/math.h>
-#include <age/vehicle/entity.h>
-#include <age/vehicle/transmission.h>
-#include <age/vehicle/aero.h>
-#include <age/vehicle/wheel.h>
-#include <age/physics/phcollider.h>
-#include <age/vehicle/nitro.h>
-#include <age/vehicle/carSSTurbo.h>
-#include <veh_base/damage.h>
-#include <age/physics/archetype.h>
 #include <age/memory/memory.h>
-#include <age/physics/bound.h>
-#include <age/core/output.h>
-#include <age/physics/archmgr.h>
-#include <age/physics/phlevel.h>
+#include <age/vehicle/entity.h>
+#include <age/physics/archetype.h>
+#include <veh_dyna/wheel.h>
+
+#include <age/core/output.h> //
 
 void mcCarSim::MakeCollider(const char* carName, vehEntity* entity)
 {
     //hook::Thunk<0x4D2440>::Call<void>(this, carName, entity); // Call original
 
-    MakeColliderChassis(carName, entity);
+    vehChassis::MakeCollider(carName, entity);
 
     entity->SetPhysFlag(4, true);
 
@@ -30,76 +21,26 @@ void mcCarSim::MakeCollider(const char* carName, vehEntity* entity)
     archetype->SetTypeFlag(0x4000, true);
 }
 
-void mcCarSim::MakeColliderChassis(const char* carName, vehEntity* entity)
+void mcCarSim::MakeWheels(const char* carName)
 {
-    //hook::Thunk<0x569010>::Call<void>(this, carName, entity); // Call original
+    vehChassis::MakeWheels(carName);
 
-    // Create collider
-    m_Collider = age_new phCollider();
-
-    if (m_Collider)
+    for (int i = 0; i < m_NumWheels; ++i)
     {
-        m_Collider->m_Vtable = &phCollider::SomeVtable;
-        m_Collider->m_CarSim = this;
+        vehWheel* wheel = m_Wheels[i]; // m_WheelsStruct
+
+        if (i >= 2)  wheel->m_BrakeCoef = 1.1f;
+        else
+        {
+            wheel->m_BrakeCoef = 0.25f;
+            if (m_NumWheels > 2) wheel->m_SteeringOffset = 0.15f;
+        }
+
+        wheel->m_TireDispLimitLong = 0.075f;
+        wheel->m_TireDampCoefLong = 0.4f;
+        wheel->m_TireDragCoefLong = 0.0f;
+        wheel->m_SuspensionLimit = 0.33f;
     }
-
-    // Load vehicle bounds
-    char boundName[64];
-    sprintf(boundName, "%s_bound", carName);
-
-    phBound* bound = phBound::Load(boundName);
-
-    if (bound)
-    {
-        m_Collider->m_Bound = bound;
-        m_Size.X = bound->dword_14 - bound->dword_08;
-        m_Size.Y = bound->dword_18 - bound->dword_0c;
-        m_Size.Z = bound->dword_1c - bound->dword_10;
-        m_Size.Y = bound->dword_18;
-    }
-    else Errorf("vehChassis::MakeCollider(): File %s not found", boundName);
-
-    // Default inertia box
-    if (m_InertiaBox.X == 0.0f && m_InertiaBox.Y == 0.0f && m_InertiaBox.Z == 0.0f)
-    {
-        m_InertiaBox = m_Size * 1.25f;
-        m_InertiaScale = Vector3(1.25f, 1.25f, 1.25f);
-    }
-
-    // Create ICS
-    phInertialCS* ics = age_new phInertialCS();
-
-    ics->m_MaxAngVelocity = Vector3(6.2831855f, 6.2831855f, 6.2831855f); // 2PI
-    ics->m_MaxVelocity = 111.75f;
-
-    // Read max velocity from .ini
-    bool speedrunMode = HookConfig::GetBool("General", "SpeedrunMode", false);
-    float maxVelocity = HookConfig::GetFloat("Physics", "MaxVelocity", 111.75 * 2.237); // In mph format
-    if (!speedrunMode) ics->m_MaxVelocity = maxVelocity / 2.237; // mph to ms
-
-    ics->InitBoxMass(m_Mass, m_InertiaBox.X, m_InertiaBox.Y, m_InertiaBox.Z);
-    ics->Zero();
-
-    m_Collider->m_ICS = ics;
-
-    // Create physics archetype
-    if (!phArchetypeMgr::Instance) phArchetypeMgr::CreateInstance(0x190);
-
-    char s[60];
-    phArchetype* archetype = phArchetypeMgr::Instance->RegisterArchetype(bound, s, false, 1, phArchetype::dword_674060);
-    
-    archetype->SetMass(ics->m_Mass);
-    archetype->SetAngInertia(ics->m_AngInertia);
-
-    archetype->SetTypeFlag(64, 1);
-
-    entity->m_PhysInst.SetArchetype(archetype);
-    entity->m_PhysInst.m_Transform = Matrix34::I;
-
-    m_Collider->Init(entity, ics, 0);
-    
-    // Add collider to physics level
-    if (phLevel::Instance) phLevel::Instance->AddActiveObject(m_Collider, false);
 }
 
 // WIP

@@ -1,7 +1,7 @@
 #include "factory.h"
 #include <age/vehicle/entity.h>
 #include <mccar/carsim.h>
-#include <age/vehicle/aero.h>
+#include <mccar/caraero.h>
 #include <age/vehicle/automgr.h>
 #include <age/vehicle/car.h>
 #include <age/vehicle/nitro.h>
@@ -10,7 +10,7 @@
 #include <age/data/parse.h>
 #include <age/physics/archetype.h>
 #include <age/vehicle/vehinput.h>
-#include <age/vehicle/carmodel.h>
+#include <veh_base/model.h>
 #include <age/memory/memory.h>
 #include <age/data/args.h>
 #include <age/physics/phcollider.h>
@@ -93,38 +93,40 @@ void mcPlayerFactory::Build(const char* carName, int idx, void* owner)
 
 vehEntity* mcPlayerFactory::Create()
 {
-	//int ghost = hook::Thunk<0x46BE10>::Call<int>(this); // This creates a second car already
+    return hook::Thunk<0x46BE10>::Call<vehEntity*>(this); // Call original
+    
+    //int ghost = hook::Thunk<0x46BE10>::Call<int>(this); // This creates a second car already
 
-    MakeEntity();
-    MakeSim();
-    MakePlayerInput();
-    MaybeMakeModel();
-    MakeDamage1();
-    MakeStuck();
-    MakeGyro();
-    MakeDriver();
-    MakeFeedback();
-    MaybeMakeCamera();
-    MaybeMakeWheelPtx();
-
-    MakeDamage2();
-    MaybeMakeAudio();
-
-    vehEntity* entity = GetEntity();
-    mcCarSim* sim = entity->m_Car.m_CarSim;
-
-    if (sim->m_NumWheels == 2) // If bike
-    {
-        vehAero* aero = sim->m_Aero;
-        vehInput* input = entity->m_Car.m_Input;
-
-        aero->sub_4E5450(sim, input);
-    }
-
-    vehAutoMgr* mgr = vehAutoMgr::Instance;
-    if (mgr) mgr->AddEntry(&entity->m_Car);
-
-    return entity;
+//    MakeEntity();
+//    MakeSim();
+//    MakePlayerInput();
+//    MaybeMakeModel();
+//    MakeDamage1();
+//    MakeStuck();
+//    MakeGyro();
+//    MakeDriver();
+//    MakeFeedback();
+//    MaybeMakeCamera();
+//    MaybeMakeWheelPtx();
+//
+//    MakeDamage2();
+//    MaybeMakeAudio();
+//
+//    vehEntity* entity = GetEntity();
+//    mcCarSim* sim = entity->m_Car.m_CarSim;
+//
+//    if (sim->m_NumWheels == 2) // If bike
+//    {
+//        mcCarAero* aero = sim->m_Aero;
+//        vehPlayerInput* input = entity->m_Car.m_Input; // TODO: Redo inheritance chain for vehPlayerInput
+//
+//        aero->Init(sim, input);
+//    }
+//
+//    vehAutoMgr* mgr = vehAutoMgr::Instance;
+//    if (mgr) mgr->AddEntry(&entity->m_Car);
+//
+//    return entity;
 }
 
 vehEntity* mcPlayerFactory::GetEntity() const
@@ -137,22 +139,22 @@ vehEntity* mcPlayerFactory::GetEntity() const
 
 void mcPlayerFactory::MakePlayerInput()
 {
-    //hook::Thunk<0x46BF20>::Call<void>(this); // Call original
+    hook::Thunk<0x46BF20>::Call<void>(this); // Call original
 
-    vehEntity* entity = GetEntity();
+    //vehEntity* entity = GetEntity();
 
-    if (m_PlayerId == -1)
-    {
-        entity->m_Car.m_Input = nullptr;
-        return;
-    }
+    //if (m_PlayerId == -1)
+    //{
+    //    entity->m_Car.m_Input = nullptr;
+    //    return;
+    //}
 
-    vehInput* input = age_new vehInput(0, 1, 0);
+    //vehPlayerInput* input = age_new vehPlayerInput(0, 1, 0);
 
-    input->Init(entity, m_CarName);
+    //input->Init(entity, m_CarName);
 
-    input->sub_46A3F0(m_PlayerId);
-    input->sub_46A410(m_PlayerId);
+    //input->sub_46A3F0(m_PlayerId);
+    //input->sub_46A410(m_PlayerId);
 
-    entity->m_Car.m_Input = input;
+    //entity->m_Car.m_Input = input; // TODO: Redo inheritance chain for vehPlayerInput
 }

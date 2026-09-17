@@ -4,7 +4,7 @@
 //#include <age/mcgame/factory.h>
 #include <age/vehicle/entity.h>
 #include <mccar/carsim.h>
-#include <age/vehicle/carmodel.h>
+#include <veh_base/model.h>
 #include <age/vehicle/nitro.h>
 #include <age/vehicle/carSSTurbo.h>
 #include <age/vehicle/aiinfo.h>
