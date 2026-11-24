@@ -7,7 +7,10 @@ public:
 	void* m_Vtable;
 	int dword_04;
 	int dword_08;
-	int m_FlagsPlayerID;
+
+	uint16_t m_Flags;
+    uint16_t m_PlayerID;
+
 	float m_GasBrake;
 	float m_Brake;
 	float m_Handbrake;

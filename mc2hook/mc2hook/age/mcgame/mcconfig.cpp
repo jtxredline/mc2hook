@@ -3,6 +3,11 @@
 #include <age/types.h>
 #include <age/globals.h>
 
+declfield(mcConfig::g_SomePlayerCarModelTypeValue)(0x6C236C);
+declfield(mcConfig::g_CurrentCar2)(0x6C3434);
+declfield(mcConfig::g_SomeOtherCurrentCar)(0x6C3438);
+declfield(mcConfig::g_CurrentCarColor2)(0x6C3458);
+
 int mcConfig::LookupTOD(const char* todName)
 {
     int index = 0;

@@ -3,14 +3,14 @@
 #include <veh_dyna/aero.h>
 #include <age/memory/age_alloc_baseclass.h>
 
-class vehPlayerInput;
+class mcPlayerInput;
 class mcCarSim;
-class vehPlayerInput;
+class vehInput;
 
 class mcCarAero : public vehAero, public AGEAllocatedClass
 {
 public:
-	vehPlayerInput* m_BikeInput;
+	mcPlayerInput* m_BikeInput; // vehInput* m_Input?
 	float m_DragSlipstream;
 	float m_Drag;
 	float dword_48;
@@ -20,7 +20,7 @@ public:
 	~mcCarAero() { hook::Thunk<0x4E5470>::Call<void>(this); }
 
 	void Update();
-	void Init(mcCarSim* sim, vehPlayerInput* input);
+	void Init(mcCarSim* sim, vehInput* input);
 };
 
 static_assert(sizeof(mcCarAero) == 0x4C, "mcCarAero size mismatch");

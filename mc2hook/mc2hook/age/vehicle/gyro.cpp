@@ -4,7 +4,7 @@
 #include <age/data/timemgr.h>
 #include <age/math/math.h>
 
-#include <age/vehicle/vehinput.h>
+#include <mcplayer/input.h>
 #include <veh_base/input.h>
 
 #include <age/physics/archetype.h>

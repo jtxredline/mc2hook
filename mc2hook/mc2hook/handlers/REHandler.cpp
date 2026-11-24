@@ -10,7 +10,7 @@
 #include <age/mcfe/hub.h>
 #include <age/mcnetwork/lobbyderived.h>
 #include <age/gfx/rstate.h>
-#include <age/vehicle/vehinput.h>
+#include <mcplayer/input.h>
 #include <age/mcgame/mcdata.h>
 #include <age/mcgame/mcconfig.h>
 #include <age/input/input.h>
@@ -26,9 +26,9 @@
 #include <age/data/memstream.h>
 #include <age/data/replay.h>
 #include <age/mcgame/mcreplay.h>
-#include <age/mcgame/factory.h>
+#include <mcplayer/factory.h>
 #include <mcai/factory.h>
-#include <age/vehicle/automgr.h>
+#include <veh_dyna/automgr.h>
 #include <age/vehicle/car.h>
 #include <mcai/manager.h>
 #include <age/vehicle/entity.h>
@@ -171,7 +171,7 @@ void REHandler::Install()
                 //cb::call(0x4A5254),
                 //cb::call(0x4A53CF),
                 //cb::call(0x4A6027),
-                //cb::call(0x4CB3E1), // vehModel car normals 
+                //cb::call(0x4CB3E1), // rmcCarModel car normals 
                 //cb::call(0x4CD6DA),
                 //cb::call(0x4E0418),
                 //cb::call(0x4E04F6),
@@ -306,9 +306,9 @@ void REHandler::Install()
 
     //InstallVTableHook("hudMap::sub_4A93C0()", &hudMap::sub_4A93C0, { 0x642C38 });
 
-    // vehPlayerInput
-    InstallVTableHook("vehPlayerInput::Update()", &vehPlayerInput::Update, { 0x63D0C4 });
-    InstallVTableHook("vehPlayerInput::ApplyReplayFrame()", &vehPlayerInput::ApplyReplayFrame, { 0x63D0D4 });
+    // mcPlayerInput
+    InstallVTableHook("mcPlayerInput::Update()", &mcPlayerInput::Update, { 0x63D0C4 });
+    InstallVTableHook("mcPlayerInput::PlaybackReplay()", &mcPlayerInput::PlaybackReplay, { 0x63D0D4 });
 
     // ioInput
 
@@ -432,8 +432,8 @@ void REHandler::Install()
     //    });
 
     // mcPlayerFactory / aiOpponentFactory / vehFactory
-    InstallCallback("mcPlayerFactory::Create()", "mcPlayerFactory::Create()",
-        &mcPlayerFactory::Create, {
+    InstallCallback("mcPlayerFactory::Construct()", "mcPlayerFactory::Construct()",
+        &mcPlayerFactory::Construct, {
             cb::call(0x468A41),
         });
 

@@ -4,7 +4,7 @@
 // Forward declarations
 class mcCarSim;
 class vehInput;
-class vehModel;
+class rmcCarModel;
 class mcCarAudio;
 class vehStuck;
 class vehGyro;
@@ -18,7 +18,7 @@ public:
 	void* m_Vtable;
 	vehInput* m_Input;
 	mcCarSim* m_CarSim;
-	vehModel* m_Model;
+	rmcCarModel* m_Model;
 	mcCarAudio* m_Audio;
 	mcCarDamage* m_Damage;
 	void* m_Feedback;

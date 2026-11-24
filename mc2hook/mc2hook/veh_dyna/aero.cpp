@@ -145,7 +145,7 @@ void vehAero::Update()
     //}
 }
 
-//void vehAero::sub_4E5450(mcCarSim* sim, vehPlayerInput* input)
+//void vehAero::sub_4E5450(mcCarSim* sim, mcPlayerInput* input)
 //{
 //    hook::Thunk<0x4E5450>::Call<void>(this, sim, input); // Call original
 //}

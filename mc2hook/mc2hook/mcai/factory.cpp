@@ -2,7 +2,7 @@
 #include <age/memory/memory.h>
 #include <age/vehicle/entity.h>
 #include <mccar/carsim.h>
-#include <age/vehicle/automgr.h>
+#include <veh_dyna/automgr.h>
 #include <age/vehicle/car.h>
 #include <age/vehicle/nitro.h>
 #include <age/vehicle/carSSTurbo.h>
@@ -45,7 +45,7 @@ void aiOpponentFactory::MakeSim()
     entity->m_Car.m_CarSim = sim;
 
     sim->MakeCollider(m_CarName, entity);
-    sim->MakeAero(m_CarName);
+    sim->MakeAero(m_CarName); // vehChassis::MakeAero?
     sim->MakeFluid(m_CarName);
     sim->MakeTransmission(m_CarName);
     sim->MakeEngine(m_CarName);
@@ -99,7 +99,7 @@ void aiOpponentFactory::MakeModel()
     //hook::Thunk<0x4BF490>::Call<void>(this); // Call original
 
     vehEntity* entity = GetEntity();
-    vehModel* model = age_new vehModel();
+    rmcCarModel* model = age_new rmcCarModel();
 
     datArgParser::Get("nohighlods");
 
@@ -108,7 +108,7 @@ void aiOpponentFactory::MakeModel()
     model->Init(m_CarName, &entity->m_Car.m_CarSim->m_Collider->m_SomeInstParent->m_SomeInstParentTransform, entity->m_Car.m_CarSim, false, false, isBike);
 
     // This makes car models appear in the world
-    hook::Thunk<0x5178A0>::Call<void>(&model->dword_0c);
+    hook::Thunk<0x5178A0>::Call<void>(&model->m_Cullable);
 
     entity->m_Car.m_Model = model;
 }
@@ -167,15 +167,15 @@ void aiOpponentFactory::MakeDriver()
 
     vehEntity* entity = GetEntity();
     mcCarSim* carSim = entity->m_Car.m_CarSim;
-    vehModel* model = entity->m_Car.m_Model;
+    rmcCarModel* model = entity->m_Car.m_Model;
 
     if (carSim->m_NumWheels == 2) // Make bike rider
     {
         mcCharacter* character = age_new mcCharacter();
         character->Init(carSim, entity->m_Car.m_Input, m_CarName, "rider", 0, false);
 
-        character->dword_288 = model->dword_64;
-        character->sub_4D8F30(model->dword_64);
+        character->dword_288 = model->m_ColorID;
+        character->sub_4D8F30(model->m_ColorID);
 
         model->m_Driver = character;
         entity->m_Car.m_Driver = character;

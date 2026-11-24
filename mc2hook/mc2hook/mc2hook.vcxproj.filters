@@ -30,12 +30,12 @@
     <ClCompile Include="age\vector\vector.h" />
     <ClCompile Include="age\vector\vector3.cpp" />
     <ClCompile Include="age\vector\vector4.cpp" />
-    <ClCompile Include="age\vehicle\automgr.cpp" />
+    <ClCompile Include="veh_dyna\automgr.cpp" />
     <ClCompile Include="mccar\carsim.cpp" />
     <ClCompile Include="veh_dyna\drivetrain.cpp" />
     <ClCompile Include="veh_dyna\engine.cpp" />
     <ClInclude Include="veh_dyna\engine.h" />
-    <ClCompile Include="age\vehicle\vehinput.cpp" />
+    <ClCompile Include="mcplayer\input.cpp" />
     <ClCompile Include="veh_dyna\transmission.cpp" />
     <ClCompile Include="veh_dyna\wheel.cpp" />
     <ClCompile Include="age\zipfile\zipfile.cpp" />
@@ -120,7 +120,7 @@
     <ClCompile Include="age\mcgame\mcreplay.cpp" />
     <ClCompile Include="age\mcgame\playermgr.cpp" />
     <ClCompile Include="age\mcgame\player.cpp" />
-    <ClCompile Include="age\mcgame\factory.cpp" />
+    <ClCompile Include="mcplayer\factory.cpp" />
     <ClCompile Include="age\vehicle\car.cpp" />
     <ClCompile Include="mcai\manager.cpp" />
     <ClCompile Include="age\mcgame\racemgr.cpp" />
@@ -142,6 +142,8 @@
     <ClCompile Include="snd_control\audiomgr.cpp" />
     <ClCompile Include="mccar\character.cpp" />
     <ClCompile Include="veh_dyna\driver.cpp" />
+    <ClCompile Include="veh_dyna\playerinput.cpp" />
+    <ClCompile Include="veh_base\sim.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="age\camera\playercamera.h" />
@@ -195,12 +197,12 @@
     <ClInclude Include="age\vector\vector3.h" />
     <ClInclude Include="age\vector\vector4.h" />
     <ClInclude Include="veh_dyna\aero.h" />
-    <ClInclude Include="age\vehicle\automgr.h" />
+    <ClInclude Include="veh_dyna\automgr.h" />
     <ClInclude Include="age\vehicle\car.h" />
     <ClInclude Include="mccar\carsim.h" />
     <ClInclude Include="age\vehicle\carSSTurbo.h" />
     <ClInclude Include="veh_dyna\drivetrain.h" />
-    <ClInclude Include="age\vehicle\vehinput.h" />
+    <ClInclude Include="mcplayer\input.h" />
     <ClInclude Include="age\vehicle\nitro.h" />
     <ClInclude Include="veh_dyna\transmission.h" />
     <ClInclude Include="veh_dyna\wheel.h" />
@@ -300,7 +302,7 @@
     <ClInclude Include="age\mcgame\mcreplay.h" />
     <ClInclude Include="age\mcgame\playermgr.h" />
     <ClInclude Include="age\mcgame\player.h" />
-    <ClInclude Include="age\mcgame\factory.h" />
+    <ClInclude Include="mcplayer\factory.h" />
     <ClInclude Include="mcai\opponent.h" />
     <ClInclude Include="mcai\manager.h" />
     <ClInclude Include="age\mcgame\racemgr.h" />
@@ -331,6 +333,8 @@
     <ClInclude Include="veh_dyna\driver.h" />
     <ClInclude Include="mccar\character.h" />
     <ClInclude Include="mccar\cardriver.h" />
+    <ClInclude Include="veh_dyna\playerinput.h" />
+    <ClInclude Include="mccar\carmodeltype.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="discord-rpc\lib\discord_game_sdk.dll.lib" />

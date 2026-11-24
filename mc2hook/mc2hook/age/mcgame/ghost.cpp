@@ -92,7 +92,7 @@ void mcGhostCar::MakeSim(const char* carName)
 
 void mcGhostCar::MakeModel(const char* carName)
 {
-    vehModel* model = age_new vehModel();
+    rmcCarModel* model = age_new rmcCarModel();
 
     datArgParser::Get("nohighlods");
 
@@ -101,7 +101,7 @@ void mcGhostCar::MakeModel(const char* carName)
     model->Init(carName, &m_Entity->m_Car.m_CarSim->m_Collider->m_SomeInstParent->m_SomeInstParentTransform, m_Entity->m_Car.m_CarSim, false, false, isBike);
 
     // This makes car models appear in the world
-    hook::Thunk<0x5178A0>::Call<void>(&model->dword_0c);
+    hook::Thunk<0x5178A0>::Call<void>(&model->m_Cullable);
 
     m_Entity->m_Car.m_Model = model;
 }
@@ -109,7 +109,7 @@ void mcGhostCar::MakeModel(const char* carName)
 void mcGhostCar::Update()
 {
     Printf("mcGhostCar::Update\n");
-    //hook::Thunk<0x4CA4D0>::Call<void>(&m_Entity->m_Car.m_Model); // vehModel::Update
+    //hook::Thunk<0x4CA4D0>::Call<void>(&m_Entity->m_Car.m_Model); // rmcCarModel::Update
 }
 
 void mcGhostCar::Destroy()//(bool a2)

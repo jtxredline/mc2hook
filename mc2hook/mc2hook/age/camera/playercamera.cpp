@@ -9,7 +9,7 @@
 #include <age/vehicle/nitro.h>
 #include <mccar/caraero.h>
 #include <veh_dyna/transmission.h>
-#include <age/vehicle/automgr.h>
+#include <veh_dyna/automgr.h>
 #include <age/mcnetwork/netmanager.h>
 #include <mccar/carsim.h>
 

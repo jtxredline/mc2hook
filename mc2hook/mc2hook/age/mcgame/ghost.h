@@ -1,7 +1,7 @@
 #pragma once
 
 class vehEntity;
-//class vehPlayerInput;
+//class mcPlayerInput;
 //class mcCarSim;
 
 class mcGhostCar
@@ -17,6 +17,6 @@ public:
     void MakeSim(const char* carName);
     void MakeModel(const char* carName);
 
-    //vehPlayerInput* GetInput();
+    //mcPlayerInput* GetInput();
     //mcCarSim* GetSim();
 };

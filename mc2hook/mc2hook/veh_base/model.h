@@ -2,19 +2,20 @@
 #include <mc2hook/mc2hook.h>
 #include <age/memory/age_alloc_baseclass.h>
 
+class mcCarModelType;
 class Matrix34;
 class vehDriver;
 class mcCarSim;
 
-class vehModel : public AGEAllocatedClass
+class rmcCarModel : public AGEAllocatedClass
 {
 public:
 	void* m_Vtable;
 	int dword_04;
 	int dword_08;
-	int dword_0c;
+	int m_Cullable;
 	int dword_10;
-	int dword_14;
+	mcCarModelType* m_CarModelType;
 	int dword_18;
 	int dword_1c;
 	int dword_20;
@@ -34,18 +35,22 @@ public:
 	int dword_58;
 	int dword_5c;
 	int dword_60;
-	int dword_64;
+	int m_ColorID;
 	int dword_68;
 	vehDriver* m_Driver;
 	int dword_70;
 	mcCarSim* m_CarSim;
-	char m_Padding[41246];
+	char m_Padding1[38240];
+	int m_Spotlight1;
+	int m_Spotlight2;
+	int ptr3;
+	char m_Padding2[2996];
 
-	vehModel()  { hook::Thunk<0x4CE460>::Call<void>(this); }
-	~vehModel() { hook::Thunk<0x4C95D0>::Call<void>(this); }
+	rmcCarModel()  { hook::Thunk<0x4CE460>::Call<void>(this); } //  rmcCarModel
+	~rmcCarModel() { hook::Thunk<0x4C95D0>::Call<void>(this); } // ~rmcCarModel
 
 	void sub_4C4BC0(char a2) { hook::Thunk<0x4C4BC0>::Call<void>(this, a2); }
 	void Init(const char* carName, Matrix34* mtx, mcCarSim* sim, bool a5, bool a6, bool isBike);
 };
 
-static_assert(sizeof(vehModel) == 0xA198, "vehModel size mismatch");
+static_assert(sizeof(rmcCarModel) == 0xA198, "rmcCarModel size mismatch");

@@ -114,7 +114,7 @@
       <EnableUAC>false</EnableUAC>
       <AdditionalDependencies>dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/pdbaltpath:%_PDB% %(AdditionalOptions)</AdditionalOptions>
-      <OutputFile>D:\MC\MC2\Midnight Club 2 Test2\dinput8.dll</OutputFile>
+      <OutputFile>D:\MC\MC2\Midnight Club 2 BugTest\dinput8.dll</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -193,7 +193,8 @@
     <ClInclude Include="age\mcgame\racemgr.h" />
     <ClInclude Include="age\mcnetwork\netmanager.h" />
     <ClInclude Include="age\math\math.h" />
-    <ClInclude Include="age\mcgame\factory.h" />
+    <ClInclude Include="mccar\carmodeltype.h" />
+    <ClInclude Include="mcplayer\factory.h" />
     <ClInclude Include="age\mcnetwork\lobbyderived.h" />
     <ClInclude Include="age\mcgame\player.h" />
     <ClInclude Include="age\mcgame\raceconfig.h" />
@@ -242,7 +243,7 @@
     <ClInclude Include="veh_base\input.h" />
     <ClInclude Include="veh_dyna\aero.h" />
     <ClInclude Include="age\vehicle\aiinfo.h" />
-    <ClInclude Include="age\vehicle\automgr.h" />
+    <ClInclude Include="veh_dyna\automgr.h" />
     <ClInclude Include="age\vehicle\car.h" />
     <ClInclude Include="mccar\caraudio.h" />
     <ClInclude Include="mccar\caraero.h" />
@@ -260,8 +261,9 @@
     <ClInclude Include="age\vehicle\entity.h" />
     <ClInclude Include="veh_base\model.h" />
     <ClInclude Include="age\vehicle\gyro.h" />
-    <ClInclude Include="age\vehicle\vehinput.h" />
+    <ClInclude Include="mcplayer\input.h" />
     <ClInclude Include="age\vehicle\nitro.h" />
+    <ClInclude Include="veh_dyna\playerinput.h" />
     <ClInclude Include="veh_dyna\suspension.h" />
     <ClInclude Include="veh_dyna\transmission.h" />
     <ClInclude Include="veh_dyna\wheel.h" />
@@ -378,7 +380,7 @@
     <ClCompile Include="age\mcgame\racemgr.cpp" />
     <ClCompile Include="age\mcnetwork\netmanager.cpp" />
     <ClCompile Include="age\math\math.cpp" />
-    <ClCompile Include="age\mcgame\factory.cpp" />
+    <ClCompile Include="mcplayer\factory.cpp" />
     <ClCompile Include="age\mcnetwork\lobbyderived.cpp" />
     <ClCompile Include="age\mcgame\player.cpp" />
     <ClCompile Include="age\mcgame\raceconfig.cpp" />
@@ -406,8 +408,9 @@
     <ClCompile Include="mccar\cardamage.cpp" />
     <ClCompile Include="mccar\character.cpp" />
     <ClCompile Include="snd_control\audiomgr.cpp" />
+    <ClCompile Include="veh_base\sim.cpp" />
     <ClCompile Include="veh_dyna\aero.cpp" />
-    <ClCompile Include="age\vehicle\automgr.cpp" />
+    <ClCompile Include="veh_dyna\automgr.cpp" />
     <ClCompile Include="age\vehicle\car.cpp" />
     <ClCompile Include="mccar\caraudio.cpp" />
     <ClCompile Include="mccar\caraero.cpp" />
@@ -423,7 +426,8 @@
     <ClCompile Include="age\vehicle\entity.cpp" />
     <ClCompile Include="age\vehicle\gyro.cpp" />
     <ClCompile Include="age\vehicle\nitro.cpp" />
-    <ClCompile Include="age\vehicle\vehinput.cpp" />
+    <ClCompile Include="mcplayer\input.cpp" />
+    <ClCompile Include="veh_dyna\playerinput.cpp" />
     <ClCompile Include="veh_dyna\transmission.cpp" />
     <ClCompile Include="veh_dyna\wheel.cpp" />
     <ClCompile Include="age\zipfile\zipfile.cpp" />

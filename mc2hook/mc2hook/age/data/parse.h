@@ -73,5 +73,5 @@ public:
     void AddValue(LPCSTR name, Vector4* value) { AddValue(name, value, 1); };
 
 public:
-    static hook::Type<int> dword_8600B0;
+    static hook::Type<Vector3> dword_8600B0;
 };

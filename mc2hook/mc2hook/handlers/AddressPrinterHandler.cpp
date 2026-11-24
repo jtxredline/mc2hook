@@ -20,7 +20,7 @@
 // vehStuck:
 // vehSuspension:
 // vehTransmission:
-// vehPlayerInput: 0x46B330, 0x63D0C4
+// mcPlayerInput: 0x46B330, 0x63D0C4
 // vehWheel: 0x56DB90, 0x650E30
 // mcCar: 0x4D1710, 0x644980
 // mcRaceStateDerived: 0x482580, 0x63EC04

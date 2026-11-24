@@ -1,7 +1,8 @@
 #pragma once
 #include <mc2hook\mc2hook.h>
 
-class mcRaceConfig {
+class mcRaceConfig
+{
 public:
     static hook::Type<int> g_CurrentCity;
     static hook::Type<int> g_CurrentTOD;

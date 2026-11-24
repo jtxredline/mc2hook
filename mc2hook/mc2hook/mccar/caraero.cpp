@@ -1,5 +1,5 @@
 #include "caraero.h"
-#include <age/vehicle/vehinput.h>
+#include <mcplayer/input.h>
 
 void mcCarAero::Update()
 {
@@ -19,7 +19,7 @@ void mcCarAero::Update()
     }
 }
 
-void mcCarAero::Init(mcCarSim* sim, vehPlayerInput* input)
+void mcCarAero::Init(mcCarSim* sim, vehInput* input)
 {
     hook::Thunk<0x4E5450>::Call<void>(this, sim, input); // Call original
 }

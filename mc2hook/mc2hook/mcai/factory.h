@@ -6,7 +6,7 @@ class vehEntity;
 class mcCar;
 class aiOpponent;
 
-class aiOpponentFactory : vehFactory
+class aiOpponentFactory : public vehFactory
 {
 public:
 	mcCar* m_Car;

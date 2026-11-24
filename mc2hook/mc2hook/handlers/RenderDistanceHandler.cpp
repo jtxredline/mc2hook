@@ -13,6 +13,7 @@ float RenderDistanceHandler::GetFloatHook()
 void RenderDistanceHandler::Install()
 {
     ccMultiplier = HookConfig::GetFloat("Graphics", "CCRadiusMultiplier", 1.0f);
+    // TODO: Add a global lamp/light glow decay/distance multiplier @ 0x662E68
 
     InstallCallback("CC Multiplier Handler", "GetFloat Hook",
         &GetFloatHook, {

@@ -50,12 +50,10 @@ public:
 	float m_Throttle;
 	float m_Brake;
 	float m_Handbrake;
-	float field_80;
-	float field_84;
-	float field_88;
-	float field_8C;
-	float field_90;
-	float field_94;
+	Vector3 m_ResetPos;
+	float field_8C; //
+	float field_90; // 
+	float field_94; // m_ResetAngle?
 	float field_98;
 	float field_9C;
 	float field_A0;
@@ -63,6 +61,9 @@ public:
 	float field_A8;
 	float field_AC;
 	float m_Speed;
+
+public:
+	void SetResetPos(const Vector3& pos);
 };
 
 static_assert(sizeof(vehSim) == 0xB4, "vehSim size mismatch");

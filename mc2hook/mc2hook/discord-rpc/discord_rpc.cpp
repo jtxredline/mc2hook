@@ -3,7 +3,7 @@
 #include <chrono>
 #include <age/mcgame/raceconfig.h>
 #include <age/mcnetwork/netmanager.h>
-#include <age/vehicle/automgr.h>
+#include <veh_dyna/automgr.h>
 #include <age/types.h>
 #include <age/globals.h>
 #include <age/string/string.h>
