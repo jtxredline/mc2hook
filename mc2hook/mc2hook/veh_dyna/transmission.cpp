@@ -9,6 +9,8 @@
 #include <age/input/keyboard.h>
 #include <dinput.h>
 
+bool vehTransmission::sm_CallOriginal = false;
+
 void vehTransmission::Update()
 {
     //hook::Thunk<0x567E00>::Call<void>(this); // Call original
@@ -62,8 +64,11 @@ void vehTransmission::Update()
 
     m_GearChangeTimer += datTimeManager::GetSeconds();
 
-    // Debug flag
-    if (ioKeyboard::GetKeyDown(DIK_LALT)) m_CallOriginal = !m_CallOriginal;
+    // Debug: Left Alt toggles the switch once a press (this runs for every car, every frame)
+    static bool s_AltWasDown = false;
+    const bool altDown = ioKeyboard::GetKeyDown(DIK_LALT);
+    if (altDown && !s_AltWasDown) sm_CallOriginal = !sm_CallOriginal;
+    s_AltWasDown = altDown;
 }
 
 void vehTransmission::SetGearChangeFlag(int flag)

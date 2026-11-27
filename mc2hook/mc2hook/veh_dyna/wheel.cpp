@@ -1217,7 +1217,7 @@ void vehWheel::UpdateComp()
 {
     static bool toggle = false;
 
-    if (m_CarSim->m_Transmission->m_CallOriginal) // Debug flag
+    if (vehTransmission::sm_CallOriginal) // Debug switch
     {
         hook::Thunk<0x56DB90>::Call<void>(this); // Call original
 
@@ -1227,7 +1227,7 @@ void vehWheel::UpdateComp()
             toggle = !toggle;
         }
     }
-    else if (m_CarSim->m_Transmission->m_CallOriginal == false)
+    else
     {
         Update(); //hook::Thunk<0x56DB90>::Call<void>(this); // vehWheel::Update();
 

@@ -39,10 +39,14 @@ public:
     int m_MaxDownshifts;
     float m_GearBias;
     bool m_Clutch;
-    bool m_CallOriginal; // Debug flag
-    char m_Padding[2];
+    char m_Padding[3];
 
 public:
+    // Debug, toggled by Left Alt: every car's wheels run the game's own update instead of the rewrite.
+    // One switch for all cars; the game never writes the struct's padding, so a flag there started each car on
+    // whatever its memory held.
+    static bool sm_CallOriginal;
+
     vehTransmission()  { hook::Thunk<0x567940>::Call<void>(this); }
     ~vehTransmission() { hook::Thunk<0x567750>::Call<void>(this); }
 

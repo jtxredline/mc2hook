@@ -687,7 +687,7 @@ void mcCarSim::UpdateControlsComp()
 {
     static bool toggle = false;
 
-    if (m_Transmission->m_CallOriginal) // Debug flag
+    if (vehTransmission::sm_CallOriginal) // Debug switch
     {
         hook::Thunk<0x4D3290>::Call<void>(this); // Call original
 
@@ -697,7 +697,7 @@ void mcCarSim::UpdateControlsComp()
             toggle = !toggle;
         }
     }
-    else if (m_Transmission->m_CallOriginal == false)
+    else
     {
         UpdateControls();
 
