@@ -12,6 +12,11 @@ void phArchetype::SetTypeFlag(uint mask, bool value)
 	hook::Thunk<0x58E800>::Call<void>(this, mask, value); // Call original
 }
 
+void phArchetype::SetIncludeFlag(uint mask, bool value)
+{
+	hook::Thunk<0x58E830>::Call<void>(this, mask, value); // Call original
+}
+
 void phArchetype::SetMass(float mass)
 {
 	hook::Thunk<0x47B960>::Call<void>(this, mass); // Call original

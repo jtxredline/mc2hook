@@ -18,7 +18,7 @@ void mcCarSim::MakeCollider(const char* carName, vehEntity* entity)
 
     archetype->SetTypeFlag(0x8000, true);
     archetype->SetTypeFlag(0x20000, true);
-    archetype->SetTypeFlag(0x4000, true);
+    archetype->SetIncludeFlag(0x4000, true);
 }
 
 void mcCarSim::MakeWheels(const char* carName)

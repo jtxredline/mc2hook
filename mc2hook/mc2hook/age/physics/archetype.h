@@ -28,7 +28,8 @@ public:
     static hook::Type<float> dword_674060; // 0.3f
 
     float sub_47B9D0();
-    void SetTypeFlag(uint mask, bool value);
+    void SetTypeFlag(uint mask, bool value);    // what it is (+0x0C)
+    void SetIncludeFlag(uint mask, bool value); // what it collides with (+0x10)
     void SetMass(float mass);
     void SetAngInertia(const Vector3& angInertia);
 };
