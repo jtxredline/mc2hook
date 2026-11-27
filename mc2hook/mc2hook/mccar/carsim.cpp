@@ -25,9 +25,12 @@ void mcCarSim::MakeWheels(const char* carName)
 {
     vehChassis::MakeWheels(carName);
 
+    // The wheel block holds the wheels in the order they were made (whl0, whl1 front, then whl2, whl3);
+    // m_Wheels holds them as whl0, whl2, whl1, whl3, so it would hand front settings to a rear wheel.
+    vehWheel* wheels = reinterpret_cast<vehWheel*>(m_WheelsStruct);
     for (int i = 0; i < m_NumWheels; ++i)
     {
-        vehWheel* wheel = m_Wheels[i]; // m_WheelsStruct
+        vehWheel* wheel = &wheels[i];
 
         if (i >= 2)  wheel->m_BrakeCoef = 1.1f;
         else
