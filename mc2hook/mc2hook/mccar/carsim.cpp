@@ -18,16 +18,19 @@ void mcCarSim::MakeCollider(const char* carName, vehEntity* entity)
 
     archetype->SetTypeFlag(0x8000, true);
     archetype->SetTypeFlag(0x20000, true);
-    archetype->SetTypeFlag(0x4000, true);
+    archetype->SetIncludeFlag(0x4000, true);
 }
 
 void mcCarSim::MakeWheels(const char* carName)
 {
     vehChassis::MakeWheels(carName);
 
+    // The wheel block holds the wheels in the order they were made (whl0, whl1 front, then whl2, whl3);
+    // m_Wheels holds them as whl0, whl2, whl1, whl3, so it would hand front settings to a rear wheel.
+    vehWheel* wheels = reinterpret_cast<vehWheel*>(m_WheelsStruct);
     for (int i = 0; i < m_NumWheels; ++i)
     {
-        vehWheel* wheel = m_Wheels[i]; // m_WheelsStruct
+        vehWheel* wheel = &wheels[i];
 
         if (i >= 2)  wheel->m_BrakeCoef = 1.1f;
         else
@@ -684,7 +687,7 @@ void mcCarSim::UpdateControlsComp()
 {
     static bool toggle = false;
 
-    if (m_Transmission->m_CallOriginal) // Debug flag
+    if (vehTransmission::sm_CallOriginal) // Debug switch
     {
         hook::Thunk<0x4D3290>::Call<void>(this); // Call original
 
@@ -694,7 +697,7 @@ void mcCarSim::UpdateControlsComp()
             toggle = !toggle;
         }
     }
-    else if (m_Transmission->m_CallOriginal == false)
+    else
     {
         UpdateControls();
 

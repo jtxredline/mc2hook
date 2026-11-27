@@ -61,10 +61,8 @@ void vehChassis::MakeCollider(const char* carName, vehEntity* entity)
     if (bound)
     {
         m_Collider->m_Bound = bound;
-        m_Size.X = bound->dword_14 - bound->dword_08;
-        m_Size.Y = bound->dword_18 - bound->dword_0c;
-        m_Size.Z = bound->dword_1c - bound->dword_10;
-        m_Size.Y = bound->dword_18;
+        m_Size = bound->m_BoxMax - bound->m_BoxMin;
+        m_Size.Y = bound->m_BoxMax.Y; // the height is the box's top, not its span
     }
     else Errorf("vehChassis::MakeCollider(): File %s not found", boundName);
 
@@ -94,8 +92,8 @@ void vehChassis::MakeCollider(const char* carName, vehEntity* entity)
     // Create physics archetype
     if (!phArchetypeMgr::Instance) phArchetypeMgr::CreateInstance(0x190);
 
-    char s[60];
-    phArchetype* archetype = phArchetypeMgr::Instance->RegisterArchetype(bound, s, false, 1, phArchetype::dword_674060);
+    // Registered under the bound's name, which also picks the bound's physics file when there is one
+    phArchetype* archetype = phArchetypeMgr::Instance->RegisterArchetype(bound, boundName, false, 1, phArchetype::dword_674060);
 
     archetype->SetMass(ics->m_Mass);
     archetype->SetAngInertia(ics->m_AngInertia);
@@ -129,7 +127,7 @@ void vehChassis::MakeFluid(const char* carName)
     if (m_Fluid)
     {
         phBound* bound = m_Collider->m_Bound;
-        m_Fluid->Init((mcCarSim*)this, &bound->dword_08, &bound->dword_14);
+        m_Fluid->Init((mcCarSim*)this, &bound->m_BoxMin, &bound->m_BoxMax);
     }
 }
 
