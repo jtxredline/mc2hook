@@ -92,8 +92,8 @@ void vehChassis::MakeCollider(const char* carName, vehEntity* entity)
     // Create physics archetype
     if (!phArchetypeMgr::Instance) phArchetypeMgr::CreateInstance(0x190);
 
-    char s[60];
-    phArchetype* archetype = phArchetypeMgr::Instance->RegisterArchetype(bound, s, false, 1, phArchetype::dword_674060);
+    // Registered under the bound's name, which also picks the bound's physics file when there is one
+    phArchetype* archetype = phArchetypeMgr::Instance->RegisterArchetype(bound, boundName, false, 1, phArchetype::dword_674060);
 
     archetype->SetMass(ics->m_Mass);
     archetype->SetAngInertia(ics->m_AngInertia);
