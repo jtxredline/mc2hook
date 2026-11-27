@@ -1,6 +1,7 @@
 #pragma once
 
 class mcCarSim;
+struct Vector3;
 
 class vehFluid
 {
@@ -18,5 +19,5 @@ public:
 	char m_Anim[768];
 
 public:
-	void Init(mcCarSim* sim, int* a2, int* a3);
+	void Init(mcCarSim* sim, const Vector3* boxMin, const Vector3* boxMax);
 };

@@ -1,4 +1,5 @@
 #pragma once
+#include <age/vector/vector3.h>
 
 class phSurface;
 
@@ -7,12 +8,8 @@ class phBound
 public:
     int dword_00;
     int dword_04;
-    int dword_08;
-    int dword_0c;
-    int dword_10;
-    int dword_14;
-    int dword_18;
-    int dword_1c;
+    Vector3 m_BoxMin; // bounding box corners, floats
+    Vector3 m_BoxMax;
     int dword_20;
     int dword_24;
     int dword_28;
